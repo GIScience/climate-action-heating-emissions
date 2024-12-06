@@ -1,0 +1,7 @@
+.env
+.env.base
+.idea/
+__pycache__/
+.pytest_cache/
+
+CI_JOB_TOKEN

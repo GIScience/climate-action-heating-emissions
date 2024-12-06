@@ -1,0 +1,21 @@
+FROM python:3.11.5-bookworm
+
+ENV PACKAGE_NAME='plugin_blueprint'
+
+RUN pip install --no-cache-dir poetry==1.8.4
+
+COPY pyproject.toml poetry.lock ./
+
+
+RUN export CI_JOB_TOKEN=$(cat /kaniko/CI_JOB_TOKEN) && \
+    git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.heigit.org".insteadOf "ssh://git@gitlab.heigit.org:2022" && \
+    poetry install --no-ansi --no-interaction --all-extras --without dev,test --no-root
+
+COPY $PACKAGE_NAME $PACKAGE_NAME
+COPY resources resources
+COPY README.md ./README.md
+
+RUN poetry install --no-ansi --no-interaction --all-extras --without dev,test
+
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT poetry run python ${PACKAGE_NAME}/plugin.py

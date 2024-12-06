@@ -1,0 +1,1 @@
+Serve as blueprint for new plugins.
