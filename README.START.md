@@ -9,9 +9,10 @@ go.
 The terms Operator and Plugin are therefore mostly synonymous for you.
 For more information on the architecture, please contact the [CA team](https://heigit.org/).
 
-**For an example of a fully developed plugin with all possible input and output types, check out the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).**
+**For an example of a fully developed plugin with all possible input and output types, check out
+the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).**
 
-Please follow the subsequent steps to bring your plugin to life.
+Please follow these steps to bring your plugin to life:
 
 ## Preparation
 
@@ -30,20 +31,18 @@ Yet, we highly encourage you to create smaller intermediate MRs for review!
 
 ### Plugin name
 
-We have to replace names at multiple levels to refer to your plugin's name.
-Let's start with updating your [pyproject.toml](pyproject.toml).
-In that file, replace the name, description and author attributes with your
-plugin's information.
-If you don't want to get creative you can simply mimic the repository name for your project name.
+We have to replace `"plugin-blueprint"` with the name of your plugin in multiple places.
 
-You also need to update your plugin's name in [info.py](plugin_blueprint/core/info.py).
-
-Next we will refactor the name of the package ([plugin_blueprint/](plugin_blueprint)).
-Rename it to the project name you have defined above in your `pyproject.toml`.
-This directory is also copied to the Docker container we use for deployment.
-Therefore, you have to change the name also in the [Dockerfile.Kaniko](Dockerfile.Kaniko).
-
-You should also now visit the [README.md](README.md) and update your plugin name and details there.
+1. Update your [pyproject.toml](pyproject.toml).
+   In that file, replace the name, description and author attributes with your
+   plugin's information.
+   If you don't want to get creative you can simply mimic the repository name for your project name.
+2. Update your plugin's name in [info.py](plugin_blueprint/core/info.py).
+3. Refactor the name of the package itself ([plugin_blueprint/](plugin_blueprint)).
+   Rename it to the project name you have defined above in your `pyproject.toml`.
+4. Your plugin directory is also copied to the Docker container we use for deployment.
+   Therefore, you have to change the name also in the [Dockerfile.Kaniko](Dockerfile.Kaniko).
+5. Finally, update your plugin name and details in [README.md](README.md).
 
 ### Python Environment
 
@@ -66,7 +65,8 @@ and you are ready to code within your poetry environment.
 
 We use [pytest](https://pytest.org) as a testing engine.
 Ensure all tests are passing by running `poetry run pytest`.
-If any tests are failing, you've missed renaming from `plugin_blueprint` somewhere, so look for references to that in the code.
+If any tests are failing, you've missed renaming from `plugin_blueprint` somewhere, so look for references to that in
+the code.
 
 ### Linting and formatting
 
@@ -81,7 +81,6 @@ use ["magic trailing commas"](https://docs.astral.sh/ruff/settings/#format_skip-
 
 ### Logging
 
-Using the environment variable `LOG_LEVEL` you can adjust the amount of log messages produced by the plugin.
 Please make sure to use logging throughout your plugin.
 This will make debugging easier at a later stage.
 
@@ -94,15 +93,18 @@ Follow the [Development Setup](README.md#development-setup) instructions to do t
 
 ### First merge request
 
-Now that your project naming is updated for your plugin and you've run the test, you are ready to **make this your first merge request**.
+Now that your project naming is updated for your plugin, and you've run the tests, you are ready to **make this your
+first merge request**.
 Add your CA-team contact as reviewer.
 
 ### Structure
 
 We have structured the code into two main categories based on their functionality:
 
-1. [core](plugin_blueprint/core/): contains the necessary framework for your plugin to work with `climatoology` and the web app
+1. [core](plugin_blueprint/core/): holds the critical infrastructure for hosting the plugin on the platform.
+   As a plugin developer, you will mostly only change the definition of your plugin's inputs and outputs in these files.
 2. [components](plugin_blueprint/components/): is for the implementation of your plugin, which you will develop
+   Most of your coding should go in this submodule.
 
 The following steps will help you get started with developing your plugin.
 
@@ -110,9 +112,9 @@ The following steps will help you get started with developing your plugin.
 
 The `get_info()` function here provides key information about your plugin including:
 
-- The plugin name
+- The plugin's name
 - The version number
-- The purpose and methodology for the plugin
+- The plugin's purpose and methodology
 
 Before you start coding your plugin operator, you should edit the [purpose.md](resources/info/purpose.md),
 [methodology.md](resources/info/methodology.md), [icon.jpeg](resources/info/icon.jpeg) and this `get_info` function,
@@ -125,21 +127,23 @@ We highly encourage [test driven development](https://en.wikipedia.org/wiki/Test
 In fact, we require two predefined tests to successfully run on your plugin.
 
 - The first test confirms that your plugin's info method returns an `_Info` artifact (`test_plugin_info_request`).
-- The second test ensures that your computation returns the expected number of outputs as `_Artifact` types (`test_plugin_compute_request`).
+- The second test ensures that your computation returns the expected number of outputs as `_Artifact` types (
+  `test_plugin_compute_request`).
 
-These tests ensure that the development contract is met.
+These tests ensure that the plugin will run on the Climate Action platform.
 
-The existing test only asserts the functionality within the architecture
-(that your plugin returns the expected number of outputs, and that these are of the expected type, `_Artifact`).
+The existing test only asserts that your plugin returns the expected number of outputs, and that these are of the
+expected type (`_Artifact`).
 It does not assert the intended functionality of the operator.
-The [Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase) includes a variety of example tests for testing actual results.
+The [Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase) includes a variety of example tests for
+testing actual results.
 We expect you to thoroughly test your code in a similar way.
 Your tests should be sorted into test scripts following the same structure as your plugin.
 
 ##### Compute Method in [operator_worker.py](plugin_blueprint/core/operator_worker.py)
 
 Now, *finally*, comes the main coding part.
-This method is where you can explode your genius and create ohsome results.
+This method is where you process data and do the computations behind your plugin's results.
 You are free to create additional classes or methods as needed to call from the `compute` method.
 The only requirement of this method is to return a list of Artifacts (i.e. results).
 
@@ -151,12 +155,12 @@ we recommend putting them in a `utils` file (or folder) within [components](plug
 You will probably also use external services like [ohsome-py](https://github.com/GIScience/ohsome-py).
 In addition, you can use the provided utilities of the CA team.
 A list of utilities can be found in the [climatoology](https://gitlab.heigit.org/climate-action/climatoology)
-repository, but we also provide examples for their usage in the [Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).
-
+repository, but we also provide examples for their usage in
+the [Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).
 
 #### Input parameters in [input.py](plugin_blueprint/core/input.py)
 
-Keep in mind to update the input parameter class while you are coding away.
+Remember to update the input parameter class while you are coding away.
 This must include any inputs or options the user can make when running your plugin.
 
 ### Development stages
@@ -166,7 +170,8 @@ The first MR you created above paves the way for the future development of the p
 #### Dummy
 
 Your next step will be to create a dummy version of your plugin.
-The dummy version will help you formalise the data creation pipeline.
+The dummy version will help you formalise the data creation pipeline early in the process
+and will serve as a basic example of what the final plugin might return.
 It will _not_ create real output but rather return a mocked result that in its type, color etc. resembles the real
 output.
 Therefore, it will not be shared outside the climate action group!
@@ -201,11 +206,11 @@ From now on you can repeat this process for each release target that you, your c
 define.
 
 By now your plugin should be up and running on the climate action infrastructure.
-Because you are doing rigorous testing we can have trust in the code and be sure it works in deployment.
+Because you are doing rigorous testing, we can trust the code and be sure it works in deployment.
 
 **Please now delete this file. If you need to review these steps again in the future,
-you can access them from the [Plugin Blueprint](https://gitlab.heigit.org/climate-action/plugins/plugin-blueprint) repository.**
-
+you can access them from the [Plugin Blueprint](https://gitlab.heigit.org/climate-action/plugins/plugin-blueprint)
+repository.**
 
 ## Forking this repository (for admins)
 
