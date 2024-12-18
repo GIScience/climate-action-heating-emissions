@@ -8,8 +8,8 @@ from climatoology.base.baseoperator import ComputationResources, BaseOperator, _
 from climatoology.base.info import _Info
 import shapely
 
-from plugin_blueprint.core.info import get_info
-from plugin_blueprint.core.input import ComputeInput
+from heating_emissions.core.info import get_info
+from heating_emissions.core.input import ComputeInput
 
 
 log = logging.getLogger(__name__)

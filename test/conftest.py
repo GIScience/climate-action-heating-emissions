@@ -5,8 +5,8 @@ from climatoology.base.computation import ComputationScope
 import pytest
 import shapely
 
-from plugin_blueprint.core.operator_worker import Operator
-from plugin_blueprint.core.input import ComputeInput
+from heating_emissions.core.operator_worker import Operator
+from heating_emissions.core.input import ComputeInput
 
 
 @pytest.fixture

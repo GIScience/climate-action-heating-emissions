@@ -3,5 +3,6 @@
 .idea/
 __pycache__/
 .pytest_cache/
+data/
 
 CI_JOB_TOKEN
