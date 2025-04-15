@@ -7,11 +7,17 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11.5"
-climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.0.2" }
+climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.1.0" }
 pydantic = "^2.8.2"
+rioxarray = "^0.18.1"
+rasterio = "^1.4.3"
+matplotlib = "^3.10.0"
+sqlalchemy = "^2.0.40"
+geoalchemy2 = "^0.17.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
+requests-mock = "^1.12.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"

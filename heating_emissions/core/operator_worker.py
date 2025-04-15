@@ -3,19 +3,33 @@
 import logging
 from typing import List
 
-from climatoology.base.artifact import create_markdown_artifact
 from climatoology.base.baseoperator import ComputationResources, BaseOperator, _Artifact, AoiProperties
 from climatoology.base.info import _Info
 import shapely
+import geopandas as gpd
+from geoalchemy2 import Geometry  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
+from sqlalchemy import MetaData, create_engine
 
+from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
+from heating_emissions.components.gridded_emissions_artifact import (
+    build_emissions_artifact,
+    calculate_heating_emissions,
+)
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
-
 
 log = logging.getLogger(__name__)
 
 
 class Operator(BaseOperator[ComputeInput]):
+    def __init__(self, ca_database_url: str):
+        super().__init__()
+
+        engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'])
+        metadata = MetaData()
+        metadata.reflect(bind=engine)
+        self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
+
     def info(self) -> _Info:
         return get_info()
 
@@ -26,16 +40,27 @@ class Operator(BaseOperator[ComputeInput]):
         aoi_properties: AoiProperties,
         params: ComputeInput,
     ) -> List[_Artifact]:
-        # Create a placeholder markdown artifact
-        markdown_artifact = create_markdown_artifact(
-            text='A placeholder artifact showing some text results.',
-            name='Placeholder Result',
-            tl_dr='Some placeholder text',
-            resources=resources,
-            filename='markdown',
+        # Check we are within bounds of census data coverage
+        self.check_aoi(aoi, aoi_properties)
+
+        census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
+        result = calculate_heating_emissions(census_data)
+
+        heating_per_capita_emissions_artifact = build_emissions_artifact(result=result, resources=resources)
+        heating_absolute_emissions_artifact = build_emissions_artifact(
+            result=result, resources=resources, per_capita=False
         )
 
-        # When building your own plugin, refactor the logic for creating results by moving it to a submodule
-        # See the Plugin Showcase for a full example
+        return [heating_per_capita_emissions_artifact, heating_absolute_emissions_artifact]
 
-        return [markdown_artifact]
+    def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
+        aoi_gpd = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
+        germany = gpd.read_file('resources/germany_bkg_boundaries.json')
+        intersections = aoi_gpd.intersects(germany.geometry)
+        if intersections[0]:
+            return None
+        else:
+            log.error(
+                f'Currently the Heating Emissions Plugin is only available for Germany. {aoi_properties.name} does not intersect Boundaries for Germany'
+            )
+            raise ValueError()

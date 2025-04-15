@@ -1,0 +1,21 @@
+{
+"type": "FeatureCollection",
+"name": "census_grid",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2922800E4223800", "x_mp_100m": 4223850, "y_mp_100m": 2922850, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.661454554966516, 49.41060039206927 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2922800E4223900", "x_mp_100m": 4223950, "y_mp_100m": 2922850, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.662832094477682, 49.410616750377287 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923000E4224200", "x_mp_100m": 4224250, "y_mp_100m": 2923050, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.66691558699795, 49.412464029916087 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923000E4224300", "x_mp_100m": 4224350, "y_mp_100m": 2923050, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.668293180627245, 49.412480321549467 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923000E4224400", "x_mp_100m": 4224450, "y_mp_100m": 2923050, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.669670775098256, 49.412496596340624 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923100E4224100", "x_mp_100m": 4224150, "y_mp_100m": 2923150, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.665513401589685, 49.413346873487946 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923100E4224200", "x_mp_100m": 4224250, "y_mp_100m": 2923150, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.66689101974962, 49.413363182309659 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923100E4224300", "x_mp_100m": 4224350, "y_mp_100m": 2923150, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.668268638752203, 49.41337947428876 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923300E4223900", "x_mp_100m": 4223950, "y_mp_100m": 2923350, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.662708877638151, 49.415112507148919 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923700E4223800", "x_mp_100m": 4223850, "y_mp_100m": 2923750, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.66123251571047, 49.418692745876392 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923700E4223900", "x_mp_100m": 4223950, "y_mp_100m": 2923750, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.662610283600227, 49.41870910730902 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923800E4223800", "x_mp_100m": 4223850, "y_mp_100m": 2923850, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.66120783896265, 49.419591894839471 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923800E4223900", "x_mp_100m": 4223950, "y_mp_100m": 2923850, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.662585632233682, 49.419608256619348 ] } },
+{ "type": "Feature", "properties": { "raster_id_100m": "CRS3035RES100mN2923800E4224000", "x_mp_100m": 4224050, "y_mp_100m": 2923850, "within_aoi": true }, "geometry": { "type": "Point", "coordinates": [ 8.663963426350387, 49.419624601554176 ] } }
+]
+}

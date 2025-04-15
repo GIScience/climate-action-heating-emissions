@@ -3,12 +3,14 @@ import logging.config
 from climatoology.app.plugin import start_plugin
 
 from heating_emissions.core.operator_worker import Operator
+from heating_emissions.core.settings import Settings
 
 log = logging.getLogger(__name__)
 
 
 def init_plugin() -> int:
-    operator = Operator()
+    settings = Settings()
+    operator = Operator(ca_database_url=settings.ca_database_url)
 
     log.info('Starting Plugin')
     return start_plugin(operator=operator)

@@ -10,3 +10,5 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ### Added
 
 - A minimum plugin
+- Absolute Heating Emissions Artifact
+- Per Capita Heating Emissions Artifact

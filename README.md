@@ -3,6 +3,8 @@
 Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions. This plugin estimates annual building space heating emissions by combining open data from various sources. In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022 census, and includes only _residential_ buildings.
 
 ## Data sources
+
+### Spatial data
 Gridded data from the German 2022 census can be downloaded from: https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#Gitterdaten2022
 
 The current version of the plugin uses the following gridded census data:
@@ -11,9 +13,26 @@ The current version of the plugin uses the following gridded census data:
 - Building year of construction ("Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen")
 - Heating energy carriers in residential buildings ("Gebäude mit Wohnraum nach Energieträger der Heizung in Gitterzellen")
 
-We assign an approximated average energy consumption rate to buildings constructed in different periods according to [this chart](https://www.bmwk.de/Redaktion/DE/Infografiken/Energie/energieverbrauch-wohngebaeude.html) from the Bundesministerium für Wirtschaft und Klimaschutz.
+### Energy consumption rates
+We use energy consumption values for buildings of different age classes from (co2online)[https://www.wohngebaeude.info/daten/#/heizen/bundesweit], which are based on measurements from over 300 thousand buildings across Germany, and are adjusted by temperature differences.
 
+| Age class    | Energy consumption (kWh/m2) | Notes      |
+|--------------|-----------------------------|------------|
+| Before 1919  | 134.6                       | Pre-war    |
+| 1919 to 1948 | 134.6                       | Pre-war    |
+| 1949 to 1978 | 135.7                       | Post-war   |
+| 1979 to 1990 | 126.2                       | WSchVO 1   |
+| 1991 to 2000 | 93.3                        | WSchVO 3   |
+| 2001 to 2010 | 78.5                        | EnEV 2002  |
+| 2011 to 2019 | 74.1                        | EnEV 2007* |
+| Since 2019   | 74.1                        | EnEV 2007* |
+
+
+When the age of a building is unknown, we assign them the mean energy consumption rate (126.7 kWh).
+
+### Emission factors
 We use carbon dioxide emission factors for each energy carrier (from unit processes) from the Probas database.
+
 
 ## Development setup
 
