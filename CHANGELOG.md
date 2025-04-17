@@ -12,3 +12,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - A minimum plugin
 - Absolute Heating Emissions Artifact
 - Per Capita Heating Emissions Artifact
+- Histograms of:
+  - per capita CO2 emissions
+  - energy consumption
+  - emission factors

@@ -21,6 +21,6 @@ def test_operator_compute_german_request(
         params=default_compute_input,
     )
 
-    assert len(computed_artifacts) == 2
+    assert len(computed_artifacts) == 5
     for artifact in computed_artifacts:
         assert isinstance(artifact, _Artifact)

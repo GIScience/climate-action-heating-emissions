@@ -14,6 +14,12 @@ from heating_emissions.components.census_data import DatabaseConnection, collect
 from heating_emissions.components.gridded_emissions_artifact import (
     build_emissions_artifact,
     calculate_heating_emissions,
+    plot_per_capita_co2_histogram,
+    build_per_capita_co2_histogram_artifact,
+    plot_energy_consumption_histogram,
+    build_energy_histogram_artifact,
+    plot_emission_factor_histogram,
+    build_emission_factor_histogram_artifact,
 )
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
@@ -46,12 +52,32 @@ class Operator(BaseOperator[ComputeInput]):
         census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
         result = calculate_heating_emissions(census_data)
 
+        per_capita_histogram = plot_per_capita_co2_histogram(census_data=census_data)
+        energy_histogram = plot_energy_consumption_histogram(census_data=census_data)
+        emission_factor_histogram = plot_emission_factor_histogram(census_data=census_data)
+
         heating_per_capita_emissions_artifact = build_emissions_artifact(result=result, resources=resources)
         heating_absolute_emissions_artifact = build_emissions_artifact(
             result=result, resources=resources, per_capita=False
         )
 
-        return [heating_per_capita_emissions_artifact, heating_absolute_emissions_artifact]
+        per_capita_histogram_artifact = build_per_capita_co2_histogram_artifact(
+            aoi_aggregate=per_capita_histogram, resources=resources
+        )
+        energy_consumption_histogram_artifact = build_energy_histogram_artifact(
+            aoi_aggregate=energy_histogram, resources=resources
+        )
+        emission_factor_histogram_artifact = build_emission_factor_histogram_artifact(
+            aoi_aggregate=emission_factor_histogram, resources=resources
+        )
+
+        return [
+            heating_per_capita_emissions_artifact,
+            per_capita_histogram_artifact,
+            energy_consumption_histogram_artifact,
+            emission_factor_histogram_artifact,
+            heating_absolute_emissions_artifact,
+        ]
 
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
         aoi_gpd = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
