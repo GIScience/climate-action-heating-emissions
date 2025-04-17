@@ -1,1 +1,1 @@
-This plugin uses German census data to estimate annual emissions from residential space heating.
+Estimate annual carbon dioxide emissions from heating residential buildings for any area within Germany.
