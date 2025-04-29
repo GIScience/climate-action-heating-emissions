@@ -16,3 +16,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
   - per capita CO2 emissions
   - energy consumption
   - emission factors
+
+### Changed
+
+- Update Climatoology to 6.3.1
