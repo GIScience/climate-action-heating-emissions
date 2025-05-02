@@ -1,4 +1,5 @@
 from typing import Tuple
+import geopandas as gpd
 import matplotlib as mpl
 import numpy as np
 import pandas as pd
@@ -66,3 +67,9 @@ def reproject_data_to_4326(
     )
     log.debug(f'projected transform: {geographic_transform}')
     return geographic_raster_data, geographic_transform
+
+
+def get_aoi_area(aoi_as_geoseries: gpd.GeoSeries) -> float:
+    reprojected_aoi_df = aoi_as_geoseries.to_crs(aoi_as_geoseries.estimate_utm_crs())
+    area_km2 = round(reprojected_aoi_df.geometry.area.sum() / 1e6, 2)
+    return area_km2

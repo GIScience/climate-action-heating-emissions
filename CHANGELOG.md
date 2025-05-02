@@ -16,6 +16,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
   - per capita CO2 emissions
   - energy consumption
   - emission factors
+- Check to ensure the selected AOI does not exceed size limit ([#11](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/11))
 
 ### Changed
 

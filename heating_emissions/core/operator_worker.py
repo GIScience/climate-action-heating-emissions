@@ -5,6 +5,7 @@ from typing import List
 
 from climatoology.base.baseoperator import ComputationResources, BaseOperator, _Artifact, AoiProperties
 from climatoology.base.info import _Info
+from climatoology.utility.exception import ClimatoologyUserError
 import shapely
 import geopandas as gpd
 from geoalchemy2 import Geometry  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
@@ -21,6 +22,7 @@ from heating_emissions.components.gridded_emissions_artifact import (
     plot_emission_factor_histogram,
     build_emission_factor_histogram_artifact,
 )
+from heating_emissions.components.utils import get_aoi_area
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
 
@@ -80,13 +82,17 @@ class Operator(BaseOperator[ComputeInput]):
         ]
 
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
-        aoi_gpd = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
+        aoi_as_series = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
+
         germany = gpd.read_file('resources/germany_bkg_boundaries.json')
-        intersections = aoi_gpd.intersects(germany.geometry)
-        if intersections[0]:
-            return None
-        else:
-            log.error(
+        intersections = aoi_as_series.intersects(germany.geometry)
+        if not intersections[0]:
+            raise ClimatoologyUserError(
                 f'Currently the Heating Emissions Plugin is only available for Germany. {aoi_properties.name} does not intersect Boundaries for Germany'
             )
-            raise ValueError()
+
+        aoi_utm32n_area_km2 = get_aoi_area(aoi_as_series)
+        if aoi_utm32n_area_km2 > 30000:
+            raise ClimatoologyUserError(
+                f'The selected area is too large: {aoi_utm32n_area_km2} km². Currently, the maximum allowed area is 30000 km². Please select a smaller area or a sub-region of your selected area.'
+            )
