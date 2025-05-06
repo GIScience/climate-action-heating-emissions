@@ -6,7 +6,7 @@ from climatoology.base.info import _Info, generate_plugin_info, PluginAuthor
 from semver import Version
 
 
-def get_info() -> _Info:
+def get_info(params) -> _Info:
     info = generate_plugin_info(
         name='Heating Emissions',
         icon=Path('resources/icon.jpeg'),
@@ -31,5 +31,6 @@ def get_info() -> _Info:
         concerns=set(),
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
+        demo_input_parameters=params(),
     )
     return info

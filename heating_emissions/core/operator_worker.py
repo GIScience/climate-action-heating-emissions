@@ -39,7 +39,7 @@ class Operator(BaseOperator[ComputeInput]):
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
 
     def info(self) -> _Info:
-        return get_info()
+        return get_info(ComputeInput)
 
     def compute(
         self,

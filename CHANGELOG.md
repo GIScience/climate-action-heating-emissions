@@ -21,3 +21,4 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ### Changed
 
 - Update Climatoology to 6.3.1
+- Include demo_input_parameters in operator worker file
