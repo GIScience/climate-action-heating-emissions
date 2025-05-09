@@ -4,6 +4,7 @@ from pathlib import Path
 
 from climatoology.base.info import _Info, generate_plugin_info, PluginAuthor
 from semver import Version
+from datetime import timedelta
 
 
 def get_info(params) -> _Info:
@@ -32,5 +33,6 @@ def get_info(params) -> _Info:
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
         demo_input_parameters=params(),
+        computation_shelf_life=timedelta(weeks=52),
     )
     return info
