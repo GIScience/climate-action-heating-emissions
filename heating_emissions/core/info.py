@@ -10,7 +10,7 @@ from datetime import timedelta
 def get_info(params) -> _Info:
     info = generate_plugin_info(
         name='Heating Emissions',
-        icon=Path('resources/icon.jpeg'),
+        icon=Path('resources/heating-radiator.jpeg'),
         authors=[
             PluginAuthor(
                 name='Sebastian Block',

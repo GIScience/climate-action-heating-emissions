@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "heating-emissions"
-version = "1.0.0"
+version = "1.0.1"
 description = "This indicator computes annual carbon dioxide emissions from residential space heating in an area of interest within Germany"
 authors = ["Sebastian Block <sebastian.block@heigit.org>", "Veit Ulrich <veit.ulrich@heigit.org>", "Rizwan Khan <Rizwan.Khan@heigit.org>"]
 readme = "README.md"
