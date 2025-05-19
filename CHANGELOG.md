@@ -7,6 +7,14 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/1.0.1...main)
 
+### Changed
+
+- Simplified legend annotation to avoid capitalization typos ([15](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/15))
+
+### Added
+- Reference lines for histograms of per capita emissions and energy consumption ([10](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/10))
+
+
 ## [1.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.0.1) - 2025-05-14
 
 ### Changed

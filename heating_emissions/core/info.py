@@ -13,23 +13,14 @@ def get_info(params) -> _Info:
         icon=Path('resources/heating-radiator.jpeg'),
         authors=[
             PluginAuthor(
-                name='Sebastian Block',
-                affiliation='HeiGIT gGmbH',
-                website='https://heigit.org/heigit-team/',
-            ),
-            PluginAuthor(
-                name='Veit Ulrich',
-                affiliation='HeiGIT gGmbH',
-                website='https://heigit.org/heigit-team/',
-            ),
-            PluginAuthor(
-                name='Rizwan Khan',
+                name='Climate Action Team',
                 affiliation='HeiGIT gGmbH',
                 website='https://heigit.org/heigit-team/',
             ),
         ],
         version=Version.parse(importlib.metadata.version('heating-emissions')),
         concerns=set(),
+        teaser='Estimate carbon dioxide emissions from residential heating in Germany.',
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
         demo_input_parameters=params(),

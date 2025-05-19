@@ -36,12 +36,12 @@ def build_emissions_artifact(
 
     emissions_max = int(result[output_emissions].quantile(cap).round())
 
-    labels = ContinuousLegendData(cmap_name=cmap, ticks={f'> {emissions_max}0 kg of CO2': 1, '0 kg of CO2': 0})
+    labels = ContinuousLegendData(cmap_name=cmap, ticks={f'> {emissions_max}0': 1, '0': 0})
 
     return create_geotiff_artifact(
         raster_info=raster_info,
-        layer_name=f'{emission_type} heating emissions',
-        caption=f'{emission_type} heating carbon dioxide emissions per 100-m grid cell',
+        layer_name=f'{emission_type} CO₂ emissions (kg per year)',
+        caption=f'{emission_type} CO₂ emissions from residential heating per year per 100-m pixel',
         description='Territorial (scope 1) carbon dioxide emissions from residential space heating. Based on data from 2022 German census.',
         legend_data=labels,
         primary=per_capita,
@@ -187,6 +187,14 @@ def plot_per_capita_co2_histogram(
             xaxis=dict(title=dict(text='annual tonnes of carbon dioxide per person')),
         ),
     )
+    hist_plot.add_vline(
+        x=2.2,
+        line_width=1.5,
+        line_dash='dot',
+        annotation_text='German average',
+        annotation_position='top left',
+        annotation_textangle=-90,
+    )
     return hist_plot
 
 
@@ -208,6 +216,14 @@ def plot_energy_consumption_histogram(
             font=dict(size=12),
             xaxis=dict(title=dict(text='kWh per square meter per year')),
         ),
+    )
+    hist_plot.add_vline(
+        x=127.1,
+        line_width=1.5,
+        line_dash='dot',
+        annotation_text='German average',
+        annotation_position='top left',
+        annotation_textangle=-90,
     )
     return hist_plot
 

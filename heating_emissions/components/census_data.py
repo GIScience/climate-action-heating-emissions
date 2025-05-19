@@ -115,7 +115,8 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> pd.Series:
 
 
 def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> pd.Series:
-    cropped_energy_data = census_data.fillna(0)
+    with pd.option_context('future.no_silent_downcasting', True):
+        cropped_energy_data = census_data.fillna(0).infer_objects(copy=False)
     cropped_energy_data['computed_total_buildings'] = cropped_energy_data[
         [
             'gas',
