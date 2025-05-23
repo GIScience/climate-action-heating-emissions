@@ -56,6 +56,11 @@ def default_aoi_properties() -> AoiProperties:
     return AoiProperties(name='Heidelberg', id='heidelberg')
 
 
+@pytest.fixture
+def default_non_german_aoi_properties() -> AoiProperties:
+    return AoiProperties(name='Abenteuerland', id='abenteuerland')
+
+
 # The following fixtures can be ignored on plugin setup
 @pytest.fixture
 def compute_resources():

@@ -84,11 +84,12 @@ class Operator(BaseOperator[ComputeInput]):
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
         aoi_as_series = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
 
-        germany = gpd.read_file('resources/germany_bkg_boundaries.json')
-        intersections = aoi_as_series.intersects(germany.geometry)
-        if not intersections[0]:
+        germany = gpd.read_file('resources/germany_buffered_boundaries.json')
+        inside_germany = aoi_as_series.within(germany.geometry)
+        if not inside_germany[0]:
             raise ClimatoologyUserError(
-                f'Currently the Heating Emissions Plugin is only available for Germany. {aoi_properties.name} does not intersect Boundaries for Germany'
+                f'For now, estimates of heating emissions are only available for Germany. {aoi_properties.name} is '
+                'outside Germany. We are working on expanding the tool to other countries'
             )
 
         aoi_utm32n_area_km2 = get_aoi_area(aoi_as_series)

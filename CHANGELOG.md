@@ -12,7 +12,11 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Simplified legend annotation to avoid capitalization typos ([15](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/15))
 
 ### Added
+
 - Reference lines for histograms of per capita emissions and energy consumption ([10](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/10))
+- Safety check and error message for AOIs without residential buildings
+
+- Test for check_aoi() to see if it correctly catches AOIs outside of Germany ([16](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/16))
 
 
 ## [1.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.0.1) - 2025-05-14

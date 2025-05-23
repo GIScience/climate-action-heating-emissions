@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import geopandas as gpd
 import pandas as pd
 import shapely
+from climatoology.utility.exception import ClimatoologyUserError
 from geoalchemy2 import WKTElement
 from sqlalchemy import Engine, MetaData, select
 
@@ -34,6 +35,12 @@ def get_clipped_census_grid(db_connection: DatabaseConnection, aoi: shapely.Mult
     query = select(db_table).where(db_table.c.geometry.op('&&')(aoi_geom) & db_table.c.geometry.ST_Within(aoi_geom))
     with db_connection.engine.connect() as conn:
         result = conn.execute(query).mappings().all()
+
+    if not result:
+        raise ClimatoologyUserError(
+            'There are no data for residential buildings in the area you selected. Please select an area '
+            'with residential buildings'
+        )
 
     result_gdf = pd.DataFrame(result)
     result_gdf['geometry'] = gpd.GeoSeries.from_wkb(result_gdf['geometry'].astype(str))
