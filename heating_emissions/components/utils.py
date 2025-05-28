@@ -12,7 +12,7 @@ import logging
 log = logging.getLogger(__name__)
 
 # Define dictionary with emission factors
-EMISSION_FACTORS = {
+EMISSION_FACTORS = {  # in kg of CO2 per kWh og heating
     'gas': 0.20029,
     'heating_oil': 0.26739,
     'wood': 0.34,

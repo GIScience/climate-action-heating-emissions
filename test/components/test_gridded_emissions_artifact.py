@@ -28,7 +28,7 @@ def test_calculate_heating_emissions():
         example_dataframe['average_sqm_per_person']
         * example_dataframe['heat_consumption']
         * example_dataframe['emission_factor']
-    ) / 10
+    )
 
     expected_absolute = expected_per_capita * example_dataframe['population']
 
@@ -56,6 +56,6 @@ def test_calculate_heating_emissions_missing_data():
 
     result = calculate_heating_emissions(census_data=example_geo_dataframe)
 
-    expected_absolute = (31 * ((80 + 75) / 2) * 65 * 0.2) / 10
+    expected_absolute = round(31 * ((80 + 75) / 2) * 65 * 0.2)
 
     assert result['co2_emissions'][0] == expected_absolute

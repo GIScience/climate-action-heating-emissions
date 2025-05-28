@@ -1,19 +1,21 @@
+import matplotlib
 from climatoology.base.artifact import (
     ContinuousLegendData,
     RasterInfo,
     _Artifact,
-    create_geotiff_artifact,
     create_plotly_chart_artifact,
+    create_geojson_artifact,
 )
 from climatoology.base.computation import ComputationResources
 import geopandas as gpd
 import numpy as np
 import plotly.graph_objects as go
+from matplotlib.colors import to_hex, Normalize
 from plotly.graph_objs import Figure
 from rasterio import Affine, CRS
 import logging
 from itertools import product
-
+from pydantic_extra_types.color import Color
 
 from heating_emissions.components.utils import generate_colors, reproject_data_to_4326
 
@@ -30,20 +32,34 @@ def build_emissions_artifact(
         output_emissions = 'co2_emissions'
         file_name = 'heating_emissions_absolute'
         emission_type = 'Absolute'
-    cmap = 'YlOrRd'
     cap = 0.95
-    raster_info = create_emissions_raster_data(result, cmap=cmap, output_emissions=output_emissions, cap=cap)
+    # raster_info = create_emissions_raster_data(result, cmap=cmap, output_emissions=output_emissions, cap=cap)
 
     emissions_max = int(result[output_emissions].quantile(cap).round())
 
-    labels = ContinuousLegendData(cmap_name=cmap, ticks={f'> {emissions_max}0': 1, '0': 0})
+    grid_cell_centroids = gpd.points_from_xy(x=result['x_mp_100m'], y=result['y_mp_100m'], crs='EPSG:3035')
+    artifact_data = gpd.GeoDataFrame(data=result[output_emissions], geometry=grid_cell_centroids)
+    artifact_data.geometry = artifact_data.buffer(50, cap_style=3)
+    artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
 
-    return create_geotiff_artifact(
-        raster_info=raster_info,
+    # Define colors and legend
+    norm = Normalize(vmin=0, vmax=3500)
+    cmap = matplotlib.colormaps.get('YlOrRd')
+    cmap.set_under('#808080')
+    color = artifact_data[output_emissions].apply(lambda v: Color(to_hex(cmap(norm(v)))))
+    legend = ContinuousLegendData(
+        cmap_name='YlOrRd',
+        ticks={f'> {emissions_max}': 1, '0': 0},
+    )
+
+    return create_geojson_artifact(
+        features=artifact_data_4326.geometry,
         layer_name=f'{emission_type} CO₂ emissions (kg per year)',
         caption=f'{emission_type} CO₂ emissions from residential heating per year per 100-m pixel',
         description='Territorial (scope 1) carbon dioxide emissions from residential space heating. Based on data from 2022 German census.',
-        legend_data=labels,
+        color=color,
+        label=artifact_data[output_emissions].to_list(),
+        legend_data=legend,
         primary=per_capita,
         resources=resources,
         filename=file_name,
@@ -59,11 +75,11 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
 
     census_data['heated_area'] = census_data['population'] * census_data['average_sqm_per_person']
     census_data['co2_emissions'] = (
-        census_data['heated_area'] * census_data['heat_consumption'] * census_data['emission_factor'] / 10
-    )  # result in 10s of kg
+        census_data['heated_area'] * census_data['heat_consumption'] * census_data['emission_factor']
+    ).round()  # result in kg of CO2 per year
     census_data['co2_emissions_per_capita'] = (
-        census_data['average_sqm_per_person'] * census_data['heat_consumption'] * census_data['emission_factor'] / 10
-    )  # result in 10s of kg
+        census_data['average_sqm_per_person'] * census_data['heat_consumption'] * census_data['emission_factor']
+    ).round()  # result in kg of CO2 per year
 
     return census_data
 
@@ -165,15 +181,9 @@ def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: C
 def plot_per_capita_co2_histogram(
     census_data: gpd.GeoDataFrame,
 ) -> Figure:
-    census_data['co2_emissions_per_capita'] = (
-        census_data['average_sqm_per_person']
-        * census_data['heat_consumption']
-        * census_data['emission_factor']
-        / 1e3  # result in tonnes
-    )
     hist_plot = Figure(
         data=go.Histogram(
-            x=census_data['co2_emissions_per_capita'],
+            x=census_data['co2_emissions_per_capita'] / 1e3,  # result in tonnes,
             hovertemplate='%{y:.1f} % of cells emit %{x} tonnes of carbon'
             ' dioxide per person per year <extra></extra>',
             histnorm='percent',

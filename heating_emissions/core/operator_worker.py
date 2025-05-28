@@ -54,21 +54,22 @@ class Operator(BaseOperator[ComputeInput]):
         census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
         result = calculate_heating_emissions(census_data)
 
-        per_capita_histogram = plot_per_capita_co2_histogram(census_data=census_data)
-        energy_histogram = plot_energy_consumption_histogram(census_data=census_data)
-        emission_factor_histogram = plot_emission_factor_histogram(census_data=census_data)
-
         heating_per_capita_emissions_artifact = build_emissions_artifact(result=result, resources=resources)
         heating_absolute_emissions_artifact = build_emissions_artifact(
             result=result, resources=resources, per_capita=False
         )
 
+        per_capita_histogram = plot_per_capita_co2_histogram(census_data=census_data)
         per_capita_histogram_artifact = build_per_capita_co2_histogram_artifact(
             aoi_aggregate=per_capita_histogram, resources=resources
         )
+
+        energy_histogram = plot_energy_consumption_histogram(census_data=census_data)
         energy_consumption_histogram_artifact = build_energy_histogram_artifact(
             aoi_aggregate=energy_histogram, resources=resources
         )
+
+        emission_factor_histogram = plot_emission_factor_histogram(census_data=census_data)
         emission_factor_histogram_artifact = build_emission_factor_histogram_artifact(
             aoi_aggregate=emission_factor_histogram, resources=resources
         )
