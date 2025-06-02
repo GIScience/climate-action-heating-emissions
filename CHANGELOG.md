@@ -15,6 +15,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ### Added
 
+- Gridded maps of emission drivers: emission factor, energy consumption, and living space per capita ([26](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/26))
 - Reference lines for histograms of per capita emissions and energy consumption ([10](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/10))
 - Safety check and error message for AOIs without residential buildings
 

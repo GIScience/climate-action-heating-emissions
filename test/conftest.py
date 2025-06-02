@@ -87,3 +87,25 @@ def mock_query_census_tables():
         patch('heating_emissions.components.census_data.query_table_from_db', side_effect=return_default_table),
     ):
         yield
+
+
+@pytest.fixture
+def default_census_table():
+    example_dataframe = pd.DataFrame(
+        {
+            'population': [31, 85, 15],
+            'average_sqm_per_person': [40, 80, 75],
+            'heat_consumption': [65, 125.3, 145.2],
+            'emission_factor': [0.2, 0.15, 0.3],
+            'latitude': [45.15, 45.16, 45.15],
+            'longitude': [5.15, 5.16, 5.16],
+        }
+    )
+
+    example_geo_dataframe = gpd.GeoDataFrame(
+        example_dataframe,
+        geometry=gpd.points_from_xy(example_dataframe.longitude, example_dataframe.latitude),
+        crs='EPSG:4326',
+    )
+
+    return example_geo_dataframe

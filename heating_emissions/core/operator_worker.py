@@ -12,9 +12,8 @@ from geoalchemy2 import Geometry  # noqa: F401 (Geometry import is required for 
 from sqlalchemy import MetaData, create_engine
 
 from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
-from heating_emissions.components.gridded_emissions_artifact import (
-    build_emissions_artifact,
-    calculate_heating_emissions,
+from heating_emissions.components.gridded_emissions_artifact import build_gridded_artifact
+from heating_emissions.components.histogram_artifacts import (
     plot_per_capita_co2_histogram,
     build_per_capita_co2_histogram_artifact,
     plot_energy_consumption_histogram,
@@ -22,7 +21,7 @@ from heating_emissions.components.gridded_emissions_artifact import (
     plot_emission_factor_histogram,
     build_emission_factor_histogram_artifact,
 )
-from heating_emissions.components.utils import get_aoi_area
+from heating_emissions.components.utils import calculate_heating_emissions, get_aoi_area
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
 
@@ -54,11 +53,20 @@ class Operator(BaseOperator[ComputeInput]):
         census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
         result = calculate_heating_emissions(census_data)
 
-        heating_per_capita_emissions_artifact = build_emissions_artifact(result=result, resources=resources)
-        heating_absolute_emissions_artifact = build_emissions_artifact(
+        # Gridded artifacts
+        heating_per_capita_emissions_artifact = build_gridded_artifact(result=result, resources=resources)
+        heating_absolute_emissions_artifact = build_gridded_artifact(
             result=result, resources=resources, per_capita=False
         )
+        energy_consumption_artifact = build_gridded_artifact(
+            result=result, resources=resources, output='heat_consumption'
+        )
+        living_space_artifact = build_gridded_artifact(
+            result=result, resources=resources, output='average_sqm_per_person'
+        )
+        emission_factor_artifact = build_gridded_artifact(result=result, resources=resources, output='emission_factor')
 
+        # Histograms
         per_capita_histogram = plot_per_capita_co2_histogram(census_data=census_data)
         per_capita_histogram_artifact = build_per_capita_co2_histogram_artifact(
             aoi_aggregate=per_capita_histogram, resources=resources
@@ -80,6 +88,9 @@ class Operator(BaseOperator[ComputeInput]):
             energy_consumption_histogram_artifact,
             emission_factor_histogram_artifact,
             heating_absolute_emissions_artifact,
+            energy_consumption_artifact,
+            living_space_artifact,
+            emission_factor_artifact,
         ]
 
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
