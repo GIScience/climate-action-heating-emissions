@@ -1,3 +1,6 @@
+import logging
+
+import geopandas as gpd
 import matplotlib
 from climatoology.base.artifact import (
     ContinuousLegendData,
@@ -5,9 +8,7 @@ from climatoology.base.artifact import (
     create_geojson_artifact,
 )
 from climatoology.base.computation import ComputationResources
-import geopandas as gpd
-from matplotlib.colors import to_hex, Normalize
-import logging
+from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
 
 log = logging.getLogger(__name__)

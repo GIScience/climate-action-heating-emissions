@@ -1,8 +1,8 @@
-from heating_emissions.components.utils import generate_colors
-import pandas as pd
 import geopandas as gpd
 import numpy as np
-from heating_emissions.components.utils import calculate_heating_emissions
+import pandas as pd
+
+from heating_emissions.components.utils import calculate_heating_emissions, generate_colors
 
 
 def test_calculate_heating_emissions():

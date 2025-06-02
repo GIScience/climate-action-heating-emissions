@@ -1,10 +1,10 @@
 import importlib
 import importlib.metadata
+from datetime import timedelta
 from pathlib import Path
 
-from climatoology.base.info import _Info, generate_plugin_info, PluginAuthor
+from climatoology.base.info import PluginAuthor, _Info, generate_plugin_info
 from semver import Version
-from datetime import timedelta
 
 
 def get_info(params) -> _Info:

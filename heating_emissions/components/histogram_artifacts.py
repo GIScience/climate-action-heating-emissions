@@ -1,9 +1,9 @@
-from climatoology.base.artifact import create_plotly_chart_artifact, _Artifact
-from climatoology.base.computation import ComputationResources
+import geopandas as gpd
 import numpy as np
 import plotly.graph_objects as go
+from climatoology.base.artifact import _Artifact, create_plotly_chart_artifact
+from climatoology.base.computation import ComputationResources
 from plotly.graph_objs import Figure
-import geopandas as gpd
 
 
 def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
@@ -54,8 +54,7 @@ def plot_per_capita_co2_histogram(
     hist_plot = Figure(
         data=go.Histogram(
             x=census_data['co2_emissions_per_capita'] / 1e3,  # result in tonnes,
-            hovertemplate='%{y:.1f} % of cells emit %{x} tonnes of carbon'
-            ' dioxide per person per year <extra></extra>',
+            hovertemplate='%{y:.1f} % of cells emit %{x} tonnes of carbon dioxide per person per year <extra></extra>',
             histnorm='percent',
         ),
         layout=go.Layout(

@@ -22,6 +22,29 @@ unit_tests:
     - poetry run pre-commit run --all-files
     - poetry run pytest
 
+optional_linting:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  image:
+    name: python:3.11.5
+  variables:
+    PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+  cache:
+    key: $CI_COMMIT_REF_NAME
+    paths:
+      - $PRE_COMMIT_HOME
+      - .venv
+  before_script:
+    - python3 -m venv .venv
+    - source .venv/bin/activate
+    - pip install pre-commit
+  script:
+    - pre-commit run -c .pre-commit-config-optional-linting.yaml --all-files
+  allow_failure:
+    exit_codes:
+      - 1
+
 docker_build_deploy_development:
   stage: deploy
   rules:

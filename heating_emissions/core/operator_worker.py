@@ -3,23 +3,25 @@
 import logging
 from typing import List
 
-from climatoology.base.baseoperator import ComputationResources, BaseOperator, _Artifact, AoiProperties
+import geopandas as gpd
+import shapely
+from climatoology.base.baseoperator import AoiProperties, BaseOperator, ComputationResources, _Artifact
 from climatoology.base.info import _Info
 from climatoology.utility.exception import ClimatoologyUserError
-import shapely
-import geopandas as gpd
-from geoalchemy2 import Geometry  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
+from geoalchemy2 import (
+    Geometry,  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
+)
 from sqlalchemy import MetaData, create_engine
 
 from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
 from heating_emissions.components.gridded_emissions_artifact import build_gridded_artifact
 from heating_emissions.components.histogram_artifacts import (
-    plot_per_capita_co2_histogram,
-    build_per_capita_co2_histogram_artifact,
-    plot_energy_consumption_histogram,
-    build_energy_histogram_artifact,
-    plot_emission_factor_histogram,
     build_emission_factor_histogram_artifact,
+    build_energy_histogram_artifact,
+    build_per_capita_co2_histogram_artifact,
+    plot_emission_factor_histogram,
+    plot_energy_consumption_histogram,
+    plot_per_capita_co2_histogram,
 )
 from heating_emissions.components.utils import calculate_heating_emissions, get_aoi_area
 from heating_emissions.core.info import get_info
@@ -40,7 +42,7 @@ class Operator(BaseOperator[ComputeInput]):
     def info(self) -> _Info:
         return get_info(ComputeInput)
 
-    def compute(
+    def compute(  # dead: disable
         self,
         resources: ComputationResources,
         aoi: shapely.MultiPolygon,

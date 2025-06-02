@@ -1,8 +1,9 @@
 from plotly.graph_objects import Figure
+
 from heating_emissions.components.histogram_artifacts import (
-    plot_per_capita_co2_histogram,
-    plot_energy_consumption_histogram,
     plot_emission_factor_histogram,
+    plot_energy_consumption_histogram,
+    plot_per_capita_co2_histogram,
 )
 from heating_emissions.components.utils import calculate_heating_emissions
 

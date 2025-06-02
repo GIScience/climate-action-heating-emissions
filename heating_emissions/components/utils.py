@@ -1,15 +1,17 @@
+import logging
 from itertools import product
 from typing import Tuple
+
 import geopandas as gpd
 import matplotlib as mpl
 import numpy as np
 import pandas as pd
-from climatoology.base.artifact import RasterInfo
-from rasterio import CRS, Affine
-from rasterio.warp import reproject
 import xarray
+from climatoology.base.artifact import RasterInfo
 from pydantic_extra_types.color import Color
-import logging
+from rasterio import CRS
+from rasterio._base import Affine
+from rasterio.warp import reproject
 
 log = logging.getLogger(__name__)
 
@@ -53,24 +55,6 @@ def generate_colors(color_by: pd.Series, cmap_name: str, cap: float = 1.0) -> di
     return mapped_colors
 
 
-def reproject_data_to_4326(
-    source_data: xarray.DataArray, source_transform: Affine, source_crs: CRS
-) -> Tuple[
-    np.ndarray,
-    Affine,
-]:
-    destination = np.zeros(source_data.shape, np.int16)
-    geographic_raster_data, geographic_transform = reproject(
-        source=source_data.to_numpy(),
-        destination=destination,
-        src_transform=source_transform,
-        src_crs=source_crs,
-        dst_crs=CRS.from_epsg(4326),
-    )
-    log.debug(f'projected transform: {geographic_transform}')
-    return geographic_raster_data, geographic_transform
-
-
 def get_aoi_area(aoi_as_geoseries: gpd.GeoSeries) -> float:
     reprojected_aoi_df = aoi_as_geoseries.to_crs(aoi_as_geoseries.estimate_utm_crs())
     area_km2 = round(reprojected_aoi_df.geometry.area.sum() / 1e6, 2)
@@ -95,7 +79,7 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
     return census_data
 
 
-def create_emissions_raster_data(
+def create_emissions_raster_data(  # dead: disable
     result: gpd.GeoDataFrame, cmap: str, output_emissions: str, cap: float = 1.0
 ) -> RasterInfo:
     grid_size = 100  # m as of EPSG:3035
@@ -145,3 +129,21 @@ def create_emissions_raster_data(
     )
 
     return raster_info
+
+
+def reproject_data_to_4326(
+    source_data: xarray.DataArray, source_transform: Affine, source_crs: CRS
+) -> Tuple[
+    np.ndarray,
+    Affine,
+]:
+    destination = np.zeros(source_data.shape, np.int16)
+    geographic_raster_data, geographic_transform = reproject(
+        source=source_data.to_numpy(),
+        destination=destination,
+        src_transform=source_transform,
+        src_crs=source_crs,
+        dst_crs=CRS.from_epsg(4326),
+    )
+    log.debug(f'projected transform: {geographic_transform}')
+    return geographic_raster_data, geographic_transform

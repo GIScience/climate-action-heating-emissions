@@ -1,15 +1,15 @@
-from unittest.mock import patch
 import uuid
+from unittest.mock import patch
 
+import geopandas as gpd
 import pandas as pd
-from climatoology.base.baseoperator import AoiProperties
-from climatoology.base.computation import ComputationScope
 import pytest
 import shapely
-import geopandas as gpd
+from climatoology.base.baseoperator import AoiProperties
+from climatoology.base.computation import ComputationScope
 
-from heating_emissions.core.operator_worker import Operator
 from heating_emissions.core.input import ComputeInput
+from heating_emissions.core.operator_worker import Operator
 
 
 @pytest.fixture
