@@ -45,6 +45,22 @@ To run your plugin locally requires the following setup:
 If you want to run your plugin through Docker, refer to
 the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).
 
+### Testing
+
+We use [pytest](https://pytest.org) as a testing engine.
+Ensure all tests are passing by running `poetry run pytest`.
+
+#### Coverage
+
+To get a coverage report of how much of your code is run during testing, execute
+`poetry run pytest --ignore test/core/ --cov`.
+We ignore the `test/core/` folder when assessing coverage because the core tests run the whole plugin to be sure
+everything successfully runs with a very basic configuration.
+Yet, they don't actually test functionality and therefore artificially inflate the test coverage results.
+
+To get a more detailed report including which lines in each file are **not** tested,
+run `poetry run pytest --ignore test/core/ --cov --cov-report term-missing`
+
 ## Releasing a new plugin version
 
 To release a new plugin version

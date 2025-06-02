@@ -3,6 +3,9 @@
 .idea/
 __pycache__/
 .pytest_cache/
+.coverage
+coverage.xml
+
 data/
 playground.py
 
