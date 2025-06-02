@@ -19,13 +19,14 @@ def build_gridded_artifact(
     output_column = 'co2_emissions_per_capita'
     file_name = 'heating_emissions_per_capita'
     emission_type = 'Per capita'
-    legend_cap = 3000
+    legend_upper_cap = 3000
+    legend_lower_cap = 0
     is_primary = True
     if not per_capita:
         output_column = 'co2_emissions'
         file_name = 'heating_emissions_absolute'
         emission_type = 'Absolute'
-        legend_cap = 150000
+        legend_upper_cap = 150000
         is_primary = False
 
     layer_name = f'{emission_type} CO₂ emissions (kg/year)'
@@ -35,16 +36,21 @@ def build_gridded_artifact(
     if output == 'heat_consumption':
         output_column = output
         file_name = output
-        legend_cap = 135
+        legend_upper_cap = 135
+        legend_lower_cap = 70
         layer_name = 'Energy consumption (kWh/m²/year)'
         caption = 'Average heating energy consumption rate in residential buildings'
         description = 'Estimated energy consumption rate for heating residential buildings based on building age data.'
         is_primary = False
 
+    low_bound_tick_label = f'{legend_lower_cap}'
+
     if output == 'average_sqm_per_person':
         output_column = output
         file_name = output
-        legend_cap = 100
+        legend_upper_cap = 100
+        legend_lower_cap = 10
+        low_bound_tick_label = f'< {legend_lower_cap}'
         layer_name = 'Living space (m² per person)'
         caption = 'Average living space per capita'
         description = 'Average living space per capita (m²) in 100-m grid cells (data from 2022 German census)'
@@ -53,7 +59,7 @@ def build_gridded_artifact(
     if output == 'emission_factor':
         output_column = output
         file_name = output
-        legend_cap = 0.3
+        legend_upper_cap = 0.3
         layer_name = 'Emission factor (kg of CO₂ per kWh)'
         caption = 'Average (scope 1) emission factor from heating'
         description = (
@@ -68,13 +74,13 @@ def build_gridded_artifact(
     artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
 
     # Define colors and legend
-    norm = Normalize(vmin=0, vmax=legend_cap)
+    norm = Normalize(vmin=legend_lower_cap, vmax=legend_upper_cap)
     cmap = matplotlib.colormaps.get('YlOrRd')
     cmap.set_under('#808080')
     color = artifact_data[output_column].apply(lambda v: Color(to_hex(cmap(norm(v)))))
     legend = ContinuousLegendData(
         cmap_name='YlOrRd',
-        ticks={f'> {legend_cap}': 1, '0': 0},
+        ticks={f'> {legend_upper_cap}': 1, low_bound_tick_label: 0},
     )
 
     return create_geojson_artifact(
