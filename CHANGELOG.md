@@ -11,6 +11,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 - Mapped emissions are now in vector (geoJSON) format, allowing better display and downloading of actual emissions data ([18](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/18))
 - Simplified legend annotation to avoid capitalization typos ([15](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/15))
+- Capped maximum values for color maps of per capita and absolute emissions ([25](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/25))
 
 ### Added
 

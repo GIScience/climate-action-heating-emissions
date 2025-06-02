@@ -28,14 +28,16 @@ def build_emissions_artifact(
     output_emissions = 'co2_emissions_per_capita'
     file_name = 'heating_emissions_per_capita'
     emission_type = 'Per capita'
+    emissions_max = 3000
     if not per_capita:
         output_emissions = 'co2_emissions'
         file_name = 'heating_emissions_absolute'
         emission_type = 'Absolute'
-    cap = 0.95
-    # raster_info = create_emissions_raster_data(result, cmap=cmap, output_emissions=output_emissions, cap=cap)
+        emissions_max = 150000
 
-    emissions_max = int(result[output_emissions].quantile(cap).round())
+    # cap = 0.95
+    # raster_info = create_emissions_raster_data(result, cmap=cmap, output_emissions=output_emissions, cap=cap)
+    # emissions_max = int(result[output_emissions].quantile(cap).round())
 
     grid_cell_centroids = gpd.points_from_xy(x=result['x_mp_100m'], y=result['y_mp_100m'], crs='EPSG:3035')
     artifact_data = gpd.GeoDataFrame(data=result[output_emissions], geometry=grid_cell_centroids)
@@ -43,7 +45,8 @@ def build_emissions_artifact(
     artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
 
     # Define colors and legend
-    norm = Normalize(vmin=0, vmax=3500)
+    norm = Normalize(vmin=0, vmax=emissions_max)
+
     cmap = matplotlib.colormaps.get('YlOrRd')
     cmap.set_under('#808080')
     color = artifact_data[output_emissions].apply(lambda v: Color(to_hex(cmap(norm(v)))))
