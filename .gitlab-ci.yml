@@ -99,6 +99,7 @@ docker_build_deploy_development:
       /kaniko/executor \
           --context "${CI_PROJECT_DIR}" \
           --dockerfile "${CI_PROJECT_DIR}/Dockerfile.Kaniko" \
+          --build-arg "CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}" \
           --cache \
           --cache-repo "${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}-cache" \
           --cache-copy-layers \
