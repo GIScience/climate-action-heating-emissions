@@ -11,7 +11,7 @@ from climatoology.utility.exception import ClimatoologyUserError
 from geoalchemy2 import (
     Geometry,  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
 )
-from sqlalchemy import MetaData, create_engine
+from sqlalchemy import MetaData, NullPool, create_engine
 
 from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
 from heating_emissions.components.gridded_emissions_artifact import build_gridded_artifact
@@ -34,7 +34,7 @@ class Operator(BaseOperator[ComputeInput]):
     def __init__(self, ca_database_url: str):
         super().__init__()
 
-        engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'])
+        engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'], poolclass=NullPool)
         metadata = MetaData()
         metadata.reflect(bind=engine)
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)

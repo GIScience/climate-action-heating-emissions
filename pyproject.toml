@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "heating-emissions"
-version = "1.1.0"
+version = "1.1.1"
 description = "This indicator computes annual carbon dioxide emissions from residential space heating in an area of interest within Germany"
 authors = ["Sebastian Block <sebastian.block@heigit.org>", "Veit Ulrich <veit.ulrich@heigit.org>", "Rizwan Khan <Rizwan.Khan@heigit.org>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11.5"
-climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.4.0" }
+climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.4.2" }
 pydantic = "^2.8.2"
 rioxarray = "^0.18.1"
 rasterio = "^1.4.3"
