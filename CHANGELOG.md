@@ -17,6 +17,10 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 - Updated climatoology to 6.4.2
 
+### Added
+
+- Information about emission factors and their source to the methodology ([29](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/29))
+
 ## [1.1.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.0) - 2025-06-03
 
 ### Changed
