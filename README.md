@@ -92,3 +92,42 @@ To release a new plugin version
 4. Create a [release]((https://docs.gitlab.com/ee/user/project/releases/#create-a-release-in-the-releases-page)) on
    GitLab, including a changelog
 
+## Docker
+
+To build docker images, you need to give the engine access to the climatoology repository.
+Create a file `CI_JOB_TOKEN` that contains your personal access token to the climatoology repository.
+
+### Build
+
+The tool is also [Dockerised](Dockerfile).
+Images are automatically built and deployed in the [CI-pipeline](.gitlab-ci.yml).
+
+In case you want to manually build and run locally (e.g. to test a new feature in development), execute
+
+```shell
+docker build --secret id=CI_JOB_TOKEN . --tag repo.heigit.org/climate-action/heating-emissions:devel
+```
+
+Note that this will overwrite any existing image with the same tag (i.e. the one you previously pulled from the Climate
+Action docker registry).
+
+To mimic the build behaviour of the CI you have to add `--build-arg CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)`
+to the above command.
+
+### Run
+
+If you have the Climate Infrastructure running (see [Development Setup](#development-setup)) you can now run the
+container via
+
+```shell
+docker run --rm --network=host --env-file .env.base --env-file .env repo.heigit.org/climate-action/heating-emissions:devel
+```
+
+### Deploy
+
+Deployment is handled by the GitLab CI automatically.
+If for any reason you want to deploy manually (and have the required rights), after building the image, run
+
+```shell
+docker image push repo.heigit.org/climate-action/heating-emissions:devel
+```

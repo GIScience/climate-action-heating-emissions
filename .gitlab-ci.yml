@@ -85,43 +85,43 @@ optional_linting:
 
 docker_build_deploy_development:
   stage: deploy
+  tags: [ k8s ]
   rules:
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == 'push'
-  image:
-    name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [ "" ]
+  image: docker.io/docker:cli
   before_script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"${REGISTRY_URL}\":{\"auth\":\"$(printf "%s:%s" "${CI_DOCKER_USER}" "${CI_DOCKER_TOKEN}" | base64 | tr -d '\n')\"}}}}" > /kaniko/.docker/config.json
-    - echo "${CI_JOB_TOKEN}" > /kaniko/CI_JOB_TOKEN
+    - echo ${CI_DOCKER_TOKEN} | docker --config ~/ca_config login ${REGISTRY_URL} -u ${CI_DOCKER_USER} --password-stdin
+    - docker --config ~/ca_config buildx create --use --name=kube --driver remote tcp://amd64-buildkit-service.ci-cd.svc:1234
   script:
-    - >
-      /kaniko/executor \
-          --context "${CI_PROJECT_DIR}" \
-          --dockerfile "${CI_PROJECT_DIR}/Dockerfile.Kaniko" \
-          --build-arg "CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}" \
-          --cache \
-          --cache-repo "${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}-cache" \
-          --cache-copy-layers \
-          --destination "${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:devel" \
-          --destination "${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:staging" \
-          --cleanup
+    - |
+      docker --config ~/ca_config \
+        buildx build \
+        --builder=kube \
+        --secret id=CI_JOB_TOKEN \
+        --build-arg "CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}" \
+        --cache-from=type=registry,ref=${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:buildcache \
+        --cache-to=type=registry,ref=${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:buildcache,mode=max \
+        --tag ${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:devel \
+        --tag ${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:staging \
+        --push \
+        .
 
 docker_build_deploy_release:
   stage: deploy
+  tags: [ k8s ]
   rules:
     - if: $CI_COMMIT_TAG
-  image:
-    name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [ "" ]
+  image: docker.io/docker:cli
   before_script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"${REGISTRY_URL}\":{\"auth\":\"$(printf "%s:%s" "${CI_DOCKER_USER}" "${CI_DOCKER_TOKEN}" | base64 | tr -d '\n')\"}}}}" > /kaniko/.docker/config.json
-    - echo "${CI_JOB_TOKEN}" > /kaniko/CI_JOB_TOKEN
+    - echo ${CI_DOCKER_TOKEN} | docker --config ~/ca_config login ${REGISTRY_URL} -u ${CI_DOCKER_USER} --password-stdin
+    - docker --config ~/ca_config buildx create --use --name=kube --driver remote tcp://amd64-buildkit-service.ci-cd.svc:1234
   script:
-    - >
-      /kaniko/executor \
-          --context "${CI_PROJECT_DIR}" \
-          --dockerfile "${CI_PROJECT_DIR}/Dockerfile.Kaniko" \
-          --destination "${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}" \
-          --cleanup
+    - |
+      docker --config ~/ca_config \
+        buildx build \
+        --builder=kube \
+        --platform=linux/amd64 \
+        --secret id=CI_JOB_TOKEN \
+        --tag ${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} \
+        --push \
+        .
