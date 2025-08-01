@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11.5"
-climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.4.2" }
+climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.4.3" }
 pydantic = "^2.8.2"
 rioxarray = "^0.18.1"
 rasterio = "^1.4.3"
