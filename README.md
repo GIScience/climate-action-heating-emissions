@@ -14,6 +14,7 @@ Gridded data from the German 2022 census can be downloaded [here](https://www.ze
 
 ### Energy consumption rates
 We use energy consumption values for buildings of different age classes from [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), which are based on measurements from over 300 thousand buildings across Germany, and are adjusted by temperature differences.
+Co2online gave us permission to use their data in this plugin.
 
 | Age class    | Energy consumption (kWh/m²) | Building standard |
 |--------------|-----------------------------|-------------------|
