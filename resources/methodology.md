@@ -62,3 +62,7 @@ We use carbon dioxide emission factors from the Probas database for [gas](https:
 - **Note 2**: The model estimates territorial (scope 1) emissions. Since no emissions are generated directly at buildings heated with electricity, heat pumps, and district heating, these emission factors are 0. Heating these buildings likely still generates emissions (for example, for electricity generation), but these happen elsewhere (e.g., at power or district heating plants).
 
 - **Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories above, weighting by the number of buildings with each carrier across all of Germany.
+
+### Other data sources
+German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year, plotted in the respective histogram): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+German average per capita carbon dioxide emissions from residential heating (2.2 t per year, plotted in the respective histogram): [UBA](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
