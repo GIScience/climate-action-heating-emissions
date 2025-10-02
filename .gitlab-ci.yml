@@ -1,6 +1,7 @@
 stages:
   - test
   - test-coverage
+  - build
   - deploy
 
 unit_tests:
@@ -83,11 +84,11 @@ optional_linting:
     exit_codes:
       - 1
 
-docker_build_deploy_development:
-  stage: deploy
+build_staging:
+  stage: build
   tags: [ k8s ]
   rules:
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == 'push'
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
   image: docker.io/docker:cli
   before_script:
     - echo ${CI_DOCKER_TOKEN} | docker --config ~/ca_config login ${REGISTRY_URL} -u ${CI_DOCKER_USER} --password-stdin
@@ -106,8 +107,8 @@ docker_build_deploy_development:
         --push \
         .
 
-docker_build_deploy_release:
-  stage: deploy
+build_release:
+  stage: build
   tags: [ k8s ]
   rules:
     - if: $CI_COMMIT_TAG
@@ -125,3 +126,21 @@ docker_build_deploy_release:
         --tag ${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} \
         --push \
         .
+
+
+deploy_staging:
+  stage: deploy
+  tags: [ k8s ]
+  needs:
+    - build_staging
+  rules:
+    - !reference [ build_staging, rules ]
+  image: repo.heigit.org/heigit/argocd-cli:latest
+  script:
+    - |
+      argocd app actions \
+        run argocd/${ARGOCD_STAGING_APPLICATION_NAME} \
+        restart --kind Deployment \
+        --server ${ARGOCD_SERVER} \
+        --auth-token ${ARGOCD_AUTH_TOKEN} \
+        --resource-name can-${CI_PROJECT_NAME}
