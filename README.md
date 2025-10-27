@@ -1,4 +1,4 @@
-# <img src="resources/icon.jpeg" width="5%"> Space heating emissions
+# <img src="resources/heating-radiator.jpeg" width="5%"> Space heating emissions
 
 Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions. This plugin estimates annual building space heating emissions by combining open data from various sources. In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022 census, and includes only _residential_ buildings.
 
