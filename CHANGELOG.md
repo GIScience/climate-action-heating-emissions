@@ -7,6 +7,9 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/1.1.1...main)
 
+### Fixed
+- rename results' index from 'raster_id_100m' to 'index' to support the grid value visualization in dashboard([41](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/41))
+
 ### Added
 - Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))
 

@@ -62,6 +62,7 @@ class Operator(BaseOperator[ComputeInput]):
         result = calculate_heating_emissions(census_data)
 
         # Gridded artifacts
+        result.index.names = ['index']
         heating_per_capita_emissions_artifact = build_gridded_artifact(result=result, resources=resources)
         heating_absolute_emissions_artifact = build_gridded_artifact(
             result=result, resources=resources, per_capita=False
