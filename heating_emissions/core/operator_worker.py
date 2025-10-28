@@ -14,7 +14,10 @@ from geoalchemy2 import (
 from sqlalchemy import MetaData, NullPool, create_engine
 
 from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
-from heating_emissions.components.gridded_emissions_artifact import build_gridded_artifact
+from heating_emissions.components.gridded_emissions_artifact import (
+    build_gridded_artifact,
+    build_gridded_artifact_classdata,
+)
 from heating_emissions.components.histogram_artifacts import (
     build_emission_factor_histogram_artifact,
     build_energy_histogram_artifact,
@@ -23,7 +26,10 @@ from heating_emissions.components.histogram_artifacts import (
     plot_energy_consumption_histogram,
     plot_per_capita_co2_histogram,
 )
-from heating_emissions.components.utils import calculate_heating_emissions, get_aoi_area
+from heating_emissions.components.utils import (
+    calculate_heating_emissions,
+    get_aoi_area,
+)
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
 
@@ -52,7 +58,7 @@ class Operator(BaseOperator[ComputeInput]):
         # Check we are within bounds of census data coverage
         self.check_aoi(aoi, aoi_properties)
 
-        census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
+        census_data, uncalculated_census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
         result = calculate_heating_emissions(census_data)
 
         # Gridded artifacts
@@ -67,6 +73,14 @@ class Operator(BaseOperator[ComputeInput]):
             result=result, resources=resources, output='average_sqm_per_person'
         )
         emission_factor_artifact = build_gridded_artifact(result=result, resources=resources, output='emission_factor')
+
+        # Gridded artifacts -- original (uncalculated) census data
+        building_age_artifact = build_gridded_artifact_classdata(
+            uncalculated_census_data=uncalculated_census_data, resources=resources, output='dominant_age'
+        )
+        building_energy_source_artifact = build_gridded_artifact_classdata(
+            uncalculated_census_data=uncalculated_census_data, resources=resources, output='dominant_energy'
+        )
 
         # Histograms
         per_capita_histogram = plot_per_capita_co2_histogram(census_data=census_data)
@@ -93,6 +107,8 @@ class Operator(BaseOperator[ComputeInput]):
             energy_consumption_artifact,
             living_space_artifact,
             emission_factor_artifact,
+            building_age_artifact,
+            building_energy_source_artifact,
         ]
 
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:

@@ -7,6 +7,9 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/1.1.1...main)
 
+### Added
+- Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))
+
 ## [1.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.1) - 2025-06-04
 
 ### Fixed

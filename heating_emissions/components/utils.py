@@ -41,6 +41,31 @@ HEAT_CONSUMPTION = {  # in kWh/m2
     'unknown': 126.7,
 }
 
+# Category orders for building ages and energy sources
+BUILDING_AGES = {
+    'pre_1919': 'pre-1919',
+    '1919_1948': '1919-1948',
+    '1949_1978': '1949-1978',
+    '1979_1990': '1979-1990',
+    '1991_2000': '1991-2000',
+    '2001_2010': '2001-2010',
+    '2011_2019': '2011-2019',
+    'post_2020': 'post-2020',
+    'unknown': 'Unknown',
+}
+
+ENERGY_SOURCES = {
+    'wood': 'Wood',
+    'coal': 'Coal',
+    'heating_oil': 'Heating oil',
+    'gas': 'Gas',
+    'biomass_biogas': 'Biomass / Biogas',
+    'solar_geothermal_heat_pumps': 'Solar / Geothermal / Heat pumps',
+    'electricity': 'Electricity',
+    'district_heating': 'District heating',
+    'unknown': 'Unknown',
+}
+
 
 def generate_colors(color_by: pd.Series, cmap_name: str, cap: float = 1.0) -> dict[int : tuple[int, int, int]]:
     norm = mpl.colors.Normalize(vmin=0, vmax=color_by.quantile(cap))
@@ -77,6 +102,13 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
     ).round()  # result in kg of CO2 per year
 
     return census_data
+
+
+def postprocess_uncalculate_census_data(uncalculated_census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    uncalculated_census_data[['dominant_age', 'dominant_energy']] = uncalculated_census_data[
+        ['dominant_age', 'dominant_energy']
+    ].fillna('Unknown')
+    return uncalculated_census_data
 
 
 def create_emissions_raster_data(  # dead: disable

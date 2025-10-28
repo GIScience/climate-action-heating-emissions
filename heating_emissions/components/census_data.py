@@ -8,7 +8,13 @@ from climatoology.utility.exception import ClimatoologyUserError
 from geoalchemy2 import WKTElement
 from sqlalchemy import Engine, MetaData, select
 
-from heating_emissions.components.utils import EMISSION_FACTORS, HEAT_CONSUMPTION
+from heating_emissions.components.utils import (
+    BUILDING_AGES,
+    EMISSION_FACTORS,
+    ENERGY_SOURCES,
+    HEAT_CONSUMPTION,
+    postprocess_uncalculate_census_data,
+)
 
 log = logging.getLogger(__name__)
 
@@ -19,11 +25,14 @@ class DatabaseConnection:
     metadata: MetaData
 
 
-def collect_census_data(db_connection: DatabaseConnection, aoi: shapely.MultiPolygon) -> gpd.GeoDataFrame:
+def collect_census_data(
+    db_connection: DatabaseConnection, aoi: shapely.MultiPolygon
+) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
     """Read all required census data and return it as a single geodataframe."""
     raster_grid = get_clipped_census_grid(db_connection=db_connection, aoi=aoi)
-    census_data = get_census_tables_from_db(db_connection, raster_grid)
-    return census_data
+    census_data, uncalculated_census_data = get_census_tables_from_db(db_connection, raster_grid)
+    uncalculated_census_data = postprocess_uncalculate_census_data(uncalculated_census_data)
+    return census_data, uncalculated_census_data
 
 
 def get_clipped_census_grid(db_connection: DatabaseConnection, aoi: shapely.MultiPolygon) -> gpd.GeoDataFrame:
@@ -50,9 +59,14 @@ def get_clipped_census_grid(db_connection: DatabaseConnection, aoi: shapely.Mult
     return result_gdf
 
 
-def get_census_tables_from_db(db_connection: DatabaseConnection, raster_grid: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def get_census_tables_from_db(
+    db_connection: DatabaseConnection, raster_grid: gpd.GeoDataFrame
+) -> (gpd.GeoDataFrame, gpd.GeoDataFrame):
     """Query all other tables from the database for the grid points in `raster_grid`, clean them, and return a
     GeoDataFrame with all tables joined.
+    Return:
+        1. the census data after calculation, e.g., the heat_consumption is already calculated based on building ages.
+        2. the census data before calculation, e.g., the dominant/original building ages information.
     """
 
     tables_and_cleaning_fns = {
@@ -63,13 +77,19 @@ def get_census_tables_from_db(db_connection: DatabaseConnection, raster_grid: gp
     }
 
     census_data = []
+    uncalculated_census_data = []
     for table, cleaning_fn in tables_and_cleaning_fns.items():
         log.debug(f'Querying database table {table}')
         result = query_table_from_db(db_connection, raster_grid.index, table)
-        result = cleaning_fn(result)
+        result, uncalculated_data = cleaning_fn(result)
         census_data.append(result)
 
-    return raster_grid.join(census_data)
+        if uncalculated_data is not None:
+            uncalculated_census_data.append(uncalculated_data)
+        else:
+            uncalculated_census_data.append(result)
+
+    return raster_grid.join(census_data), raster_grid.join(uncalculated_census_data)
 
 
 def query_table_from_db(db_connection: DatabaseConnection, raster_ids: pd.Series, table: str) -> pd.DataFrame:
@@ -80,28 +100,23 @@ def query_table_from_db(db_connection: DatabaseConnection, raster_ids: pd.Series
     return pd.DataFrame(result).set_index('raster_id_100m')
 
 
-def clean_population_data(census_data: pd.DataFrame) -> pd.DataFrame:
-    return census_data['population'].fillna(0)
+def clean_population_data(census_data: pd.DataFrame) -> tuple[pd.DataFrame, None]:
+    return census_data['population'].fillna(0), None
 
 
-def clean_living_space_data(census_data: gpd.GeoDataFrame) -> pd.Series:
-    return census_data['average_sqm_per_person'].fillna(0)
+def clean_living_space_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, None]:
+    return census_data['average_sqm_per_person'].fillna(0), None
 
 
-def clean_building_age_data(census_data: gpd.GeoDataFrame) -> pd.Series:
+def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, pd.Series]:
     building_counts = census_data.fillna(0)
-    building_counts['computed_total_buildings'] = building_counts[
-        [
-            'pre_1919',
-            '1919_1948',
-            '1949_1978',
-            '1979_1990',
-            '1991_2000',
-            '2001_2010',
-            '2011_2019',
-            'post_2020',
-        ]
-    ].sum(axis='columns')
+
+    building_ages_columns = list(BUILDING_AGES.keys())
+    building_ages_columns.remove('unknown')
+    log.debug(f'Current building age columns will be considered: {building_ages_columns}')
+    building_ages = building_counts[building_ages_columns]
+
+    building_counts['computed_total_buildings'] = building_ages.sum(axis='columns')
     building_counts['unknown'] = building_counts.apply(
         lambda x: max(0, x['total_buildings'] - x['computed_total_buildings']), axis='columns'
     )
@@ -118,24 +133,22 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> pd.Series:
         building_counts['heat_consumption'].mean()
     )
 
-    return building_counts['heat_consumption']
+    building_counts['dominant_age'] = extract_dominant_characteristics(
+        building_ages, building_counts[['total_buildings', 'unknown']], 'dominant_age'
+    )
+
+    return building_counts['heat_consumption'], building_counts['dominant_age']
 
 
-def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> pd.Series:
+def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, pd.Series]:
     with pd.option_context('future.no_silent_downcasting', True):
         cropped_energy_data = census_data.fillna(0).infer_objects(copy=False)
-    cropped_energy_data['computed_total_buildings'] = cropped_energy_data[
-        [
-            'gas',
-            'heating_oil',
-            'wood',
-            'biomass_biogas',
-            'solar_geothermal_heat_pumps',
-            'electricity',
-            'coal',
-            'district_heating',
-        ]
-    ].sum(axis='columns')
+
+    building_energy_columns = list(ENERGY_SOURCES.keys())
+    building_energy_columns.remove('unknown')
+    log.debug(f'Current building energy carrier columns will be considered: {building_energy_columns}')
+    cropped_energy_data_energysource = cropped_energy_data[building_energy_columns]
+    cropped_energy_data['computed_total_buildings'] = cropped_energy_data_energysource.sum(axis='columns')
     cropped_energy_data['unknown'] = cropped_energy_data.apply(
         lambda x: max(0, x['total_buildings'] - x['computed_total_buildings']), axis='columns'
     )
@@ -156,4 +169,28 @@ def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> pd.Series:
         cropped_energy_data['emission_factor'].mean()
     )
 
-    return cropped_energy_data['emission_factor']
+    cropped_energy_data['dominant_energy'] = extract_dominant_characteristics(
+        cropped_energy_data_energysource, cropped_energy_data[['total_buildings', 'unknown']], 'dominant_energy'
+    )
+
+    return cropped_energy_data['emission_factor'], cropped_energy_data['dominant_energy']
+
+
+def extract_dominant_characteristics(
+    census_dominant_data: gpd.GeoDataFrame, census_data_counted: gpd.GeoDataFrame, dominant_character: str
+) -> pd.Series:
+    census_dominant_data = census_dominant_data.assign(unknown=0)
+    census_dominant_data.loc[census_data_counted['unknown'] == census_data_counted['total_buildings'], 'unknown'] = 1
+
+    ## rename for label
+    match dominant_character:
+        case 'dominant_age':
+            new_columns_names = BUILDING_AGES
+        case 'dominant_energy':
+            new_columns_names = ENERGY_SOURCES
+        case _:
+            raise ValueError(f'Unknown dominant_character: {dominant_character}')
+
+    census_dominant_data.rename(columns=new_columns_names, inplace=True)
+
+    return census_dominant_data.idxmax(axis=1)

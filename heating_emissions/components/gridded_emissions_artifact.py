@@ -2,6 +2,8 @@ import logging
 
 import geopandas as gpd
 import matplotlib
+import numpy as np
+import pandas as pd
 from climatoology.base.artifact import (
     ContinuousLegendData,
     _Artifact,
@@ -10,6 +12,8 @@ from climatoology.base.artifact import (
 from climatoology.base.computation import ComputationResources
 from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
+
+from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES
 
 log = logging.getLogger(__name__)
 
@@ -92,6 +96,58 @@ def build_gridded_artifact(
         color=color,
         label=artifact_data[output_column].to_list(),
         legend_data=legend,
+        primary=is_primary,
+        resources=resources,
+        filename=file_name,
+    )
+
+
+def build_gridded_artifact_classdata(
+    uncalculated_census_data: gpd.GeoDataFrame | pd.DataFrame, resources: ComputationResources, output: str
+) -> _Artifact:
+    # maps of building age and dominant energy source
+    output_column = output
+    file_name = output
+    is_primary = False
+
+    if output == 'dominant_age':
+        layer_name = 'Dominant building construction year'
+        caption = 'Dominant building construction year'
+        description = 'Dominant building construction year in 100-m grid cells (data from 2022 German census)'
+        color_categories = BUILDING_AGES
+
+    if output == 'dominant_energy':
+        layer_name = 'Dominant building energy carrier'
+        caption = 'Dominant building energy carrier'
+        description = 'Dominant building energy carrier in 100-m grid cells (data from 2022 German census)'
+        color_categories = ENERGY_SOURCES
+
+    # Buffer centroids
+    grid_cell_centroids = gpd.points_from_xy(
+        x=uncalculated_census_data['x_mp_100m'], y=uncalculated_census_data['y_mp_100m'], crs='EPSG:3035'
+    )
+    artifact_data = gpd.GeoDataFrame(data=uncalculated_census_data[output_column], geometry=grid_cell_centroids)
+    artifact_data.geometry = artifact_data.buffer(50, cap_style=3)
+    artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
+
+    # Define colors and legend
+    cmap = matplotlib.colormaps.get('YlOrRd_r')
+    color_list = cmap(np.linspace(0, 0.9, len(color_categories) - 1))
+    color_list = [Color(to_hex(_)) for _ in color_list]
+    color_list.append(Color('#808080'))  # the last category: unknown
+    color_map = dict(zip(color_categories.values(), color_list))
+    color = artifact_data[output_column].map(color_map)
+
+    # pass legend and use the default setting -> read 'create_geojson_artifact' explanation.
+
+    return create_geojson_artifact(
+        features=artifact_data_4326.geometry,
+        layer_name=layer_name,
+        caption=caption,
+        description=description,
+        color=color,
+        label=artifact_data[output_column].to_list(),
+        legend_data=color_map,
         primary=is_primary,
         resources=resources,
         filename=file_name,
