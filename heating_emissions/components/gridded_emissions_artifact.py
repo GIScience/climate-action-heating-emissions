@@ -13,7 +13,7 @@ from climatoology.base.computation import ComputationResources
 from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
 
-from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES
+from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES, Topics
 
 log = logging.getLogger(__name__)
 
@@ -26,13 +26,13 @@ def build_gridded_artifact(
     emission_type = 'Per capita'
     legend_upper_cap = 3000
     legend_lower_cap = 0
-    is_primary = True
+    tags = {Topics.EMISSIONS}
     if not per_capita:
         output_column = 'co2_emissions'
         file_name = 'heating_emissions_absolute'
         emission_type = 'Absolute'
         legend_upper_cap = 150000
-        is_primary = False
+        tags = {Topics.EMISSIONS}
 
     layer_name = f'{emission_type} CO₂ emissions (kg/year)'
     caption = f'{emission_type} CO₂ emissions from residential heating per year per 100-m pixel'
@@ -46,7 +46,7 @@ def build_gridded_artifact(
         layer_name = 'Energy consumption (kWh/m²/year)'
         caption = 'Average heating energy consumption rate in residential buildings'
         description = 'Estimated energy consumption rate for heating residential buildings based on building age data.'
-        is_primary = False
+        tags = {Topics.PARAMETERS}
 
     low_bound_tick_label = f'{legend_lower_cap}'
 
@@ -59,7 +59,7 @@ def build_gridded_artifact(
         layer_name = 'Living space (m² per person)'
         caption = 'Average living space per capita'
         description = 'Average living space per capita (m²) in 100-m grid cells (data from 2022 German census)'
-        is_primary = False
+        tags = {Topics.PARAMETERS}
 
     if output == 'emission_factor':
         output_column = output
@@ -70,7 +70,7 @@ def build_gridded_artifact(
         description = (
             'Estimated level of in situ (scope 1) emissions (kg of CO₂ per kWh) from heating residential buildings.'
         )
-        is_primary = False
+        tags = {Topics.PARAMETERS}
 
     # Buffer centroids
     grid_cell_centroids = gpd.points_from_xy(x=result['x_mp_100m'], y=result['y_mp_100m'], crs='EPSG:3035')
@@ -96,9 +96,9 @@ def build_gridded_artifact(
         color=color,
         label=artifact_data[output_column].to_list(),
         legend_data=legend,
-        primary=is_primary,
         resources=resources,
         filename=file_name,
+        tags=tags,
     )
 
 
@@ -108,7 +108,6 @@ def build_gridded_artifact_classdata(
     # maps of building age and dominant energy source
     output_column = output
     file_name = output
-    is_primary = False
 
     if output == 'dominant_age':
         layer_name = 'Dominant building construction year'
@@ -148,7 +147,7 @@ def build_gridded_artifact_classdata(
         color=color,
         label=artifact_data[output_column].to_list(),
         legend_data=color_map,
-        primary=is_primary,
+        tags={Topics.PARAMETERS},
         resources=resources,
         filename=file_name,
     )

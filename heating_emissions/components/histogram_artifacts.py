@@ -5,6 +5,8 @@ from climatoology.base.artifact import _Artifact, create_plotly_chart_artifact
 from climatoology.base.computation import ComputationResources
 from plotly.graph_objs import Figure
 
+from heating_emissions.components.utils import Topics
+
 
 def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
     return create_plotly_chart_artifact(
@@ -16,7 +18,7 @@ def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: Co
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} tonnes.',
         resources=resources,
         filename='aoi_C02pc_histogram',
-        primary=True,
+        tags={Topics.EMISSIONS},
     )
 
 
@@ -30,7 +32,7 @@ def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: Computatio
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} .',
         resources=resources,
         filename='aoi_energy_histogram',
-        primary=False,
+        tags={Topics.PARAMETERS},
     )
 
 
@@ -44,7 +46,7 @@ def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: C
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)}.',
         resources=resources,
         filename='aoi_ef_histogram',
-        primary=False,
+        tags={Topics.PARAMETERS},
     )
 
 

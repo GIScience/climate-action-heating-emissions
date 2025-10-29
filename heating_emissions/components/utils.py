@@ -1,4 +1,5 @@
 import logging
+from enum import StrEnum
 from itertools import product
 from typing import Tuple
 
@@ -65,6 +66,11 @@ ENERGY_SOURCES = {
     'district_heating': 'District heating',
     'unknown': 'Unknown',
 }
+
+
+class Topics(StrEnum):
+    EMISSIONS = 'emissions'
+    PARAMETERS = 'parameters'
 
 
 def generate_colors(color_by: pd.Series, cmap_name: str, cap: float = 1.0) -> dict[int : tuple[int, int, int]]:
