@@ -9,12 +9,7 @@ def test_operator_info_request(operator):
 
 
 def test_operator_compute_german_request(
-    operator,
-    default_compute_input,
-    default_german_aoi,
-    default_aoi_properties,
-    compute_resources,
-    mock_query_census_tables,
+    operator, default_compute_input, default_german_aoi, default_aoi_properties, compute_resources
 ):
     computed_artifacts = operator.compute(
         resources=compute_resources,
@@ -34,7 +29,6 @@ def test_check_aoi_outside_germany(
     default_non_german_aoi,
     default_non_german_aoi_properties,
     compute_resources,
-    mock_query_census_tables,
 ):
     with pytest.raises(ClimatoologyUserError):
         operator.compute(

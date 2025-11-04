@@ -41,7 +41,7 @@ class Operator(BaseOperator[ComputeInput]):
         super().__init__()
 
         engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'], poolclass=NullPool)
-        metadata = MetaData()
+        metadata = MetaData(schema='census_de')
         metadata.reflect(bind=engine)
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
 

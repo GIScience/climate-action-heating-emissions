@@ -61,6 +61,12 @@ To run your plugin locally requires the following setup:
 If you want to run your plugin through Docker, refer to
 the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).
 
+### Further requirements
+
+Make sure you have the following installed on your machine:
+- psql (PostgreSQL) v16.10 or higher
+- postgis v3.4.2 or higher
+
 ### Testing
 
 We use [pytest](https://pytest.org) as a testing engine.

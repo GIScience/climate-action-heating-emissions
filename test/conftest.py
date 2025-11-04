@@ -1,12 +1,12 @@
+import os
 import uuid
-from unittest.mock import patch
+from pathlib import Path
 
-import geopandas as gpd
-import pandas as pd
 import pytest
 import shapely
 from climatoology.base.baseoperator import AoiProperties
 from climatoology.base.computation import ComputationScope
+from pytest_postgresql import factories
 
 from heating_emissions.core.input import ComputeInput
 from heating_emissions.core.operator_worker import Operator
@@ -23,11 +23,11 @@ def default_german_aoi() -> shapely.MultiPolygon:
         polygons=[
             [
                 [
-                    [12.3, 48.22],
-                    [12.3, 48.34],
-                    [12.48, 48.34],
-                    [12.48, 48.22],
-                    [12.3, 48.22],
+                    [8.664, 49.410],
+                    [8.664, 49.419],
+                    [8.670, 49.419],
+                    [8.670, 49.410],
+                    [8.664, 49.410],
                 ]
             ]
         ]
@@ -69,43 +69,28 @@ def compute_resources():
 
 
 @pytest.fixture
-def operator():
-    with patch('heating_emissions.core.operator_worker.MetaData.reflect', side_effect=None):
-        operator = Operator(ca_database_url='sqlite:///:memory:')
-        yield operator
+def operator(test_database_url):
+    operator = Operator(ca_database_url=test_database_url)
+    yield operator
+
+
+# Configure test database fixtures
+if os.getenv('CI', 'False').lower() == 'true':
+    connection_params = dict(
+        host=os.getenv('POSTGRES_HOST'),
+        port=os.getenv('POSTGRES_PORT'),
+        user=os.getenv('POSTGRES_USER'),
+        password=os.getenv('POSTGRES_PASSWORD'),
+        dbname='test_db',
+    )
+    db_test_schema = factories.postgresql_noproc(
+        load=[Path(__file__).parent / 'resources/create_db_tables.sql'], **connection_params
+    )
+else:
+    db_test_schema = factories.postgresql_proc(load=[Path(__file__).parent / 'resources/create_db_tables.sql'])
+db_test_engine = factories.postgresql('db_test_schema')
 
 
 @pytest.fixture
-def mock_query_census_tables():
-    default_census_grid = gpd.read_file('resources/test/census_grid.geojson').set_index('raster_id_100m')
-
-    def return_default_table(db_connection, raster_ids, table_name):
-        return pd.read_csv(f'resources/test/{table_name}.csv').set_index('raster_id_100m')
-
-    with (
-        patch('heating_emissions.components.census_data.get_clipped_census_grid', return_value=default_census_grid),
-        patch('heating_emissions.components.census_data.query_table_from_db', side_effect=return_default_table),
-    ):
-        yield
-
-
-@pytest.fixture
-def default_census_table():
-    example_dataframe = pd.DataFrame(
-        {
-            'population': [31, 85, 15],
-            'average_sqm_per_person': [40, 80, 75],
-            'heat_consumption': [65, 125.3, 145.2],
-            'emission_factor': [0.2, 0.15, 0.3],
-            'latitude': [45.15, 45.16, 45.15],
-            'longitude': [5.15, 5.16, 5.16],
-        }
-    )
-
-    example_geo_dataframe = gpd.GeoDataFrame(
-        example_dataframe,
-        geometry=gpd.points_from_xy(example_dataframe.longitude, example_dataframe.latitude),
-        crs='EPSG:4326',
-    )
-
-    return example_geo_dataframe
+def test_database_url(db_test_engine):
+    return f'postgresql+psycopg2://{db_test_engine.info.user}:{db_test_engine.info.password}@{db_test_engine.info.host}:{db_test_engine.info.port}/{db_test_engine.info.dbname}'

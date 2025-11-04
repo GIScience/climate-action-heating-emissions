@@ -11,8 +11,18 @@ unit_tests:
     - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == 'push'
   image:
     name: python:3.11.5
+  services:
+    - name: postgis/postgis:17-3.5
+      alias: postgres
   variables:
     PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    POSTGRES_DB: postgres
+    POSTGRES_USER: username
+    POSTGRES_PASSWORD: password
+    POSTGRES_VERSION: 17
+    POSTGRES_HOST_AUTH_METHOD: trust
   cache:
     key: $CI_COMMIT_REF_NAME
     paths:

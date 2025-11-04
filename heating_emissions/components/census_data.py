@@ -39,7 +39,7 @@ def get_clipped_census_grid(db_connection: DatabaseConnection, aoi: shapely.Mult
     """Query the census grid cells within the AOI from the database."""
     log.info('Querying database for census grid points within the AOI')
 
-    db_table = db_connection.metadata.tables['census_de_raster_grid_100m']
+    db_table = db_connection.metadata.tables['census_de.raster_grid_100m']
     aoi_geom = WKTElement(aoi.wkt, srid=4326)
     query = select(db_table).where(db_table.c.geometry.op('&&')(aoi_geom) & db_table.c.geometry.ST_Within(aoi_geom))
     with db_connection.engine.connect() as conn:
@@ -61,7 +61,7 @@ def get_clipped_census_grid(db_connection: DatabaseConnection, aoi: shapely.Mult
 
 def get_census_tables_from_db(
     db_connection: DatabaseConnection, raster_grid: gpd.GeoDataFrame
-) -> (gpd.GeoDataFrame, gpd.GeoDataFrame):
+) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
     """Query all other tables from the database for the grid points in `raster_grid`, clean them, and return a
     GeoDataFrame with all tables joined.
     Return:
@@ -70,10 +70,10 @@ def get_census_tables_from_db(
     """
 
     tables_and_cleaning_fns = {
-        'census_de_population': clean_population_data,
-        'census_de_residential_living_space': clean_living_space_data,
-        'census_de_residential_buildings_by_year': clean_building_age_data,
-        'census_de_residential_heating_sources': clean_energy_source_data,
+        'census_de.population': clean_population_data,
+        'census_de.residential_living_space': clean_living_space_data,
+        'census_de.residential_buildings_by_year': clean_building_age_data,
+        'census_de.residential_heating_sources': clean_energy_source_data,
     }
 
     census_data = []
