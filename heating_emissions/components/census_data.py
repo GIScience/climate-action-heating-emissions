@@ -117,15 +117,11 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, p
     building_ages = building_counts[building_ages_columns]
 
     building_counts['computed_total_buildings'] = building_ages.sum(axis='columns')
-    building_counts['unknown'] = building_counts.apply(
-        lambda x: max(0, x['total_buildings'] - x['computed_total_buildings']), axis='columns'
-    )
 
     building_counts['heat_consumption'] = 0.0
     for age, heat_consumption_factor in HEAT_CONSUMPTION.items():
         building_counts['heat_consumption'] = building_counts['heat_consumption'] + (
-            heat_consumption_factor
-            * (building_counts[age] / (building_counts['computed_total_buildings'] + building_counts['unknown']))
+            heat_consumption_factor * (building_counts[age] / (building_counts['computed_total_buildings']))
         )
 
     # For grid cells with no building age data, assign average heating consumption in AOI
@@ -133,9 +129,7 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, p
         building_counts['heat_consumption'].mean()
     )
 
-    building_counts['dominant_age'] = extract_dominant_characteristics(
-        building_ages, building_counts[['total_buildings', 'unknown']], 'dominant_age'
-    )
+    building_counts['dominant_age'] = extract_dominant_characteristics(building_ages, 'dominant_age')
 
     return building_counts['heat_consumption'], building_counts['dominant_age']
 
@@ -149,19 +143,12 @@ def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, 
     log.debug(f'Current building energy carrier columns will be considered: {building_energy_columns}')
     cropped_energy_data_energysource = cropped_energy_data[building_energy_columns]
     cropped_energy_data['computed_total_buildings'] = cropped_energy_data_energysource.sum(axis='columns')
-    cropped_energy_data['unknown'] = cropped_energy_data.apply(
-        lambda x: max(0, x['total_buildings'] - x['computed_total_buildings']), axis='columns'
-    )
 
     # Average emission factor in grid cell given heat mix (in kg of CO2 per kWh)
     cropped_energy_data['emission_factor'] = 0.0
     for fuel, emissions in EMISSION_FACTORS.items():
         cropped_energy_data['emission_factor'] = cropped_energy_data['emission_factor'] + (
-            emissions
-            * (
-                cropped_energy_data[fuel]
-                / (cropped_energy_data['computed_total_buildings'] + cropped_energy_data['unknown'])
-            )
+            emissions * (cropped_energy_data[fuel] / (cropped_energy_data['computed_total_buildings']))
         )
 
     # For grid cells with no Energy Carrier data, assign average emission factor in AOI
@@ -170,18 +157,13 @@ def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, 
     )
 
     cropped_energy_data['dominant_energy'] = extract_dominant_characteristics(
-        cropped_energy_data_energysource, cropped_energy_data[['total_buildings', 'unknown']], 'dominant_energy'
+        cropped_energy_data_energysource, 'dominant_energy'
     )
 
     return cropped_energy_data['emission_factor'], cropped_energy_data['dominant_energy']
 
 
-def extract_dominant_characteristics(
-    census_dominant_data: gpd.GeoDataFrame, census_data_counted: gpd.GeoDataFrame, dominant_character: str
-) -> pd.Series:
-    census_dominant_data = census_dominant_data.assign(unknown=0)
-    census_dominant_data.loc[census_data_counted['unknown'] == census_data_counted['total_buildings'], 'unknown'] = 1
-
+def extract_dominant_characteristics(census_dominant_data: gpd.GeoDataFrame, dominant_character: str) -> pd.Series:
     ## rename for label
     match dominant_character:
         case 'dominant_age':
@@ -191,6 +173,8 @@ def extract_dominant_characteristics(
         case _:
             raise ValueError(f'Unknown dominant_character: {dominant_character}')
 
-    census_dominant_data.rename(columns=new_columns_names, inplace=True)
+    census_dominant_data = census_dominant_data.rename(columns=new_columns_names)
+    census_dominant_data = census_dominant_data.replace({0: None}).idxmax(axis=1)
+    census_dominant_data = census_dominant_data.fillna('Unknown')
 
-    return census_dominant_data.idxmax(axis=1)
+    return census_dominant_data

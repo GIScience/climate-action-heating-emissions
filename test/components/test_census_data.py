@@ -72,15 +72,13 @@ def test_get_clipped_census_grid_no_data(operator):
 )
 def test_extract_dominant_characteristics(dominant_character, data, expected):
     census_dominant_data = gpd.GeoDataFrame(data)
-    census_data_counted = gpd.GeoDataFrame({'unknown': [0], 'total_buildings': [1]})
-    received = extract_dominant_characteristics(census_dominant_data, census_data_counted, dominant_character)
+    received = extract_dominant_characteristics(census_dominant_data, dominant_character)
 
     assert received.iloc[0] == expected
 
 
 def test_extract_dominant_characteristics_error():
     census_dominant_data = gpd.GeoDataFrame({'col1': [1]})
-    census_data_counted = gpd.GeoDataFrame({'unknown': [0], 'total_buildings': [1]})
 
     with pytest.raises(ValueError, match='Unknown dominant_character: invalid_type'):
-        extract_dominant_characteristics(census_dominant_data, census_data_counted, 'invalid_type')
+        extract_dominant_characteristics(census_dominant_data, 'invalid_type')

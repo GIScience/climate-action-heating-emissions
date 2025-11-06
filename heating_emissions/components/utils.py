@@ -15,7 +15,6 @@ EMISSION_FACTORS = {  # in kg of CO2 per kWh og heating
     'electricity': 0.0,
     'coal': 0.33661,
     'district_heating': 0.0,
-    'unknown': 0.19534,
 }
 
 ## Based on data from https://www.wohngebaeude.info/daten/#/heizen/bundesweit
@@ -28,7 +27,6 @@ HEAT_CONSUMPTION = {  # in kWh/m2
     '2001_2010': 78.5,
     '2011_2019': 74.1,
     'post_2020': 74.1,
-    'unknown': 126.7,
 }
 
 # Category orders for building ages and energy sources
