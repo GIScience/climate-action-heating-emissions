@@ -64,5 +64,23 @@ We use carbon dioxide emission factors from the Probas database for [gas](https:
 - **Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories above, weighting by the number of buildings with each carrier across all of Germany.
 
 ### Other data sources
-German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year, plotted in the respective histogram): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
-German average per capita carbon dioxide emissions from residential heating (2.2 t per year, plotted in the respective histogram): [UBA](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
+- German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year, plotted in the respective histogram): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- German average per capita carbon dioxide emissions from residential heating (2.2 t per year, plotted in the respective histogram): [UBA](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
+
+## Uncertainty
+
+### Uncertainty of the input data
+
+1. Spatial data from the German census: As this is official data from administrative sources, we assume very low (negligible) uncertainty
+2. Energy consumption rates from co2online: 9 % uncertainty ([co2online, UBA, 2019](https://www.umweltbundesamt.de/publikationen/hintergrundbericht-wohnen-sanieren))
+3. Emission factors from The German Environment Agency: not given
+
+### Uncertainty from Weighting by Building Count Instead of Building Area
+
+To estimate the average energy consumption rate in each grid cell, we weight empirical heating energy consumption values for each building age class by the fraction of buildings in each age class, based on Census data. For each grid cell, we know how many buildings belong to each age class, but we lack information about their sizes or heated floor areas. Therefore, we assume that all buildings have the same heated area.
+
+However, this assumption can introduce uncertainty within a grid cell because buildings of different ages can differ greatly in size. For example, imagine a grid cell with three buildings: one older building from the 1949–1978 age class with a heated area of 1,000 m² and two newer buildings from the 2011–2019 age class, each with 150 m².
+
+Our method only accounts for the number of buildings, not their sizes. It therefore assigns one-third of the weight to the older building and two-thirds to the newer ones when calculating the average energy consumption. In reality, the older building represents most of the heated area in the grid cell. Since older buildings tend to consume more energy due to poorer insulation, this approach would underestimate the true heating energy consumption in this example, since the high-energy-demand building receives too little weight in the calculation.
+
+Similar uncertainty is introduced in the weighting by the fraction of buildings with each type of heating energy carrier (from Census data) to obtain the average emission factor in each grid cell.
