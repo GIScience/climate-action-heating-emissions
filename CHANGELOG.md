@@ -19,7 +19,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))
 - Tests for gridded artifact functions, several functions in utils, and get_clipped_census_grid ([24](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/24), [38](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/38))
 - Paragraph on uncertainty sources to methodology description ([#44](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/44))
-- Temporal flexible emission simulation: Provide yearly emission maps with daily emission line chart ([6](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/6))
+- Temporal flexible emission simulation: Provide yearly emission maps with daily emission line chart ([#6](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/6))
+- Line with mean emission factor in emission factor histogram ([#45](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/45))
 
 ## [1.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.1) - 2025-06-04
 

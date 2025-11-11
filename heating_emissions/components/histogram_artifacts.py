@@ -128,4 +128,12 @@ def plot_emission_factor_histogram(
             xaxis=dict(title=dict(text='kg of carbon dioxide per kWh of heating')),
         ),
     )
+    hist_plot.add_vline(
+        x=0.199,
+        line_width=1.5,
+        line_dash='dot',
+        annotation_text='German average',
+        annotation_position='top left',
+        annotation_textangle=-90,
+    )
     return hist_plot

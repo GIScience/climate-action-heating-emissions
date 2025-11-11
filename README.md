@@ -29,7 +29,6 @@ Co2online gave us permission to use their data in this plugin.
 | 2011 to 2019 | 74.1                        | EnEV 2007*        |
 | Since 2019   | 74.1                        | EnEV 2007*        |
 
-When the age of a building is unknown, we assign it the mean energy consumption rate of buildings recorded in co2online (126.7 kWh).
 
 ### Emission factors
 We use carbon dioxide emission factors from the Probas database for [gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=4c06c7a1-cdec-46cd-9929-0df2a70b8897&version=02.44.152&stock=PUBLIC&lang=de), [oil](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=26f4942c-889a-4b07-a2e7-3c6d8e74227e&version=02.44.152&stock=PUBLIC&lang=de), and [coal](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=cb66d367-05d9-485e-b301-24f7b88b4320&version=02.44.152&stock=PUBLIC&lang=de). Note that we use emission factors for "unit processes", meaning that they include emissions related to burning the fuels for heat, but do not include other upstream and downstream emissions in the lifecycle of the fuels.
@@ -44,7 +43,6 @@ We use carbon dioxide emission factors from the Probas database for [gas](https:
 | District heating                    | 0.00000                         | Note 2         |
 | Electricity                         | 0.00000                         | Note 2         |
 | Solar/Geothermal/Environmental Heat | 0.00000                         | Note 2         |
-| Unknown                             | 0.19534                         | Note 3         |
 
 - **Note 1**: The model estimates emissions associated with heating without accounting for the full lifecycle of the energy carriers. This means that we estimate the CO2 released while burning biomass without considering that carbon was only recently captured through photosynthesis. Hence, we used emission factors similar to gas and coal for biogas/biomass and wood pellets, respectively.
 
