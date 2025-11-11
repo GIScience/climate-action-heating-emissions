@@ -1,6 +1,7 @@
 import logging.config
 
 from climatoology.app.plugin import start_plugin
+from ecmwf.datastores import Client as cds_Client
 
 from heating_emissions.core.operator_worker import Operator
 from heating_emissions.core.settings import Settings
@@ -10,7 +11,8 @@ log = logging.getLogger(__name__)
 
 def init_plugin() -> int:
     settings = Settings()
-    operator = Operator(ca_database_url=settings.ca_database_url)
+    cdsapi_client = cds_Client(url=settings.cdsapi_url, key=settings.cdsapi_key)
+    operator = Operator(ca_database_url=settings.ca_database_url, cdsapi_client=cdsapi_client)
 
     log.info('Starting Plugin')
     return start_plugin(operator=operator)

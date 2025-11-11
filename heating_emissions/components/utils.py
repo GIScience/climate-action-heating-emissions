@@ -58,6 +58,7 @@ ENERGY_SOURCES = {
 class Topics(StrEnum):
     EMISSIONS = 'emissions'
     PARAMETERS = 'parameters'
+    TEMPORAL = 'temporally flexible simulation'
 
 
 def get_aoi_area(aoi_as_geoseries: gpd.GeoSeries) -> float:

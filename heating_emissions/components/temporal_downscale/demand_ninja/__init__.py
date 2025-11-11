@@ -1,0 +1,1 @@
+from heating_emissions.components.temporal_downscale.demand_ninja.demand_ninja.core import demand

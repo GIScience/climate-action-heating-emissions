@@ -2,6 +2,8 @@
 
 Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions. This plugin estimates annual building space heating emissions by combining open data from various sources. In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022 census, and includes only _residential_ buildings.
 
+We also provide the *simulated* daily emission estimates for a self-defined year. This estimate is simulated based on the [demand_ninja](https://doi.org/10.1038/s41560-023-01341-5) model and our emission factors.
+
 ## Data sources
 
 ### Spatial data
@@ -49,6 +51,14 @@ We use carbon dioxide emission factors from the Probas database for [gas](https:
 - **Note 2**: The model estimates territorial (scope 1) emissions. Since no emissions are generated directly at buildings heated with electricity, heat pumps, and district heating, these emission factors are 0. Heating these buildings likely still generates emissions (for example, for electricity generation), but these happen elsewhere (e.g., at power or district heating plants).
 
 - **Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories above, weighting by the number of buildings with each carrier across all of Germany.
+
+### Weather data
+We use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview) for the heating demand simulation by `demand_ninja` model.
+The weather data-based heating demand estimates are further used for the daily emission estimation.
+- 2m_temperature
+- specific humidity calculated by *2m_dewpoint_temperature* and *surface_pressure* ([reference: 7.2.1(b)](https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes))
+- wind speed calculated by *10m_u_component_of_wind* and *10m_v_component_of_wind*
+- surface_solar_radiation_downwards
 
 ## Development setup
 

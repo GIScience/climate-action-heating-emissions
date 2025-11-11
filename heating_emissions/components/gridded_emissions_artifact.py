@@ -72,6 +72,17 @@ def build_gridded_artifact(
         )
         tags = {Topics.PARAMETERS}
 
+    if 'yearly_emissions' in output:
+        output_column, output_year = output.split(':')
+        file_name = output_column
+        layer_name = f'{emission_type} CO₂ emissions (Simulated, {output_year}) (kg/year)'
+        caption = f'{emission_type} CO₂ emissions from residential heating per 100-m pixel (Simulated, {output_year})'
+        description = (
+            f'Territorial (scope 1) CO₂ emissions from heating residential buildings (Simulated, {output_year}). '
+            f'This result is computed based on simulated heating demand by demand_ninja model.'
+        )
+        tags = {Topics.TEMPORAL}
+
     # Buffer centroids
     grid_cell_centroids = gpd.points_from_xy(x=result['x_mp_100m'], y=result['y_mp_100m'], crs='EPSG:3035')
     artifact_data = gpd.GeoDataFrame(data=result[output_column], geometry=grid_cell_centroids)

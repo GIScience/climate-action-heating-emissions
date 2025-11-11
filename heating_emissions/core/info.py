@@ -23,7 +23,7 @@ def get_info(params) -> _Info:
         teaser='Estimate carbon dioxide emissions from residential heating in Germany.',
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
-        demo_input_parameters=params(),
+        demo_input_parameters=params(temporal_emission_year=2022),
         computation_shelf_life=timedelta(weeks=52),
     )
     return info
