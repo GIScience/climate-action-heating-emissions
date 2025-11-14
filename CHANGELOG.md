@@ -14,6 +14,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Introduced artifact tags ([40](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/40))
 - Changed the database connection to read tables from the `census_de` schema ([#32](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/32))
 - Ignore total_buildings column from census when computing emission factors and heating consumption ([#39](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/39))
+- Changed colormap of construction year and energy carrier artifacts to coolwarm_r ([#48](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/48))
 
 ### Added
 - Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))

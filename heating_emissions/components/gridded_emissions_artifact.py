@@ -141,7 +141,7 @@ def build_gridded_artifact_classdata(
     artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
 
     # Define colors and legend
-    cmap = matplotlib.colormaps.get('YlOrRd_r')
+    cmap = matplotlib.colormaps.get('coolwarm_r')
     color_list = cmap(np.linspace(0, 0.9, len(color_categories) - 1))
     color_list = [Color(to_hex(_)) for _ in color_list]
     color_list.append(Color('#808080'))  # the last category: unknown
