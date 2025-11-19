@@ -1,6 +1,9 @@
 from datetime import datetime
 
 from pydantic import BaseModel, Field
+from pydantic.json_schema import SkipJsonSchema
+
+from heating_emissions.core.settings import FeatureFlags
 
 
 class TemporalEmissionsInput(BaseModel):
@@ -11,8 +14,16 @@ class TemporalEmissionsInput(BaseModel):
     )
 
 
+TemporalEmissionYearType = int
+
+feature_flags = FeatureFlags()
+if not feature_flags.temporal_downscaling:
+    TemporalEmissionsInput = SkipJsonSchema[TemporalEmissionsInput]
+    TemporalEmissionYearType = SkipJsonSchema[TemporalEmissionYearType]
+
+
 class ComputeInput(BaseModel):
-    # I used a group paramters here to show the 'title' and description. or they will disappear.
+    # I used a group parameters here to show the 'title' and description. or they will disappear.
     optional_temporal_emission: TemporalEmissionsInput = Field(
         title='Temporal flexible simulation',
         description='Compute heating emissions for a specific year at high temporal resolution: yearly and daily emissions. '
@@ -25,7 +36,7 @@ class ComputeInput(BaseModel):
         default=TemporalEmissionsInput(is_active=False),
     )
 
-    temporal_emission_year: int = Field(
+    temporal_emission_year: TemporalEmissionYearType = Field(
         title='Year for simulation',
         description='Year to be used for temporal flexible simulation of heating emissions.',
         ge=2017,

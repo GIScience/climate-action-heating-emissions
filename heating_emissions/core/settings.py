@@ -8,3 +8,9 @@ class Settings(BaseSettings):
     cdsapi_key: str
 
     model_config = SettingsConfigDict(env_file='.env')  # dead: disable
+
+
+class FeatureFlags(BaseSettings):
+    temporal_downscaling: bool = False
+
+    model_config = SettingsConfigDict(env_file='.env.feature')  # dead: disable

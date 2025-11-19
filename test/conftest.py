@@ -9,6 +9,7 @@ from climatoology.base.baseoperator import AoiProperties
 from climatoology.base.computation import ComputationScope
 from ecmwf.datastores import Client as cds_Client
 from pytest_postgresql import factories
+from shapely import Polygon
 
 from heating_emissions.components.temporal_downscale.era5_data import open_era5_data
 from heating_emissions.core.input import ComputeInput
@@ -24,7 +25,7 @@ def default_compute_input() -> ComputeInput:
 def default_german_aoi() -> shapely.MultiPolygon:
     return shapely.MultiPolygon(
         polygons=[
-            [
+            Polygon(
                 [
                     [8.664, 49.410],
                     [8.664, 49.419],
@@ -32,7 +33,7 @@ def default_german_aoi() -> shapely.MultiPolygon:
                     [8.670, 49.410],
                     [8.664, 49.410],
                 ]
-            ]
+            )
         ]
     )
 
@@ -41,7 +42,7 @@ def default_german_aoi() -> shapely.MultiPolygon:
 def default_non_german_aoi() -> shapely.MultiPolygon:
     return shapely.MultiPolygon(
         polygons=[
-            [
+            Polygon(
                 [
                     [0.3, 48.22],
                     [0.3, 48.34],
@@ -49,7 +50,7 @@ def default_non_german_aoi() -> shapely.MultiPolygon:
                     [0.48, 48.22],
                     [0.3, 48.22],
                 ]
-            ]
+            )
         ]
     )
 

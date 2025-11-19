@@ -2,12 +2,14 @@ import importlib
 import importlib.metadata
 from datetime import timedelta
 from pathlib import Path
+from typing import Type
 
 from climatoology.base.info import PluginAuthor, _Info, generate_plugin_info
+from pydantic import BaseModel, HttpUrl
 from semver import Version
 
 
-def get_info(params) -> _Info:
+def get_info(params: Type[BaseModel]) -> _Info:
     info = generate_plugin_info(
         name='Heating Emissions',
         icon=Path('resources/heating-radiator.jpeg'),
@@ -15,7 +17,7 @@ def get_info(params) -> _Info:
             PluginAuthor(
                 name='Climate Action Team',
                 affiliation='HeiGIT gGmbH',
-                website='https://heigit.org/heigit-team/',
+                website=HttpUrl('https://heigit.org/heigit-team/'),
             ),
         ],
         version=Version.parse(importlib.metadata.version('heating-emissions')),
