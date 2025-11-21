@@ -17,6 +17,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Changed the database connection to read tables from the `census_de` schema ([#32](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/32))
 - Ignore total_buildings column from census when computing emission factors and heating consumption ([#39](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/39))
 - Changed colormap of construction year and energy carrier artifacts to coolwarm_r ([#48](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/48))
+- Changed default waiting time for downloading era5 data to 120 minutes ([#51](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/51))
 
 ### Added
 - Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))

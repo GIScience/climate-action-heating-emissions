@@ -127,7 +127,7 @@ class Operator(BaseOperator[ComputeInput]):
         # temporal downscaling emissions
         if params.optional_temporal_emission.is_active:
             optional_func_start_time = time.time() - plugin_start_time  # unit: seconds
-            runtime_limit = 20 * 60 - optional_func_start_time
+            runtime_limit = 121 * 60 - optional_func_start_time
             with self.catch_exceptions(indicator_name='Temporal_emissions', resources=resources):
                 year = params.temporal_emission_year
                 census_data.index.names = ['raster_id_100m']
