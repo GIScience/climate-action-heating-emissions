@@ -24,6 +24,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Paragraph on uncertainty sources to methodology description ([#44](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/44))
 - Temporal flexible emission simulation: Provide yearly emission maps with daily emission line chart (Deactivated in production due to long runtime) ([#6](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/6))
 - Line with mean emission factor in emission factor histogram ([#45](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/45))
+- Description of 'estimated' information in plugin purpose and layer's description([#49](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/49))
+- Highlight Scope 1 emissions and its effect of emissions associated with district heating, and Description of Scope 1, 2, and 3 emissions in methodology ([#50](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/50))
 
 ## [1.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.1) - 2025-06-04
 

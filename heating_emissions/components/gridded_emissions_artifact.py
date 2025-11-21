@@ -35,8 +35,8 @@ def build_gridded_artifact(
         tags = {Topics.EMISSIONS}
 
     layer_name = f'{emission_type} CO₂ emissions (kg/year)'
-    caption = f'{emission_type} CO₂ emissions from residential heating per year per 100-m pixel'
-    description = 'Territorial (scope 1) CO₂ emissions from heating residential buildings.'
+    caption = f'{emission_type} CO₂ emissions from residential heating per year per 100-m pixel (Estimated)'
+    description = '**Estimated** territorial (scope 1) CO₂ emissions from heating residential buildings.'
 
     if output == 'heat_consumption':
         output_column = output
@@ -44,8 +44,10 @@ def build_gridded_artifact(
         legend_upper_cap = 135
         legend_lower_cap = 70
         layer_name = 'Energy consumption (kWh/m²/year)'
-        caption = 'Average heating energy consumption rate in residential buildings'
-        description = 'Estimated energy consumption rate for heating residential buildings based on building age data.'
+        caption = 'Average heating energy consumption rate in residential buildings (Estimated)'
+        description = (
+            '**Estimated** energy consumption rate for heating residential buildings based on building age data.'
+        )
         tags = {Topics.PARAMETERS}
 
     low_bound_tick_label = f'{legend_lower_cap}'
@@ -66,9 +68,9 @@ def build_gridded_artifact(
         file_name = output
         legend_upper_cap = 0.3
         layer_name = 'Emission factor (kg of CO₂ per kWh)'
-        caption = 'Average (scope 1) emission factor from heating'
+        caption = 'Average (scope 1) emission factor from heating (Estimated)'
         description = (
-            'Estimated level of in situ (scope 1) emissions (kg of CO₂ per kWh) from heating residential buildings.'
+            '**Estimated** level of in situ (scope 1) emissions (kg of CO₂ per kWh) from heating residential buildings.'
         )
         tags = {Topics.PARAMETERS}
 

@@ -12,7 +12,7 @@ def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: Co
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
         title='Histogram per capita emissions',
-        caption=f'Average carbon dioxide emissions from heating residential buildings '
+        caption=f'Average carbon dioxide emissions from heating residential buildings (Estimated) '
         f'are {round(np.mean(aoi_aggregate["data"][0].x), 2)} tonnes per person per year, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} tonnes.',
@@ -26,7 +26,7 @@ def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: Computatio
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
         title='Histogram energy consumption',
-        caption=f'Average heating energy consumption in residential buildings '
+        caption=f'Average heating energy consumption in residential buildings (Estimated) '
         f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kWh per square meter per year, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} .',
@@ -40,7 +40,7 @@ def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: C
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
         title='Histogram emission factor',
-        caption=f'Average emission factor from heating residential buildings '
+        caption=f'Average emission factor from heating residential buildings (Estimated) '
         f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kg of carbon dioxide per kWh, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)}.',
@@ -61,7 +61,7 @@ def plot_per_capita_co2_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text='Per capita carbon dioxide emissions from residential heating',
+                text='Per capita carbon dioxide emissions from residential heating (Estimated)',
                 subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),
@@ -91,7 +91,7 @@ def plot_energy_consumption_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text='Average heating energy consumption rate in residential buildings',
+                text='Average heating energy consumption rate in residential buildings (Estimated)',
                 subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),
@@ -121,7 +121,7 @@ def plot_emission_factor_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text='Average emission factor from heating in residential buildings',
+                text='Average emission factor from heating in residential buildings (Estimated)',
                 subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),

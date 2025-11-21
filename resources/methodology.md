@@ -83,3 +83,10 @@ However, this assumption can introduce uncertainty within a grid cell because bu
 Our method only accounts for the number of buildings, not their sizes. It therefore assigns one-third of the weight to the older building and two-thirds to the newer ones when calculating the average energy consumption. In reality, the older building represents most of the heated area in the grid cell. Since older buildings tend to consume more energy due to poorer insulation, this approach would underestimate the true heating energy consumption in this example, since the high-energy-demand building receives too little weight in the calculation.
 
 Similar uncertainty is introduced in the weighting by the fraction of buildings with each type of heating energy carrier (from Census data) to obtain the average emission factor in each grid cell.
+
+## Basic Knowledge
+
+### What's scope 1, 2, and 3 emissions?
+1. **Scope 1** emissions are direct emissions that occur at buildings themselves, such as burning fuel in a home furnace. Those from power plants or district heating plants are not included here.
+2. **Scope 2** emissions are indirect emissions from the generation of energy consumed by the reporting entity. If a building is heated with electricity or district heating, the emissions from generating that electricity or heat are considered scope 2 emissions.
+3. **Scope 3** emissions are all other indirect emissions that occur

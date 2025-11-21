@@ -87,6 +87,7 @@ class Operator(BaseOperator[ComputeInput]):
         emission_factor_artifact = build_gridded_artifact(result=result, resources=resources, output='emission_factor')
 
         # Gridded artifacts -- original (uncalculated) census data
+        uncalculated_census_data.index.names = ['index']
         building_age_artifact = build_gridded_artifact_classdata(
             uncalculated_census_data=uncalculated_census_data, resources=resources, output='dominant_age'
         )
