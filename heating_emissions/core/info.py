@@ -1,15 +1,14 @@
-import importlib
-import importlib.metadata
 from datetime import timedelta
 from pathlib import Path
 from typing import Type
 
-from climatoology.base.info import PluginAuthor, _Info, generate_plugin_info
+from climatoology.base.plugin_info import PluginAuthor, PluginInfo, generate_plugin_info
 from pydantic import BaseModel, HttpUrl
-from semver import Version
+
+from heating_emissions.core.input import ComputeInput
 
 
-def get_info(params: Type[BaseModel]) -> _Info:
+def get_info(params: Type[BaseModel]) -> PluginInfo:
     info = generate_plugin_info(
         name='Heating Emissions',
         icon=Path('resources/heating-radiator.jpeg'),
@@ -20,12 +19,11 @@ def get_info(params: Type[BaseModel]) -> _Info:
                 website=HttpUrl('https://heigit.org/heigit-team/'),
             ),
         ],
-        version=Version.parse(importlib.metadata.version('heating-emissions')),
         concerns=set(),
         teaser='Estimate carbon dioxide emissions from residential heating in Germany.',
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
-        demo_input_parameters=params(temporal_emission_year=2022),
+        demo_input_parameters=ComputeInput(temporal_emission_year=2022),
         computation_shelf_life=timedelta(weeks=52),
     )
     return info

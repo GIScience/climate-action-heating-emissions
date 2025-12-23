@@ -112,7 +112,7 @@ db_test_engine = factories.postgresql('db_test_schema')
 
 @pytest.fixture
 def test_database_url(db_test_engine):
-    return f'postgresql+psycopg2://{db_test_engine.info.user}:{db_test_engine.info.password}@{db_test_engine.info.host}:{db_test_engine.info.port}/{db_test_engine.info.dbname}'
+    return f'postgresql+psycopg://{db_test_engine.info.user}:{db_test_engine.info.password}@{db_test_engine.info.host}:{db_test_engine.info.port}/{db_test_engine.info.dbname}'
 
 
 @pytest.fixture

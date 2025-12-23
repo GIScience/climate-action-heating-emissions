@@ -1,16 +1,16 @@
 from unittest.mock import patch
 
 import pytest
-from climatoology.base.artifact import _Artifact
-from climatoology.base.info import _Info
-from climatoology.utility.exception import ClimatoologyUserError
+from climatoology.base.artifact import Artifact
+from climatoology.base.exception import ClimatoologyUserError
+from climatoology.base.plugin_info import PluginInfo
 
 from heating_emissions.core.input import TemporalEmissionsInput
 from heating_emissions.core.operator_worker import calculate_time_downscale_emissions
 
 
 def test_operator_info_request(operator):
-    assert isinstance(operator.info(), _Info)
+    assert isinstance(operator.info(), PluginInfo)
 
 
 def test_operator_compute_german_request(
@@ -25,7 +25,7 @@ def test_operator_compute_german_request(
 
     assert len(computed_artifacts) == 10
     for artifact in computed_artifacts:
-        assert isinstance(artifact, _Artifact)
+        assert isinstance(artifact, Artifact)
 
 
 def test_operator_compute_german_request_all_optionals(
@@ -70,7 +70,7 @@ def test_operator_compute_german_request_all_optionals(
 
     assert len(computed_artifacts) == 12
     for artifact in computed_artifacts:
-        assert isinstance(artifact, _Artifact)
+        assert isinstance(artifact, Artifact)
 
 
 def test_check_aoi_outside_germany(

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import geopandas as gpd
 import pandas as pd
 import shapely
-from climatoology.utility.exception import ClimatoologyUserError
+from climatoology.base.exception import ClimatoologyUserError
 from geoalchemy2 import WKTElement
 from sqlalchemy import Engine, MetaData, select
 

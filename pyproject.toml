@@ -1,30 +1,41 @@
-[tool.poetry]
+[project]
 name = "heating-emissions"
 version = "2.0.0"
 description = "This indicator computes annual carbon dioxide emissions from residential space heating in an area of interest within Germany"
-authors = ["Sebastian Block <sebastian.block@heigit.org>", "Veit Ulrich <veit.ulrich@heigit.org>", "Rizwan Khan <Rizwan.Khan@heigit.org>"]
+authors = [
+    { name = "Sebastian Block", email = "sebastian.block@heigit.org" },
+    { name = "Veit Ulrich", email = "veit.ulrich@heigit.org" },
+    { name = "Rizwan Khan", email = "Rizwan.Khan@heigit.org" },
+]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "~3.11.5"
-climatoology = { git = "ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git", tag = "6.4.4" }
-pydantic = "^2.8.2"
-rioxarray = "^0.18.1"
-rasterio = "^1.4.3"
-matplotlib = "^3.10.0"
-sqlalchemy = "^2.0.40"
-geoalchemy2 = "^0.17.1"
-scipy = "1.16.3"
-cdsapi = "0.7.7"
-netCDF4 = "1.7.3"
-ecmwf-datastores-client = "0.4.1"
+requires-python = ">=3.13.5,<3.14"
+dependencies = [
+    "climatoology @ git+ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git@7.0.0",
+    "pydantic (>=2.8.2,<3.0.0)",
+    "pydantic-settings (>=2.1.0,<3.0.0)",
+    "pydantic-extra-types (>=2.10.5,<3.0.0)",
+    "rioxarray (>=0.18.1,<1.0.0)",
+    "rasterio (>=1.4.3,<2.0.0)",
+    "matplotlib (>=3.10.0,<4.0.0)",
+    "sqlalchemy (>=2.0.40,<3.0.0)",
+    "geoalchemy2 (>=0.17.1,<1.0.0)",
+    "scipy (>=1.16.3,<2.0.0)",
+    "cdsapi (>=0.7.7,<1.0.0)",
+    "netCDF4 (>=1.7.3,<2.0.0)",
+    "ecmwf-datastores-client (>=0.4.1,<1.0.0)",
+    "pandas-stubs (>=2.3.3,<2.4.0)",
+    "psycopg[binary] (>=3.2.10,<4.0.0)"
+]
+
+[project.urls]
+repository = "https://gitlab.heigit.org/climate-action/plugins/heating-emissions"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
 pytest-cov = "^7.0.0"
 pytest-mock = "^3.15.1"
 pytest-postgresql = "^7.0.2"
-psycopg = {extras = ["binary"], version = "^3.2.12"}
 requests-mock = "^1.12.1"
 
 [tool.poetry.group.dev.dependencies]

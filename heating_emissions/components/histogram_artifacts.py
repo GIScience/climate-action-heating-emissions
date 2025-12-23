@@ -1,52 +1,62 @@
 import geopandas as gpd
 import numpy as np
 import plotly.graph_objects as go
-from climatoology.base.artifact import _Artifact, create_plotly_chart_artifact
+from climatoology.base.artifact import Artifact, ArtifactMetadata
+from climatoology.base.artifact_creators import create_plotly_chart_artifact
 from climatoology.base.computation import ComputationResources
 from plotly.graph_objs import Figure
 
 from heating_emissions.components.utils import Topics
 
 
-def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
-    return create_plotly_chart_artifact(
-        figure=aoi_aggregate,
-        title='Histogram per capita emissions',
-        caption=f'Average carbon dioxide emissions from heating residential buildings (Estimated) '
+def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    per_capita_co2_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram per capita emissions',
+        summary=f'Average carbon dioxide emissions from heating residential buildings (Estimated) '
         f'are {round(np.mean(aoi_aggregate["data"][0].x), 2)} tonnes per person per year, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} tonnes.',
-        resources=resources,
         filename='aoi_C02pc_histogram',
         tags={Topics.EMISSIONS},
     )
-
-
-def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
-        title='Histogram energy consumption',
-        caption=f'Average heating energy consumption in residential buildings (Estimated) '
-        f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kWh per square meter per year, '
-        f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
-        f' {round(np.max(aoi_aggregate["data"][0].x), 2)} .',
+        metadata=per_capita_co2_histogram_artifact_metadata,
         resources=resources,
-        filename='aoi_energy_histogram',
-        tags={Topics.PARAMETERS},
     )
 
 
-def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
+def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    energy_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram energy consumption',
+        summary=f'Average heating energy consumption in residential buildings (Estimated) '
+        f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kWh per square meter per year, '
+        f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
+        f' {round(np.max(aoi_aggregate["data"][0].x), 2)} .',
+        filename='aoi_energy_histogram',
+        tags={Topics.PARAMETERS},
+    )
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
-        title='Histogram emission factor',
-        caption=f'Average emission factor from heating residential buildings (Estimated) '
+        metadata=energy_histogram_artifact_metadata,
+        resources=resources,
+    )
+
+
+def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    emission_factor_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram emission factor',
+        summary=f'Average emission factor from heating residential buildings (Estimated) '
         f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kg of carbon dioxide per kWh, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)}.',
-        resources=resources,
         filename='aoi_ef_histogram',
         tags={Topics.PARAMETERS},
+    )
+    return create_plotly_chart_artifact(
+        figure=aoi_aggregate,
+        metadata=emission_factor_histogram_artifact_metadata,
+        resources=resources,
     )
 
 

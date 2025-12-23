@@ -37,7 +37,7 @@ def test_build_gridded_artifact(per_capita, output, expected_name, compute_resou
 
     artifact = build_gridded_artifact(test_df, compute_resources, output=output, per_capita=per_capita)
     assert artifact.name == expected_name
-    assert artifact.modality == ArtifactModality.MAP_LAYER_GEOJSON
+    assert artifact.modality == ArtifactModality.VECTOR_MAP_LAYER
 
 
 @pytest.mark.parametrize(
@@ -59,4 +59,4 @@ def test_build_gridded_artifact_classdata(compute_resources, output, expected_na
 
     artifact = build_gridded_artifact_classdata(test_df, compute_resources, output=output)
     assert artifact.name == expected_name
-    assert artifact.modality == ArtifactModality.MAP_LAYER_GEOJSON
+    assert artifact.modality == ArtifactModality.VECTOR_MAP_LAYER

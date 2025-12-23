@@ -6,11 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.0...main)
-
+- Updating the plugin to use the climatoology version 7
 ## [2.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.0) - 2025-11-19
 
 ### Fixed
-- rename results' index from 'raster_id_100m' to 'index' to support the grid value visualization in dashboard ([41](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/41))
+- rename results' index from 'raster_id_100m' to 'index' to support the grid value visualization in dashboard ([41](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/41)
 
 ### Changed
 - Introduced artifact tags ([40](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/40))

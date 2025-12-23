@@ -8,7 +8,7 @@ import zipfile
 import numpy as np
 import shapely
 import xarray
-from climatoology.utility.exception import ClimatoologyUserError
+from climatoology.base.exception import ClimatoologyUserError
 from ecmwf.datastores import Client, Remote
 
 from heating_emissions.components.temporal_downscale.temporal_utils import VARIABLES_NAMES, era5_data_preprocess

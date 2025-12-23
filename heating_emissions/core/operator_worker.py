@@ -6,9 +6,9 @@ from typing import List
 
 import geopandas as gpd
 import shapely
-from climatoology.base.baseoperator import AoiProperties, BaseOperator, ComputationResources, _Artifact
-from climatoology.base.info import _Info
-from climatoology.utility.exception import ClimatoologyUserError
+from climatoology.base.baseoperator import AoiProperties, Artifact, BaseOperator, ComputationResources
+from climatoology.base.exception import ClimatoologyUserError
+from climatoology.base.plugin_info import PluginInfo
 from ecmwf.datastores import Client
 from geoalchemy2 import (
     Geometry,  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
@@ -53,7 +53,7 @@ class Operator(BaseOperator[ComputeInput]):
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
         self.cdsapi_client = cdsapi_client
 
-    def info(self) -> _Info:
+    def info(self) -> PluginInfo:
         return get_info(ComputeInput)
 
     def compute(  # dead: disable
@@ -62,7 +62,7 @@ class Operator(BaseOperator[ComputeInput]):
         aoi: shapely.MultiPolygon,
         aoi_properties: AoiProperties,
         params: ComputeInput,
-    ) -> List[_Artifact]:
+    ) -> List[Artifact]:
         # record start time to monitor the running time and raise an error when the temporal estimation timeout.
         plugin_start_time = time.time()
 

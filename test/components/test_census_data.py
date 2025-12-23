@@ -1,7 +1,7 @@
 import geopandas as gpd
 import pytest
 import shapely
-from climatoology.utility.exception import ClimatoologyUserError
+from climatoology.base.exception import ClimatoologyUserError
 
 from heating_emissions.components.census_data import (
     extract_dominant_characteristics,

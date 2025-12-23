@@ -1,22 +1,26 @@
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-from climatoology.base.artifact import _Artifact, create_plotly_chart_artifact
+from climatoology.base.artifact import Artifact, ArtifactMetadata
+from climatoology.base.artifact_creators import create_plotly_chart_artifact
 from climatoology.base.computation import ComputationResources
 from plotly.graph_objs import Figure
 
 from heating_emissions.components.utils import Topics
 
 
-def build_daily_emission_lineplot_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> _Artifact:
-    return create_plotly_chart_artifact(
-        figure=aoi_aggregate,
-        title='Line plot of regional daily heating emissions',
-        caption=f'Daily CO₂ emissions from heating residential buildings. '
+def build_daily_emission_lineplot_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    daily_emission_lineplot_artifact_metadata = ArtifactMetadata(
+        name='Line plot of regional daily heating emissions',
+        summary=f'Daily CO₂ emissions from heating residential buildings. '
         f'Simulated yearly emissions are {round(np.sum(aoi_aggregate["data"][0].y) / 1000, 2)} tonnes of CO₂.',
-        resources=resources,
         filename='aoi_dailyCO2_line',
         tags={Topics.TEMPORAL},
+    )
+    return create_plotly_chart_artifact(
+        figure=aoi_aggregate,
+        metadata=daily_emission_lineplot_artifact_metadata,
+        resources=resources,
     )
 
 

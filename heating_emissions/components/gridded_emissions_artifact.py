@@ -5,10 +5,12 @@ import matplotlib
 import numpy as np
 import pandas as pd
 from climatoology.base.artifact import (
+    Artifact,
+    ArtifactMetadata,
     ContinuousLegendData,
-    _Artifact,
-    create_geojson_artifact,
+    Legend,
 )
+from climatoology.base.artifact_creators import create_vector_artifact
 from climatoology.base.computation import ComputationResources
 from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
@@ -20,7 +22,7 @@ log = logging.getLogger(__name__)
 
 def build_gridded_artifact(
     result: gpd.GeoDataFrame, resources: ComputationResources, output: str = 'co2', per_capita: bool = True
-) -> _Artifact:
+) -> Artifact:
     output_column = 'co2_emissions_per_capita'
     file_name = 'heating_emissions_per_capita'
     emission_type = 'Per capita'
@@ -95,29 +97,32 @@ def build_gridded_artifact(
     norm = Normalize(vmin=legend_lower_cap, vmax=legend_upper_cap)
     cmap = matplotlib.colormaps.get('YlOrRd')
     cmap.set_under('#808080')
-    color = artifact_data[output_column].apply(lambda v: Color(to_hex(cmap(norm(v)))))
-    legend = ContinuousLegendData(
+    artifact_data_4326['color'] = artifact_data[output_column].apply(lambda v: Color(to_hex(cmap(norm(v)))))
+    legend_data = ContinuousLegendData(
         cmap_name='YlOrRd',
         ticks={f'> {legend_upper_cap}': 1, low_bound_tick_label: 0},
     )
-
-    return create_geojson_artifact(
-        features=artifact_data_4326.geometry,
-        layer_name=layer_name,
-        caption=caption,
+    gridded_artifact_metadata = ArtifactMetadata(
+        name=layer_name,
+        summary=caption,
         description=description,
-        color=color,
-        label=artifact_data[output_column].to_list(),
-        legend_data=legend,
-        resources=resources,
         filename=file_name,
         tags=tags,
+    )
+    return create_vector_artifact(
+        data=artifact_data_4326,
+        metadata=gridded_artifact_metadata,
+        label=output_column,
+        legend=Legend(
+            legend_data=legend_data,
+        ),
+        resources=resources,
     )
 
 
 def build_gridded_artifact_classdata(
     uncalculated_census_data: gpd.GeoDataFrame | pd.DataFrame, resources: ComputationResources, output: str
-) -> _Artifact:
+) -> Artifact:
     # maps of building age and dominant energy source
     output_column = output
     file_name = output
@@ -148,19 +153,20 @@ def build_gridded_artifact_classdata(
     color_list = [Color(to_hex(_)) for _ in color_list]
     color_list.append(Color('#808080'))  # the last category: unknown
     color_map = dict(zip(color_categories.values(), color_list))
-    color = artifact_data[output_column].map(color_map)
+    artifact_data_4326['color'] = artifact_data[output_column].map(color_map)
 
-    # pass legend and use the default setting -> read 'create_geojson_artifact' explanation.
-
-    return create_geojson_artifact(
-        features=artifact_data_4326.geometry,
-        layer_name=layer_name,
-        caption=caption,
+    # pass legend and use the default setting -> read 'create_vector_artifact' explanation.
+    gridded_artifact_classdata_metadata = ArtifactMetadata(
+        name=layer_name,
+        summary=caption,
         description=description,
-        color=color,
-        label=artifact_data[output_column].to_list(),
-        legend_data=color_map,
-        tags={Topics.PARAMETERS},
-        resources=resources,
         filename=file_name,
+        tags={Topics.PARAMETERS},
+    )
+    return create_vector_artifact(
+        data=artifact_data_4326,
+        metadata=gridded_artifact_classdata_metadata,
+        label=output_column,
+        legend=Legend(legend_data=color_map),
+        resources=resources,
     )
