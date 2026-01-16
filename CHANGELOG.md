@@ -7,6 +7,10 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.0...main)
 - Updating the plugin to use the climatoology version 7
+
+### Fixed
+- add a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany" error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
+
 ## [2.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.0) - 2025-11-19
 
 ### Fixed
