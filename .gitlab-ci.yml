@@ -29,7 +29,6 @@ unit_tests:
       - $PRE_COMMIT_HOME
       - .venv
   before_script:
-    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.heigit.org".insteadOf "ssh://git@gitlab.heigit.org:2022"
     - python3 -m venv .venv
     - source .venv/bin/activate
     - pip install poetry==2.1.3
@@ -108,7 +107,6 @@ build_staging:
       docker --config ~/ca_config \
         buildx build \
         --builder=kube \
-        --secret id=CI_JOB_TOKEN \
         --build-arg "CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}" \
         --cache-from=type=registry,ref=${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:buildcache \
         --cache-to=type=registry,ref=${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:buildcache,mode=max \
@@ -132,7 +130,6 @@ build_release:
         buildx build \
         --builder=kube \
         --platform=linux/amd64 \
-        --secret id=CI_JOB_TOKEN \
         --tag ${REGISTRY_URL}/${GROUP_NAME}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} \
         --push \
         .

@@ -11,7 +11,7 @@ readme = "README.md"
 
 requires-python = ">=3.13.5,<3.14"
 dependencies = [
-    "climatoology @ git+ssh://git@gitlab.heigit.org:2022/climate-action/climatoology.git@7.0.0",
+    "climatoology @ git+https://gitlab.heigit.org/climate-action/climatoology.git@7.0.0",
     "pydantic (>=2.8.2,<3.0.0)",
     "pydantic-settings (>=2.1.0,<3.0.0)",
     "pydantic-extra-types (>=2.10.5,<3.0.0)",

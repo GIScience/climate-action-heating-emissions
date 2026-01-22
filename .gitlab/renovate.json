@@ -3,16 +3,24 @@
   "schedule": [
     "* * 1 * *"
   ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchUpdateTypes": [
         "patch"
       ],
+      "automerge": true,
       "groupName": "dependency patches"
     },
     {
       "matchUpdateTypes": [
-        "minor"
+        "minor",
+        "lockFileMaintenance"
+      ],
+      "schedule": [
+        "* 0-3 1 * *"
       ],
       "groupName": "dependency feature release updates"
     },
@@ -24,7 +32,7 @@
         "major",
         "minor"
       ],
-      "enabled": false
+      "minimumReleaseAge": "12 months"
     }
   ]
 }

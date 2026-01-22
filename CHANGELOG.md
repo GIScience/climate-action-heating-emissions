@@ -11,6 +11,9 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ### Fixed
 - add a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany" error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
 
+### Removed
+- all the shenanigans around accessing a private climatoology repository because that is now public
+
 ## [2.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.0) - 2025-11-19
 
 ### Fixed

@@ -9,7 +9,6 @@ coverage.xml
 data/
 playground.py
 
-CI_JOB_TOKEN
 resources/Zensus2022_Bevoelkerungszahl_100m-Gitter.csv
 resources/Zensus2022_Durchschn_Flaeche_je_Bewohner_100m-Gitter.csv
 resources/Zensus2022_Gebaeude_nach_Baujahr_in_Mikrozensus_Klassen_100m-Gitter.csv
