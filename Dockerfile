@@ -1,4 +1,4 @@
-FROM python:3.13.5-bookworm
+FROM python:3.13.11-bookworm
 SHELL ["/bin/bash", "-c"]
 
 ARG CI_COMMIT_SHORT_SHA
