@@ -3180,14 +3180,14 @@ rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
 [[package]]
 name = "rioxarray"
-version = "0.20.0"
+version = "0.21.0"
 description = "geospatial xarray extension powered by rasterio"
 optional = false
 python-versions = ">=3.12"
 groups = ["main"]
 files = [
-    {file = "rioxarray-0.20.0-py3-none-any.whl", hash = "sha256:197b0638146dfc6093ef52f8bf8afb42757ca16bc2e0d87b6282ce54170c9799"},
-    {file = "rioxarray-0.20.0.tar.gz", hash = "sha256:8bfc7e979edc7e30b4671d638a9be0e5a7d673dab2ea88e2445d3c7745599c02"},
+    {file = "rioxarray-0.21.0-py3-none-any.whl", hash = "sha256:f8793822f09ab7de3a82ffe711beff4cdf313a860ff86df0942f3385374ac562"},
+    {file = "rioxarray-0.21.0.tar.gz", hash = "sha256:a292d96f4d6412c05ff09629b72523ae2e9c42598183f5e9c555fc368f867c0f"},
 ]
 
 [package.dependencies]
@@ -3195,7 +3195,7 @@ numpy = ">=2"
 packaging = "*"
 pyproj = ">=3.3"
 rasterio = ">=1.4.3"
-xarray = ">=2024.7.0"
+xarray = ">=2024.7.0,<2025.12"
 
 [package.extras]
 all = ["scipy"]
@@ -3813,14 +3813,14 @@ files = [
 
 [[package]]
 name = "xarray"
-version = "2025.12.0"
+version = "2025.11.0"
 description = "N-D labeled arrays and datasets in Python"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "xarray-2025.12.0-py3-none-any.whl", hash = "sha256:9e77e820474dbbe4c6c2954d0da6342aa484e33adaa96ab916b15a786181e970"},
-    {file = "xarray-2025.12.0.tar.gz", hash = "sha256:73f6a6fadccc69c4d45bdd70821a47c72de078a8a0313ff8b1e97cd54ac59fed"},
+    {file = "xarray-2025.11.0-py3-none-any.whl", hash = "sha256:986893b995de4a948429356a3897d78e634243c1cac242bd59d03832b9d72dd1"},
+    {file = "xarray-2025.11.0.tar.gz", hash = "sha256:d7a4aa4500edbfd60676b1613db97da309ab144cac0bcff0cbf483c61c662af1"},
 ]
 
 [package.dependencies]
