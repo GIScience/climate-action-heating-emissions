@@ -117,7 +117,7 @@ Images are automatically built and deployed in the [CI-pipeline](.gitlab-ci.yml)
 In case you want to manually build and run locally (e.g. to test a new feature in development), execute
 
 ```shell
-docker build --secret id=CI_JOB_TOKEN . --tag repo.heigit.org/climate-action/heating-emissions:devel
+docker build . --tag repo.heigit.org/climate-action/heating-emissions:devel
 ```
 
 Note that this will overwrite any existing image with the same tag (i.e. the one you previously pulled from the Climate
@@ -125,6 +125,19 @@ Action docker registry).
 
 To mimic the build behaviour of the CI you have to add `--build-arg CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)`
 to the above command.
+
+#### Canary
+
+To build a canary version update your `climatoology` dependency declaration to point to the `main` branch and update
+your lock file (`poetry update climatoology`).
+Then run
+
+```shell
+docker build . \
+  --build-arg CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD) \
+  --tag repo.heigit.org/climate-action/walkability:canary \
+  --push
+```
 
 ### Run
 
