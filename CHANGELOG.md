@@ -5,14 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.0...main)
-- Updating the plugin to use the climatoology version 7
+## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.1...main)
+
+## [2.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.1) - 2026-02-12
+
+- Updated the plugin to use the climatoology version 7.0.3
 
 ### Fixed
-- add a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany" error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
+- Added a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany" error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
 
 ### Removed
-- all the shenanigans around accessing a private climatoology repository because that is now public
+- All the shenanigans around accessing a private climatoology repository because that is now public
 
 ## [2.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.0) - 2025-11-19
 

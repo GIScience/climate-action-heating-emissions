@@ -64,7 +64,7 @@ To run your plugin locally requires the following setup:
 
 1. Set up the [infrastructure](https://gitlab.heigit.org/climate-action/infrastructure) locally in `devel` mode
 2. Copy your [.env.base_template](.env.base_template) to `.env.base` and update it
-3. Run `poetry run python {plugin-name}/plugin.py`
+3. Run `poetry run python heating_emissions/plugin.py`
 
 If you want to run your plugin through Docker, refer to
 the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).

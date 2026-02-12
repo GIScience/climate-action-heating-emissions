@@ -1,6 +1,6 @@
 [project]
 name = "heating-emissions"
-version = "2.0.0"
+version = "2.0.1"
 description = "This indicator computes annual carbon dioxide emissions from residential space heating in an area of interest within Germany"
 authors = [
     { name = "Sebastian Block", email = "sebastian.block@heigit.org" },
@@ -11,7 +11,7 @@ readme = "README.md"
 
 requires-python = ">=3.13.5,<3.14"
 dependencies = [
-    "climatoology @ git+https://gitlab.heigit.org/climate-action/climatoology.git@7.0.0",
+    "climatoology @ git+https://gitlab.heigit.org/climate-action/climatoology.git@7.0.3",
     "pydantic (>=2.8.2,<3.0.0)",
     "pydantic-settings (>=2.1.0,<3.0.0)",
     "pydantic-extra-types (>=2.10.5,<3.0.0)",
@@ -25,7 +25,8 @@ dependencies = [
     "netCDF4 (>=1.7.3,<2.0.0)",
     "ecmwf-datastores-client (>=0.4.1,<1.0.0)",
     "pandas-stubs (>=2.3.3,<2.4.0)",
-    "psycopg[binary] (>=3.2.10,<4.0.0)"
+    "psycopg[binary] (>=3.2.10,<4.0.0)",
+    "psycopg2-binary (>=2.9.11,<3.0.0)"
 ]
 
 [project.urls]
