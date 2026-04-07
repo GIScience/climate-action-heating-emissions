@@ -20,7 +20,8 @@ VARIABLES_demand_ninja = {
 # source: Supplementary Table 4
 # https://static-content.springer.com/esm/art%3A10.1038%2Fs41560-023-01341-5/MediaObjects/41560_2023_1341_MOESM1_ESM.pdf
 DEMAND_NINJA_THRESHOLD = {
-    'heating_threshold': 15,  # 14.7, # Celsius degree # might be 15 in Germany based on https://proceedings.ises.org/citation?doi=swc.2023.06.05&mode=list
+    # °C in Germany based on https://proceedings.ises.org/citation?doi=swc.2023.06.05&mode=list
+    'heating_threshold': 15,
     'heating_power': 107 / 1000,  # mean + 0.5 std (monthly gas in EU), # kW per Celsius degree per capita
     'smoothing': 0.42,  # 0.62 (daily electricity, avg EU), 0.42 (daily gas, avg UK).
     'solar_gains': 0.019,  # daily electricity in EU
@@ -37,13 +38,12 @@ def calc_2m_specific_humidity(dew_temp_2m: np.ndarray, surf_pressure: np.ndarray
         2. ECMWF IFS doc (chapter 7, section 7.2.1(b) - Saturation specific humidity):
             https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes
 
-    Parameters:
-    dew_temp_2m (np.ndarray): Dew point temperature at 2 meters in Kelvin.
-    surf_pressure (np.ndarray): Surface pressure in Pascals.
-
-    Returns:
-    np.ndarray: Specific humidity at 2 meters (dimensionless, kg/kg).
+    :param np.ndarray dew_temp_2m: Dew point temperature at 2 meters in Kelvin.
+    :param np.ndarray surf_pressure: Surface pressure in Pascals.
+    :return: Specific humidity at 2 meters (dimensionless, kg/kg).
+    :rtype: np.ndarray
     """
+
     # Constants from Buck (1981) for saturation over water, to calculate saturation vapour pressure
     a1 = 611.21  # in Pa
     a3 = 17.502
@@ -82,8 +82,8 @@ def era5_data_preprocess(dataset: xarray.Dataset) -> xarray.Dataset:
     # 4. align units used in demand ninja
     ## t2m: from K to Celsius
     ## q2m: from kg/kg to g/kg
-    ## wind2m: already in m/s
-    ## ssrd: already in W/m2
+    ## ignore wind2m: already in m/s
+    ## ignore ssrd: already in W/m2
     dataset['t2m'] = dataset['t2m'] - 273.15  # Convert from Kelvin to Celsius
     dataset['q2m'] = dataset['q2m'] * 1000.0  # Convert from kg/kg to g/kg
 
