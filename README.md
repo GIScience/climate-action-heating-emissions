@@ -31,24 +31,8 @@ Co2online gave us permission to use their data in this plugin.
 
 
 ### Emission factors
-We use carbon dioxide emission factors from the Probas database for [gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=4c06c7a1-cdec-46cd-9929-0df2a70b8897&version=02.44.152&stock=PUBLIC&lang=de), [oil](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=26f4942c-889a-4b07-a2e7-3c6d8e74227e&version=02.44.152&stock=PUBLIC&lang=de), and [coal](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=cb66d367-05d9-485e-b301-24f7b88b4320&version=02.44.152&stock=PUBLIC&lang=de). Note that we use emission factors for "unit processes", meaning that they include emissions related to burning the fuels for heat, but do not include other upstream and downstream emissions in the lifecycle of the fuels.
-
-| Energy carrier                      | Emission factor (kg of CO₂/kWh) | Source / Notes |
-|-------------------------------------|---------------------------------|----------------|
-| Gas                                 | 0.20029                         | Probas         |
-| Oil                                 | 0.26793                         | Probas         |
-| Coal                                | 0.33661                         | Probas         |
-| Wood pellets                        | 0.34000                         | Note 1         |
-| Biomass/Biogas                      | 0.20029                         | Note 1         |
-| District heating                    | 0.00000                         | Note 2         |
-| Electricity                         | 0.00000                         | Note 2         |
-| Solar/Geothermal/Environmental Heat | 0.00000                         | Note 2         |
-
-- **Note 1**: The model estimates emissions associated with heating without accounting for the full lifecycle of the energy carriers. This means that we estimate the CO2 released while burning biomass without considering that carbon was only recently captured through photosynthesis. Hence, we used emission factors similar to gas and coal for biogas/biomass and wood pellets, respectively.
-
-- **Note 2**: The model estimates territorial (scope 1) emissions. Since no emissions are generated directly at buildings heated with electricity, heat pumps, and district heating, these emission factors are 0. Heating these buildings likely still generates emissions (for example, for electricity generation), but these happen elsewhere (e.g., at power or district heating plants).
-
-- **Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories above, weighting by the number of buildings with each carrier across all of Germany.
+We use two types of emission factors: Direct (scope 1) and life cycle (scope 1, 2 and 3).
+Details are documented in our [methodology](https://gitlab.heigit.org/climate-action/plugins/heating-emissions#emission-factors).
 
 ### Weather data
 We use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview) for the heating demand simulation by `demand_ninja` model.

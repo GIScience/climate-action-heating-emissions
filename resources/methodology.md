@@ -4,15 +4,15 @@ How much carbon dioxide do we emit when heating our homes? This depends on three
 
 2. Energy efficiency: how much energy do we need to heat one square meter? This depends on how well insulated buildings are, but also on how we ventilate our homes during winter.
 
-3. Energy source: how do we heat? Do we use a gas boiler, an oil furnace, a fireplace, or a heat pump? The source (or "carrier") of energy determines how much CO2 is emitted (and where) for each kWh of heating energy we use.
+3. Energy source: how do we heat? Do we use a gas boiler, an oil furnace, a fireplace, or a heat pump? The source (or "carrier") of energy determines how much CO₂ is emitted (and where) for each kWh of heating energy we use.
 
-The 2022 German national census provides spatial information (on a 100-m grid) that allows us to calculate (or estimate) each of these key variables in any 100-m grid cell across Germany. The calculation involves only three steps:
+The 2022 German national census provides spatial information that allows us to estimate each of these key variables in any 100-m grid cell across Germany.
 
 1. multiply population by the average living space per capita to obtain total living space (i.e., the space that is presumably heated).
 
-2. calculate the average heating energy consumption rate (kWh per m2) of residential buildings based on buildings' year of construction.
+2. calculate the average heating energy consumption rate (kWh per m²) of residential buildings based on buildings' year of construction.
 
-3. calculate average carbon dioxide emissions per unit of heating energy (kg per kWh) based on the proportion of different heating energy carriers (e.g., gas, oil, wood, district heating, etc.).
+3. calculate average carbon dioxide emissions per unit of heating energy (kg per kWh) based on the proportion of buildings with different heating energy carriers (e.g., gas, oil, wood, district heating, etc.).
 
 Emission estimates are the product of total living space, average energy consumption rate, and average emission factor.
 
@@ -42,29 +42,53 @@ We use energy consumption values for buildings of different age classes from [co
 
 
 ### Emission factors
-We use carbon dioxide emission factors from the Probas database for [gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=4c06c7a1-cdec-46cd-9929-0df2a70b8897&version=02.44.152&stock=PUBLIC&lang=de), [oil](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=26f4942c-889a-4b07-a2e7-3c6d8e74227e&version=02.44.152&stock=PUBLIC&lang=de), and [coal](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=cb66d367-05d9-485e-b301-24f7b88b4320&version=02.44.152&stock=PUBLIC&lang=de). Note that we use emission factors for "unit processes", meaning that they include emissions related to burning the fuels for heat, but do not include other upstream and downstream emissions in the lifecycle of the fuels.
+We use emission factors from the ProBas database of Germany's Federal Environment Agency. We use two distinct sets of emission factors to estimate both direct and life cycle emissions.
+
+**Direct (scope 1) emissions** are based on emission factors for "unit processes", meaning that they include emissions related to burning fuels for heat, but do not include other upstream and downstream emissions in the lifecycle of the fuels.
+
+We use carbon dioxide emission factors from the ProBas database for [gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=4c06c7a1-cdec-46cd-9929-0df2a70b8897&version=02.44.152&stock=PUBLIC&lang=de), [oil](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=26f4942c-889a-4b07-a2e7-3c6d8e74227e&version=02.44.152&stock=PUBLIC&lang=de), and [coal](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=cb66d367-05d9-485e-b301-24f7b88b4320&version=02.44.152&stock=PUBLIC&lang=de).
 
 | Energy carrier                      | Emission factor (kg of CO₂/kWh) | Source / Notes |
 |-------------------------------------|---------------------------------|----------------|
-| Gas                                 | 0.20029                         | Probas         |
-| Oil                                 | 0.26793                         | Probas         |
-| Coal                                | 0.33661                         | Probas         |
+| Gas                                 | 0.20029                         | ProBas         |
+| Oil                                 | 0.26793                         | ProBas         |
+| Coal                                | 0.33661                         | ProBas         |
 | Wood pellets                        | 0.34000                         | Note 1         |
 | Biomass/Biogas                      | 0.20029                         | Note 1         |
 | District heating                    | 0.00000                         | Note 2         |
 | Electricity                         | 0.00000                         | Note 2         |
 | Solar/Geothermal/Environmental Heat | 0.00000                         | Note 2         |
 
-- **Note 1**: The model estimates emissions associated with heating without accounting for the full lifecycle of the energy carriers. This means that we estimate the CO2 released while burning biomass without considering that carbon was only recently captured through photosynthesis. Hence, we used emission factors similar to gas and coal for biogas/biomass and wood pellets, respectively.
+- **Note 1**: direct emissions do not include the full lifecycle of the energy carriers. That is, we estimate the CO₂ released while burning biomass without considering that those carbon atoms were only recently captured through photosynthesis. Hence, we used emission factors similar to gas and coal for biogas/biomass and wood pellets, respectively.
 
-- **Note 2**: The model estimates territorial (scope 1) emissions. Since no emissions are generated directly at buildings heated with electricity, heat pumps, and district heating, these emission factors are 0. Heating these buildings likely still generates emissions (for example, for electricity generation), but these happen elsewhere (e.g., at power or district heating plants).
+- **Note 2**: No CO₂ is emitted directly from heating buildings with electricity, heat pumps, and district heating, so these emission factors are 0. Heating such buildings can nonetheless generate emissions elsewhere (for example, at power or district heating plants), which are captured by the life-cycle emission estimates.
 
 - **Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories above, weighting by the number of buildings with each carrier across all of Germany.
 
+
+**Life cycle emissions** additionally include upstream and downstream emissions (e.g., energy production, processing, and distribution), and thus are based on Life Cycle Inventory emission factors from ProBas.
+
+In contrast to direct emissions, which include only carbon dioxide, life cycle emissions include other greenhouse gases and are thus reported in units of CO₂-equivalents by multiplying the emission of different gases by their respective global warming potential (GWP) over 100 years (ProBas uses GWP values from the IPCC AR5 report).
+
+We use GHG (carbon dioxide equivalents) emission factors from the ProBas database. For [gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=c6fb47f4-dafa-4aea-b009-1dbf9ca1d8ca&lang=de) and [oil](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=0593c706-4ee5-44ae-85ef-bd60eac7c9c8&lang=de) we assume buildings use condensing boilers. For [coal](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=127daa60-ce89-4ad3-9fc2-dd9932481d41&version=02.44.152&stock=PUBLIC) we assume lignite briquettes. For [wood](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=74cfbbc8-96d4-49ae-8052-6ec8d8ece18f&version=02.44.152&stock=PUBLIC&lang=en) we assume wood pieces are burned in a central heating system. For [district heating](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=6dc315d7-c017-46ed-99f8-05ff57de1702&lang=de), we assume the German mix in 2020. Note that this is an average value, and the actual emissions can vary widely depending on the energy source at the district heating plant, which could be coal, gas, wood, a heat pump, etc. Similarly, for [electricity](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=6abaf6e8-ad5f-434d-bd0d-9d4682bba924&version=02.44.152&stock=PUBLIC&lang=en) we assume the average German mix in 2020. For [heat pumps](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=0d3ea28c-3efa-449f-897c-8dfaa291c4e7&version=02.44.152&stock=PUBLIC&lang=en) we assume air heat pumps powered with the average German electricity mix in 2020.
+
+| Energy carrier                      | Emission factor (kg of CO₂-eq./kWh) | Source / Notes  |
+|-------------------------------------|-------------------------------------|-----------------|
+| Gas                                 | 0.232                               | ProBas          |
+| Oil                                 | 0.318                               | ProBas          |
+| Coal                                | 0.646                               | ProBas          |
+| Wood pellets                        | 0.017                               | ProBas          |
+| Biomass/Biogas                      | 0.017                               | Note 4          |
+| District heating                    | 0.154                               | ProBas          |
+| Electricity                         | 0.417                               | ProBas          |
+| Solar/Geothermal/Environmental Heat | 0.130                               | ProBas          |
+
+- **Note 4**: The Biomass/Biogas category includes different biogenic fuels for which ProBas does not provide emission factors. We thus use the same emission factor as for wood. This assumption is unlikely to have a large effect on the results at scales of whole neighborhoods and above, since less than 0.1% of residences in Germany are heated with this energy carrier.
+-
 ### Other data sources
-- German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year, plotted in the respective histogram): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
-- German average per capita carbon dioxide emissions from residential heating (2.2 t per year, plotted in the respective histogram): [UBA](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
-- German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): own calculation
+- German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal Environment Agency](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
+- German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country using the emission factors listed above.
 
 ## Uncertainty
 
@@ -83,6 +107,8 @@ However, this assumption can introduce uncertainty within a grid cell because bu
 Our method only accounts for the number of buildings, not their sizes. It therefore assigns one-third of the weight to the older building and two-thirds to the newer ones when calculating the average energy consumption. In reality, the older building represents most of the heated area in the grid cell. Since older buildings tend to consume more energy due to poorer insulation, this approach would underestimate the true heating energy consumption in this example, since the high-energy-demand building receives too little weight in the calculation.
 
 Similar uncertainty is introduced in the weighting by the fraction of buildings with each type of heating energy carrier (from Census data) to obtain the average emission factor in each grid cell.
+
+Moreover, we do not account for potential correlations between the age of the buildings and their energy carrier. Older buildings are more likely to have dirty energy carriers, such as oil heaters, while newer buildings are more likely to have heat pumps. Ignoring the potential correlations results in an underestimation of emissions.
 
 ## Basic Knowledge
 

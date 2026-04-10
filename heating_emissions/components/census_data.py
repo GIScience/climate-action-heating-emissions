@@ -10,10 +10,11 @@ from sqlalchemy import Engine, MetaData, select
 
 from heating_emissions.components.utils import (
     BUILDING_AGES,
-    EMISSION_FACTORS,
+    EMISSION_FACTORS_DIRECT,
+    EMISSION_FACTORS_LIFE_CYCLE,
     ENERGY_SOURCES,
     HEAT_CONSUMPTION,
-    postprocess_uncalculate_census_data,
+    postprocess_uncalculated_census_data,
 )
 
 log = logging.getLogger(__name__)
@@ -31,7 +32,7 @@ def collect_census_data(
     """Read all required census data and return it as a single geodataframe."""
     raster_grid = get_clipped_census_grid(db_connection=db_connection, aoi=aoi)
     census_data, uncalculated_census_data = get_census_tables_from_db(db_connection, raster_grid)
-    uncalculated_census_data = postprocess_uncalculate_census_data(uncalculated_census_data)
+    uncalculated_census_data = postprocess_uncalculated_census_data(uncalculated_census_data)
     return census_data, uncalculated_census_data
 
 
@@ -73,23 +74,31 @@ def get_census_tables_from_db(
         'census_de.population': clean_population_data,
         'census_de.residential_living_space': clean_living_space_data,
         'census_de.residential_buildings_by_year': clean_building_age_data,
-        'census_de.residential_heating_sources': clean_energy_source_data,
     }
 
-    census_data = []
-    uncalculated_census_data = []
+    census_data_raw = []
+    uncalculated_census_data_raw = []
     for table, cleaning_fn in tables_and_cleaning_fns.items():
         log.debug(f'Querying database table {table}')
         result = query_table_from_db(db_connection, raster_grid.index, table)
         result, uncalculated_data = cleaning_fn(result)
-        census_data.append(result)
+        census_data_raw.append(result)
 
         if uncalculated_data is not None:
-            uncalculated_census_data.append(uncalculated_data)
+            uncalculated_census_data_raw.append(uncalculated_data)
         else:
-            uncalculated_census_data.append(result)
+            uncalculated_census_data_raw.append(result)
 
-    return raster_grid.join(census_data), raster_grid.join(uncalculated_census_data)
+    census_data = raster_grid.join(census_data_raw)
+    uncalculated_census_data = raster_grid.join(uncalculated_census_data_raw)
+
+    energy_data_raw = query_table_from_db(db_connection, raster_grid.index, 'census_de.residential_heating_sources')
+    energy_data = clean_energy_source_data_all(energy_data_raw)
+
+    census_energy = census_data.join(energy_data)
+    uncalculated_census_energy = uncalculated_census_data.join(energy_data)
+
+    return census_energy, uncalculated_census_energy
 
 
 def query_table_from_db(db_connection: DatabaseConnection, raster_ids: pd.Series, table: str) -> pd.DataFrame:
@@ -134,7 +143,20 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, p
     return building_counts['heat_consumption'], building_counts['dominant_age']
 
 
-def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, pd.Series]:
+def clean_energy_source_data_all(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    direct, dominant_energy = clean_energy_source_data(census_data, mode='direct')
+    life_cycle, _ = clean_energy_source_data(census_data, mode='life_cycle')
+
+    return pd.DataFrame(
+        {
+            'direct': direct,
+            'life_cycle': life_cycle,
+            'dominant_energy': dominant_energy,
+        }
+    )
+
+
+def clean_energy_source_data(census_data: gpd.GeoDataFrame, mode: str) -> tuple[pd.Series, pd.Series]:
     with pd.option_context('future.no_silent_downcasting', True):
         cropped_energy_data = census_data.fillna(0).infer_objects(copy=False)
 
@@ -146,9 +168,15 @@ def clean_energy_source_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, 
 
     # Average emission factor in grid cell given heat mix (in kg of CO2 per kWh)
     cropped_energy_data['emission_factor'] = 0.0
-    for fuel, emissions in EMISSION_FACTORS.items():
+
+    if mode == 'direct':
+        emission_factors = EMISSION_FACTORS_DIRECT
+    elif mode == 'life_cycle':
+        emission_factors = EMISSION_FACTORS_LIFE_CYCLE
+
+    for energy_carrier, ef in emission_factors.items():
         cropped_energy_data['emission_factor'] = cropped_energy_data['emission_factor'] + (
-            emissions * (cropped_energy_data[fuel] / (cropped_energy_data['computed_total_buildings']))
+            ef * (cropped_energy_data[energy_carrier] / (cropped_energy_data['computed_total_buildings']))
         )
 
     # For grid cells with no Energy Carrier data, assign average emission factor in AOI

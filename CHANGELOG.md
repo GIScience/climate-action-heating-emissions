@@ -7,6 +7,9 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.1...main)
 
+### Added
+- Total life cycle emission artifacts ([#31](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/31))
+
 ## [2.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.1) - 2026-02-12
 
 - Updated the plugin to use the climatoology version 7.0.3

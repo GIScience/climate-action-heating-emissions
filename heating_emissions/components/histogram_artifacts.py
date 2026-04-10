@@ -9,19 +9,38 @@ from plotly.graph_objs import Figure
 from heating_emissions.components.utils import Topics
 
 
-def build_per_capita_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
-    per_capita_co2_histogram_artifact_metadata = ArtifactMetadata(
-        name='Histogram per capita emissions',
-        summary=f'Average carbon dioxide emissions from heating residential buildings (Estimated) '
+def build_per_capita_direct_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    per_capita_direct_co2_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram per capita direct emissions',
+        summary=f'Average direct carbon dioxide emissions from heating residential buildings (Estimated) '
         f'are {round(np.mean(aoi_aggregate["data"][0].x), 2)} tonnes per person per year, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)} tonnes.',
-        filename='aoi_C02pc_histogram',
-        tags={Topics.EMISSIONS},
+        filename='aoi_direct_C02pc_histogram',
+        tags={Topics.DIRECT_EMISSIONS},
     )
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
-        metadata=per_capita_co2_histogram_artifact_metadata,
+        metadata=per_capita_direct_co2_histogram_artifact_metadata,
+        resources=resources,
+    )
+
+
+def build_per_capita_life_cycle_co2_histogram_artifact(
+    aoi_aggregate: Figure, resources: ComputationResources
+) -> Artifact:
+    per_capita_life_cycle_co2_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram per capita life cycle emissions ',
+        summary=f'Average life cycle GHG emissions from heating residential buildings (Estimated) '
+        f'are {round(np.mean(aoi_aggregate["data"][0].x), 2)} tonnes of CO₂-eq. per person per year, '
+        f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
+        f' {round(np.max(aoi_aggregate["data"][0].x), 2)} tonnes.',
+        filename='aoi_life_cycle_C02pc_histogram',
+        tags={Topics.LIFE_CYCLE_EMISSIONS},
+    )
+    return create_plotly_chart_artifact(
+        figure=aoi_aggregate,
+        metadata=per_capita_life_cycle_co2_histogram_artifact_metadata,
         resources=resources,
     )
 
@@ -43,39 +62,87 @@ def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: Computatio
     )
 
 
-def build_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
-    emission_factor_histogram_artifact_metadata = ArtifactMetadata(
-        name='Histogram emission factor',
-        summary=f'Average emission factor from heating residential buildings (Estimated) '
+def build_direct_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
+    direct_emission_factor_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram direct emission factor',
+        summary=f'Average direct emission factor from heating residential buildings (Estimated) '
         f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kg of carbon dioxide per kWh, '
         f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
         f' {round(np.max(aoi_aggregate["data"][0].x), 2)}.',
-        filename='aoi_ef_histogram',
-        tags={Topics.PARAMETERS},
+        filename='aoi_direct_ef_histogram',
+        tags={Topics.DIRECT_EMISSIONS},
     )
     return create_plotly_chart_artifact(
         figure=aoi_aggregate,
-        metadata=emission_factor_histogram_artifact_metadata,
+        metadata=direct_emission_factor_histogram_artifact_metadata,
         resources=resources,
     )
 
 
-def plot_per_capita_co2_histogram(
+def build_life_cycle_emission_factor_histogram_artifact(
+    aoi_aggregate: Figure, resources: ComputationResources
+) -> Artifact:
+    life_cycle_emission_factor_histogram_artifact_metadata = ArtifactMetadata(
+        name='Histogram life cycle emission factor',
+        summary=f'Average life cycle emission factor from heating residential buildings (Estimated) '
+        f'is {round(np.mean(aoi_aggregate["data"][0].x), 2)} kg CO₂-eq. per kWh, '
+        f'but range from {round(np.min(aoi_aggregate["data"][0].x), 2)} to '
+        f' {round(np.max(aoi_aggregate["data"][0].x), 2)}.',
+        filename='aoi_life_cycle_ef_histogram',
+        tags={Topics.LIFE_CYCLE_EMISSIONS},
+    )
+    return create_plotly_chart_artifact(
+        figure=aoi_aggregate,
+        metadata=life_cycle_emission_factor_histogram_artifact_metadata,
+        resources=resources,
+    )
+
+
+def plot_per_capita_direct_co2_histogram(
     census_data: gpd.GeoDataFrame,
 ) -> Figure:
     hist_plot = Figure(
         data=go.Histogram(
-            x=census_data['co2_emissions_per_capita'] / 1e3,  # result in tonnes,
+            x=census_data['direct_co2_emissions_per_capita'] / 1e3,  # result in tonnes,
             hovertemplate='%{y:.1f} % of cells emit %{x} tonnes of carbon dioxide per person per year <extra></extra>',
             histnorm='percent',
         ),
         layout=go.Layout(
             title=dict(
-                text='Per capita carbon dioxide emissions from residential heating (Estimated)',
+                text='Per capita direct carbon dioxide emissions from residential heating (Estimated)',
                 subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),
             xaxis=dict(title=dict(text='annual tonnes of carbon dioxide per person')),
+        ),
+    )
+    hist_plot.add_vline(
+        x=2.2,
+        line_width=1.5,
+        line_dash='dot',
+        annotation_text='German average',
+        annotation_position='top left',
+        annotation_textangle=-90,
+    )
+    return hist_plot
+
+
+def plot_per_capita_life_cycle_co2_histogram(
+    census_data: gpd.GeoDataFrame,
+) -> Figure:
+    hist_plot = Figure(
+        data=go.Histogram(
+            x=census_data['life_cycle_co2_emissions_per_capita'] / 1e3,  # result in tonnes,
+            hovertemplate='%{y:.1f} % of cells emit %{x} tonnes of kg CO₂-eq. per person per year <extra></extra>',
+            histnorm='percent',
+        ),
+        layout=go.Layout(
+            title=dict(
+                text='Per capita life cycle GHG emissions from residential heating (Estimated)',
+                subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
+            ),
+            font=dict(size=12),
+            xaxis=dict(title=dict(text='annual tonnes of CO₂-eq. per person')),
         ),
     )
     hist_plot.add_vline(
@@ -119,19 +186,49 @@ def plot_energy_consumption_histogram(
     return hist_plot
 
 
-def plot_emission_factor_histogram(
+def plot_direct_emission_factor_histogram(
     census_data: gpd.GeoDataFrame,
 ) -> Figure:
     hist_plot = Figure(
         data=go.Histogram(
-            x=census_data['emission_factor'],
+            x=census_data['direct_emission_factor'],
             hovertemplate='Buildings in %{y:.1f} % of cells emit %{x} kg of carbon dioxide'
             ' per kWh of heating energy used <extra></extra>',
             histnorm='percent',
         ),
         layout=go.Layout(
             title=dict(
-                text='Average emission factor from heating in residential buildings (Estimated)',
+                text='Average direct emission factor from heating in residential buildings (Estimated)',
+                subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
+            ),
+            font=dict(size=12),
+            xaxis=dict(title=dict(text='kg of carbon dioxide per kWh of heating')),
+        ),
+    )
+    hist_plot.add_vline(
+        x=0.199,
+        line_width=1.5,
+        line_dash='dot',
+        annotation_text='German average',
+        annotation_position='top left',
+        annotation_textangle=-90,
+    )
+    return hist_plot
+
+
+def plot_life_cycle_emission_factor_histogram(
+    census_data: gpd.GeoDataFrame,
+) -> Figure:
+    hist_plot = Figure(
+        data=go.Histogram(
+            x=census_data['life_cycle_emission_factor'],
+            hovertemplate='Buildings in %{y:.1f} % of cells emit %{x} kg of carbon dioxide'
+            ' per kWh of heating energy used <extra></extra>',
+            histnorm='percent',
+        ),
+        layout=go.Layout(
+            title=dict(
+                text='Average life cycle emission factor from heating in residential buildings (Estimated)',
                 subtitle=dict(text='% of 100-m grid cells in area of interest', font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),

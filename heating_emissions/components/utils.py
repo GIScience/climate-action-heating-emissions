@@ -6,7 +6,7 @@ import geopandas as gpd
 log = logging.getLogger(__name__)
 
 # Define dictionary with emission factors
-EMISSION_FACTORS = {  # in kg of CO2 per kWh og heating
+EMISSION_FACTORS_DIRECT = {  # in kg of CO2 per kWh of heating
     'gas': 0.20029,
     'heating_oil': 0.26739,
     'wood': 0.34,
@@ -15,6 +15,17 @@ EMISSION_FACTORS = {  # in kg of CO2 per kWh og heating
     'electricity': 0.0,
     'coal': 0.33661,
     'district_heating': 0.0,
+}
+
+EMISSION_FACTORS_LIFE_CYCLE = {  # in kg of CO2eq per kWh of heating
+    'gas': 0.232,
+    'heating_oil': 0.318,
+    'wood': 0.017,
+    'biomass_biogas': 0.017,
+    'solar_geothermal_heat_pumps': 0.130,
+    'electricity': 0.417,
+    'coal': 0.646,
+    'district_heating': 0.154,
 }
 
 ## Based on data from https://www.wohngebaeude.info/daten/#/heizen/bundesweit
@@ -56,7 +67,8 @@ ENERGY_SOURCES = {
 
 
 class Topics(StrEnum):
-    EMISSIONS = 'emissions'
+    DIRECT_EMISSIONS = 'direct_emissions'
+    LIFE_CYCLE_EMISSIONS = 'life_cycle_emissions'
     PARAMETERS = 'parameters'
     TEMPORAL = 'temporally flexible simulation'
 
@@ -72,20 +84,25 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
         census_data['average_sqm_per_person'].mean()
     )
     census_data['heat_consumption'] = census_data['heat_consumption'].fillna(census_data['heat_consumption'].mean())
-    census_data['emission_factor'] = census_data['emission_factor'].fillna(census_data['emission_factor'].mean())
+    for mode in ['direct', 'life_cycle']:
+        census_data[f'{mode}_emission_factor'] = census_data[mode].fillna(census_data[mode].mean())
 
-    census_data['heated_area'] = census_data['population'] * census_data['average_sqm_per_person']
-    census_data['co2_emissions'] = (
-        census_data['heated_area'] * census_data['heat_consumption'] * census_data['emission_factor']
-    ).round()  # result in kg of CO2 per year
-    census_data['co2_emissions_per_capita'] = (
-        census_data['average_sqm_per_person'] * census_data['heat_consumption'] * census_data['emission_factor']
-    ).round()  # result in kg of CO2 per year
+        census_data[f'{mode}_heated_area'] = census_data['population'] * census_data['average_sqm_per_person']
+        census_data[f'{mode}_co2_emissions'] = (
+            census_data[f'{mode}_heated_area']
+            * census_data['heat_consumption']
+            * census_data[f'{mode}_emission_factor']
+        ).round()  # result in kg of CO2 per year
+        census_data[f'{mode}_co2_emissions_per_capita'] = (
+            census_data['average_sqm_per_person']
+            * census_data['heat_consumption']
+            * census_data[f'{mode}_emission_factor']
+        ).round()  # result in kg of CO2 per year
 
     return census_data
 
 
-def postprocess_uncalculate_census_data(uncalculated_census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def postprocess_uncalculated_census_data(uncalculated_census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     uncalculated_census_data[['dominant_age', 'dominant_energy']] = uncalculated_census_data[
         ['dominant_age', 'dominant_energy']
     ].fillna('Unknown')

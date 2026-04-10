@@ -23,7 +23,7 @@ def test_operator_compute_german_request(
         params=default_compute_input,
     )
 
-    assert len(computed_artifacts) == 10
+    assert len(computed_artifacts) == 15
     for artifact in computed_artifacts:
         assert isinstance(artifact, Artifact)
 
@@ -68,7 +68,7 @@ def test_operator_compute_german_request_all_optionals(
             params=compute_input,
         )
 
-    assert len(computed_artifacts) == 12
+    assert len(computed_artifacts) == 15
     for artifact in computed_artifacts:
         assert isinstance(artifact, Artifact)
 
