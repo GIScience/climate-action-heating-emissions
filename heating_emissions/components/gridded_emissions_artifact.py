@@ -29,36 +29,32 @@ def build_gridded_artifact(
         file_name = 'direct_heating_emissions_per_capita'
         emission_type = 'Per capita'
         legend_upper_cap = 3000
-        legend_lower_cap = 0
-        tags = {Topics.DIRECT_EMISSIONS}
         if not per_capita:
             output_column = 'direct_co2_emissions'
             file_name = 'direct_heating_emissions_absolute'
             emission_type = 'Absolute'
             legend_upper_cap = 150000
-            tags = {Topics.DIRECT_EMISSIONS}
 
         layer_name = f'{emission_type} direct CO₂ emissions (kg/year)'
         caption = f'{emission_type} direct CO₂ emissions from residential heating per year per 100-m pixel'
         description = '**Estimated** direct CO₂ emissions from heating residential buildings.'
+        tags = {Topics.DIRECT_EMISSIONS}
 
     if output == 'life_cycle_co2_emissions':
         output_column = 'life_cycle_co2_emissions_per_capita'
         file_name = 'life_cycle_heating_emissions_per_capita'
         emission_type = 'Per capita'
         legend_upper_cap = 3000
-        legend_lower_cap = 0
-        tags = {Topics.LIFE_CYCLE_EMISSIONS}
         if not per_capita:
             output_column = 'life_cycle_co2_emissions'
             file_name = 'life_cycle_heating_emissions_absolute'
             emission_type = 'Absolute'
             legend_upper_cap = 150000
-            tags = {Topics.LIFE_CYCLE_EMISSIONS}
 
         layer_name = f'{emission_type} life cycle GHG emissions (kg CO₂eq/year)'
         caption = f'{emission_type} life cycle GHG emissions from residential heating per 100-m pixel (kg CO₂eq/year)'
         description = '**Estimated** life cycle GHG emissions from heating residential buildings.'
+        tags = {Topics.LIFE_CYCLE_EMISSIONS}
 
     if output == 'heat_consumption':
         output_column = output
@@ -110,6 +106,12 @@ def build_gridded_artifact(
     if 'yearly_emissions' in output:
         output_column, output_year = output.split(':')
         file_name = output_column
+        emission_type = 'Per capita'
+        legend_upper_cap = 3000
+        if not per_capita:
+            emission_type = 'Absolute'
+            legend_upper_cap = 150000
+
         layer_name = f'{emission_type} CO₂ emissions (Simulated, {output_year}) (kg/year)'
         caption = f'{emission_type} CO₂ emissions from residential heating per 100-m pixel (Simulated, {output_year})'
         description = (

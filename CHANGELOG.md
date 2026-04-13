@@ -10,6 +10,9 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ### Added
 - Total life cycle emission artifacts ([#31](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/31))
 
+### Fixed
+- Fixed bug of temporal downscaling computation which is broken by added life cycle emission estimation ([#66](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/66))
+
 ## [2.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.1) - 2026-02-12
 
 - Updated the plugin to use the climatoology version 7.0.3

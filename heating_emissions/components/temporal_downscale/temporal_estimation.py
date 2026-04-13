@@ -73,7 +73,7 @@ def calculate_hourly_emissions_permonth(
     :param hourly_demand: DataFrame with columns ['valid_time', 'latitude', 'longitude', 'heating_demand']
     :param census_data: GeoDataFrame with columns
                             ['fid', 'raster_id_100m', 'x_mp_100m', 'y_mp_100m',
-                             'population', 'average_sqm_per_person', 'heat_consumption', 'emission_factor']
+                             'population', 'average_sqm_per_person', 'heat_consumption', 'direct', 'life_cycle']
     :return
         census_data: return census data with 'monthly_emissions' estimates
         emission_hourly_regional: return ['valid_time', 'regional_hourly_emissions']
@@ -105,7 +105,7 @@ def calculate_hourly_emissions_permonth(
     for hr, hr_demand in gdf_hourly_demand.groupby('valid_time'):
         hr_demand = hr_demand[['latitude', 'longitude', 'heating_demand']]
         census_data_w_hourly_demand = pd.merge(
-            census_data[['raster_id_100m', 'lon_era5', 'lat_era5', 'emission_factor', 'population', 'geometry']],
+            census_data[['raster_id_100m', 'lon_era5', 'lat_era5', 'direct', 'population', 'geometry']],
             hr_demand,
             left_on=['lat_era5', 'lon_era5'],
             right_on=['latitude', 'longitude'],
@@ -115,7 +115,7 @@ def calculate_hourly_emissions_permonth(
         census_data_w_hourly_demand['hourly_emissions'] = (
             census_data_w_hourly_demand['heating_demand']
             * census_data_w_hourly_demand['population']
-            * census_data_w_hourly_demand['emission_factor']
+            * census_data_w_hourly_demand['direct']
         )
         census_data_w_hourly_demand.set_index('raster_id_100m', inplace=True)
 
@@ -151,7 +151,8 @@ def calculate_time_downscale_emissions(
     get_era5_data_4_energy_estimation(cdsapi_client, year, city_name, aoi, savedir, estimate_months, runtime_limit)
 
     # data pre-processing: fillna in census data
-    census_data['emission_factor'] = census_data['emission_factor'].fillna(census_data['emission_factor'].mean())
+    # todo: support temporal downscaling by both mode ['direct', 'life_cycle'] or selected mode.
+    census_data['direct'] = census_data['direct'].fillna(census_data['direct'].mean())
 
     # calculate the emissions for each month in a year
     region_hourly_emissions = []

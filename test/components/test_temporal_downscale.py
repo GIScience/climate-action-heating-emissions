@@ -44,6 +44,7 @@ def test_calculate_hourly_emissions_permonth():
     )
     hourly_demand = pd.read_csv('resources/test/temporal_downscale/hourly_demand_2022-1_heidelberg.csv')
 
+    calculated_census_data.rename(columns={'emission_factor': 'direct'}, inplace=True)
     emission_map, emission_hourly_regional = calculate_hourly_emissions_permonth(hourly_demand, calculated_census_data)
 
     expected_index_map = ['raster_id_100m']
