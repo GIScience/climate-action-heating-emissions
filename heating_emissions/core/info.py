@@ -1,14 +1,13 @@
 from datetime import timedelta
 from pathlib import Path
-from typing import Type
 
 from climatoology.base.plugin_info import PluginAuthor, PluginInfo, generate_plugin_info
-from pydantic import BaseModel, HttpUrl
+from pydantic import HttpUrl
 
 from heating_emissions.core.input import ComputeInput
 
 
-def get_info(params: Type[BaseModel]) -> PluginInfo:
+def get_info() -> PluginInfo:
     info = generate_plugin_info(
         name='Heating Emissions',
         icon=Path('resources/heating-radiator.jpeg'),

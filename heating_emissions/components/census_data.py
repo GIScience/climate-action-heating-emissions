@@ -1,10 +1,10 @@
-import logging
 from dataclasses import dataclass
 
 import geopandas as gpd
 import pandas as pd
 import shapely
 from climatoology.base.exception import ClimatoologyUserError
+from climatoology.base.logging import get_climatoology_logger
 from geoalchemy2 import WKTElement
 from sqlalchemy import Engine, MetaData, select
 
@@ -17,7 +17,7 @@ from heating_emissions.components.utils import (
     postprocess_uncalculated_census_data,
 )
 
-log = logging.getLogger(__name__)
+log = get_climatoology_logger(__name__)
 
 
 @dataclass
@@ -105,11 +105,12 @@ def query_table_from_db(db_connection: DatabaseConnection, raster_ids: pd.Series
     db_table = db_connection.metadata.tables[table]
     query = select(db_table).where(db_table.c.raster_id_100m.in_(raster_ids))
     with db_connection.engine.connect() as conn:
-        result = conn.execute(query).mappings().all()
-    return pd.DataFrame(result).set_index('raster_id_100m')
+        raw_data = conn.execute(query).mappings().all()
+    result = pd.DataFrame(raw_data).set_index('raster_id_100m')
+    return result
 
 
-def clean_population_data(census_data: pd.DataFrame) -> tuple[pd.DataFrame, None]:
+def clean_population_data(census_data: pd.DataFrame) -> tuple[pd.Series, None]:
     return census_data['population'].fillna(0), None
 
 
@@ -117,7 +118,7 @@ def clean_living_space_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, N
     return census_data['average_sqm_per_person'].fillna(0), None
 
 
-def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, pd.Series]:
+def clean_building_age_data(census_data: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
     building_counts = census_data.fillna(0)
 
     building_ages_columns = list(BUILDING_AGES.keys())
@@ -126,6 +127,10 @@ def clean_building_age_data(census_data: gpd.GeoDataFrame) -> tuple[pd.Series, p
     building_ages = building_counts[building_ages_columns]
 
     building_counts['computed_total_buildings'] = building_ages.sum(axis='columns')
+    no_buildings = building_counts['computed_total_buildings'] < 1
+    if no_buildings.any():
+        log.debug(f'No building in census areas {building_counts.index[no_buildings]}, ignoring.')
+        building_counts = building_counts[~no_buildings]
 
     building_counts['heat_consumption'] = 0.0
     for age, heat_consumption_factor in HEAT_CONSUMPTION.items():
@@ -202,7 +207,7 @@ def extract_dominant_characteristics(census_dominant_data: gpd.GeoDataFrame, dom
             raise ValueError(f'Unknown dominant_character: {dominant_character}')
 
     census_dominant_data = census_dominant_data.rename(columns=new_columns_names)
-    census_dominant_data = census_dominant_data.replace({0: None}).idxmax(axis=1)
+    census_dominant_data = census_dominant_data.idxmax(axis=1)
     census_dominant_data = census_dominant_data.fillna('Unknown')
 
     return census_dominant_data

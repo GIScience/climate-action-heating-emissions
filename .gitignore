@@ -1,5 +1,6 @@
 .env
 .env.base
+.env.feature
 .idea/
 __pycache__/
 .pytest_cache/
@@ -7,6 +8,7 @@ __pycache__/
 coverage.xml
 
 data/
+results/
 playground.py
 
 resources/Zensus2022_Bevoelkerungszahl_100m-Gitter.csv

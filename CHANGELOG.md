@@ -8,41 +8,65 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.1...main)
 
 ### Added
-- Total life cycle emission artifacts ([#31](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/31))
+
+- Total life cycle emission
+  artifacts ([#31](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/31))
+- stand-alone mode to run the plugin without the need of the CA platform.
 
 ### Fixed
-- Fixed bug of temporal downscaling computation which is broken by added life cycle emission estimation ([#66](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/66))
+
+- Fixed bug of temporal downscaling computation which is broken by added life cycle emission
+  estimation ([#66](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/66))
 
 ## [2.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.1) - 2026-02-12
 
 - Updated the plugin to use the climatoology version 7.0.3
 
 ### Fixed
-- Added a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany" error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
+
+- Added a 2km buffer to Germany boundary for AOI within checking, avoiding "Germany is outside Germany"
+  error ([#36](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/36))
 
 ### Removed
+
 - All the shenanigans around accessing a private climatoology repository because that is now public
 
 ## [2.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.0) - 2025-11-19
 
 ### Fixed
-- rename results' index from 'raster_id_100m' to 'index' to support the grid value visualization in dashboard ([41](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/41)
+
+- rename results' index from 'raster_id_100m' to 'index' to support the grid value visualization in
+  dashboard ([41](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/41)
 
 ### Changed
+
 - Introduced artifact tags ([40](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/40))
-- Changed the database connection to read tables from the `census_de` schema ([#32](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/32))
-- Ignore total_buildings column from census when computing emission factors and heating consumption ([#39](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/39))
-- Changed colormap of construction year and energy carrier artifacts to coolwarm_r ([#48](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/48))
-- Changed default waiting time for downloading era5 data to 120 minutes ([#51](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/51))
+- Changed the database connection to read tables from the `census_de`
+  schema ([#32](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/32))
+- Ignore total_buildings column from census when computing emission factors and heating
+  consumption ([#39](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/39))
+- Changed colormap of construction year and energy carrier artifacts to
+  coolwarm_r ([#48](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/48))
+- Changed default waiting time for downloading era5 data to 120
+  minutes ([#51](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/51))
 
 ### Added
-- Maps of dominant building ages and energy carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))
-- Tests for gridded artifact functions, several functions in utils, and get_clipped_census_grid ([24](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/24), [38](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/38))
-- Paragraph on uncertainty sources to methodology description ([#44](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/44))
-- Temporal flexible emission simulation: Provide yearly emission maps with daily emission line chart (Deactivated in production due to long runtime) ([#6](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/6))
-- Line with mean emission factor in emission factor histogram ([#45](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/45))
-- Description of 'estimated' information in plugin purpose and layer's description([#49](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/49))
-- Highlight Scope 1 emissions and its effect of emissions associated with district heating, and Description of Scope 1, 2, and 3 emissions in methodology ([#50](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/50))
+
+- Maps of dominant building ages and energy
+  carriers ([28](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/28))
+- Tests for gridded artifact functions, several functions in utils, and
+  get_clipped_census_grid ([24](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/24), [38](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/38))
+- Paragraph on uncertainty sources to methodology
+  description ([#44](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/44))
+- Temporal flexible emission simulation: Provide yearly emission maps with daily emission line chart (Deactivated in
+  production due to long runtime) ([#6](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/6))
+- Line with mean emission factor in emission factor
+  histogram ([#45](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/45))
+- Description of 'estimated' information in plugin purpose and layer's
+  description([#49](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/49))
+- Highlight Scope 1 emissions and its effect of emissions associated with district heating, and Description of Scope 1,
+  2, and 3 emissions in
+  methodology ([#50](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/50))
 
 ## [1.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.1) - 2025-06-04
 
@@ -56,25 +80,32 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ### Added
 
-- Information about emission factors and their source to the methodology ([29](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/29))
+- Information about emission factors and their source to the
+  methodology ([29](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/29))
 
 ## [1.1.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.1.0) - 2025-06-03
 
 ### Changed
 
-- Mapped emissions are now in vector (geoJSON) format, allowing better display and downloading of actual emissions data ([18](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/18))
-- Expanded methodology with more context for non-technical users ([19](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/19))
-- Simplified legend annotation to avoid capitalization typos ([15](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/15))
-- Capped maximum values for color maps of per capita and absolute emissions ([25](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/25))
+- Mapped emissions are now in vector (geoJSON) format, allowing better display and downloading of actual emissions
+  data ([18](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/18))
+- Expanded methodology with more context for non-technical
+  users ([19](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/19))
+- Simplified legend annotation to avoid capitalization
+  typos ([15](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/15))
+- Capped maximum values for color maps of per capita and absolute
+  emissions ([25](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/25))
 
 ### Added
 
-- Gridded maps of emission drivers: emission factor, energy consumption, and living space per capita ([26](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/26))
-- Reference lines for histograms of per capita emissions and energy consumption ([10](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/10))
+- Gridded maps of emission drivers: emission factor, energy consumption, and living space per
+  capita ([26](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/26))
+- Reference lines for histograms of per capita emissions and energy
+  consumption ([10](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/10))
 - Safety check and error message for AOIs without residential buildings
 
-- Test for check_aoi() to see if it correctly catches AOIs outside of Germany ([16](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/16))
-
+- Test for check_aoi() to see if it correctly catches AOIs outside of
+  Germany ([16](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/issues/16))
 
 ## [1.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/1.0.1) - 2025-05-14
 
@@ -89,6 +120,6 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Absolute Heating Emissions Artifact
 - Per Capita Heating Emissions Artifact
 - Histograms of:
-  - per capita CO2 emissions
-  - energy consumption
-  - emission factors
+    - per capita CO2 emissions
+    - energy consumption
+    - emission factors

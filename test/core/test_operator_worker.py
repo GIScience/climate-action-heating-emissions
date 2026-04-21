@@ -3,9 +3,8 @@ from unittest.mock import patch
 import pytest
 from climatoology.base.artifact import Artifact
 from climatoology.base.exception import ClimatoologyUserError
-from climatoology.base.plugin_info import PluginInfo
+from climatoology.base.plugin_info import DEFAULT_LANGUAGE, PluginInfo
 
-from heating_emissions.core.input import TemporalEmissionsInput
 from heating_emissions.core.operator_worker import calculate_time_downscale_emissions
 
 
@@ -21,6 +20,7 @@ def test_operator_compute_german_request(
         aoi=default_german_aoi,
         aoi_properties=default_aoi_properties,
         params=default_compute_input,
+        language=DEFAULT_LANGUAGE,
     )
 
     assert len(computed_artifacts) == 15
@@ -38,10 +38,7 @@ def test_operator_compute_german_request_all_optionals(
     default_era5_data_dir,
 ):
     compute_input = default_compute_input.model_copy(deep=True)
-    compute_input.optional_temporal_emission = TemporalEmissionsInput(
-        is_active=True,
-        year=2022,
-    )
+    compute_input.temporal_emission_year = 2022
 
     def fake_estimate_months(*args, **kwargs):
         kwargs['estimate_months'] = [1, 2]
@@ -66,6 +63,7 @@ def test_operator_compute_german_request_all_optionals(
             aoi=default_german_aoi,
             aoi_properties=default_aoi_properties,
             params=compute_input,
+            language=DEFAULT_LANGUAGE,
         )
 
     assert len(computed_artifacts) == 17
@@ -86,4 +84,5 @@ def test_check_aoi_outside_germany(
             aoi=default_non_german_aoi,
             aoi_properties=default_non_german_aoi_properties,
             params=default_compute_input,
+            language=DEFAULT_LANGUAGE,
         )

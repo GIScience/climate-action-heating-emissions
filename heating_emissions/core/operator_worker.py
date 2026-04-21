@@ -2,7 +2,7 @@
 # Well ... python imports: https://discuss.python.org/t/warning-when-importing-a-local-module-with-the-same-name-as-a-2nd-or-3rd-party-module/27799
 import logging
 import time
-from typing import List
+from typing import List, Optional
 
 import geopandas as gpd
 import shapely
@@ -10,9 +10,10 @@ from climatoology.base.baseoperator import AoiProperties, Artifact, BaseOperator
 from climatoology.base.exception import ClimatoologyUserError
 from climatoology.base.plugin_info import PluginInfo
 from ecmwf.datastores import Client
-from geoalchemy2 import (
-    Geometry,  # noqa: F401 (Geometry import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables)
-)
+
+# import is required for table reflection: https://geoalchemy-2.readthedocs.io/en/latest/core_tutorial.html#reflecting-tables
+from geoalchemy2 import Geometry  # noqa: F401
+from pydantic_extra_types.language_code import LanguageAlpha2
 from sqlalchemy import MetaData, NullPool, create_engine
 
 from heating_emissions.components.census_data import DatabaseConnection, collect_census_data
@@ -48,7 +49,7 @@ log = logging.getLogger(__name__)
 
 
 class Operator(BaseOperator[ComputeInput]):
-    def __init__(self, ca_database_url: str, cdsapi_client: Client):
+    def __init__(self, ca_database_url: str, cdsapi_client: Optional[Client]):
         super().__init__()
 
         engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'], poolclass=NullPool)
@@ -58,7 +59,7 @@ class Operator(BaseOperator[ComputeInput]):
         self.cdsapi_client = cdsapi_client
 
     def info(self) -> PluginInfo:
-        return get_info(ComputeInput)
+        return get_info()
 
     def compute(  # dead: disable
         self,
@@ -66,6 +67,8 @@ class Operator(BaseOperator[ComputeInput]):
         aoi: shapely.MultiPolygon,
         aoi_properties: AoiProperties,
         params: ComputeInput,
+        language: LanguageAlpha2,
+        **kwargs,
     ) -> List[Artifact]:
         # record start time to monitor the running time and raise an error when the temporal estimation timeout.
         plugin_start_time = time.time()
@@ -154,10 +157,12 @@ class Operator(BaseOperator[ComputeInput]):
         ]
 
         # temporal downscaling emissions
-        if params.optional_temporal_emission.is_active:
+        if params.temporal_emission_year is not None:
             optional_func_start_time = time.time() - plugin_start_time  # unit: seconds
             runtime_limit = 121 * 60 - optional_func_start_time
             with self.catch_exceptions(indicator_name='Temporal_emissions', resources=resources):
+                assert self.cdsapi_client is not None, 'CDS API client must be configured to run temporal downscaling'
+
                 year = params.temporal_emission_year
                 census_data.index.names = ['raster_id_100m']
                 census_yearly_emi_user, region_daily_emissions = calculate_time_downscale_emissions(

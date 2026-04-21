@@ -1,21 +1,33 @@
 # <img src="resources/heating-radiator.jpeg" width="5%"> Space heating emissions
 
-Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions. This plugin estimates annual building space heating emissions by combining open data from various sources. In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022 census, and includes only _residential_ buildings.
+Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions.
+This plugin estimates annual building space heating emissions by combining open data from various sources.
+In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022
+census, and includes only _residential_ buildings.
 
-We also provide the *simulated* daily emission estimates for a self-defined year. This estimate is simulated based on the [demand_ninja](https://doi.org/10.1038/s41560-023-01341-5) model and our emission factors.
+We also provide the *simulated* daily emission estimates for a self-defined year.
+This estimate is simulated based on the [demand_ninja](https://doi.org/10.1038/s41560-023-01341-5) model and our
+emission factors.
 
 ## Data sources
 
 ### Spatial data
-Gridded data from the German 2022 census can be downloaded [here](https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#Gitterdaten2022). We use the four following datasets:
+
+Gridded data from the German 2022 census can be
+downloaded [here](https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#Gitterdaten2022).
+We use the four following datasets:
 
 1. Population counts ("Bevölkerungszahlen in Gitterzellen")
 2. Living space per capita ("Durchschnittliche Wohnfläche je Bewohner in Gitterzellen")
 3. Building year of construction ("Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen")
-4. Heating energy carriers in residential buildings ("Gebäude mit Wohnraum nach Energieträger der Heizung in Gitterzellen")
+4. Heating energy carriers in residential buildings ("Gebäude mit Wohnraum nach Energieträger der Heizung in
+   Gitterzellen")
 
 ### Energy consumption rates
-We use energy consumption values for buildings of different age classes from [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), which are based on measurements from over 300 thousand buildings across Germany, and are adjusted by temperature differences.
+
+We use energy consumption values for buildings of different age classes
+from [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), which are based on measurements from over 300
+thousand buildings across Germany, and are adjusted by temperature differences.
 Co2online gave us permission to use their data in this plugin.
 
 | Age class    | Energy consumption (kWh/m²) | Building standard |
@@ -29,35 +41,72 @@ Co2online gave us permission to use their data in this plugin.
 | 2011 to 2019 | 74.1                        | EnEV 2007*        |
 | Since 2019   | 74.1                        | EnEV 2007*        |
 
-
 ### Emission factors
+
 We use two types of emission factors: Direct (scope 1) and life cycle (scope 1, 2 and 3).
 Details are documented in our [methodology](https://gitlab.heigit.org/climate-action/plugins/heating-emissions#emission-factors).
 
 ### Weather data
-We use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview) for the heating demand simulation by `demand_ninja` model.
+
+We
+use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+for the heating demand simulation by `demand_ninja` model.
 The weather data-based heating demand estimates are further used for the daily emission estimation.
+
 - 2m_temperature
-- specific humidity calculated by *2m_dewpoint_temperature* and *surface_pressure* ([reference: 7.2.1(b)](https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes))
+- specific humidity calculated by *2m_dewpoint_temperature* and
+  *surface_pressure* ([reference: 7.2.1(b)](https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes))
 - wind speed calculated by *10m_u_component_of_wind* and *10m_v_component_of_wind*
 - surface_solar_radiation_downwards
 
+## Starting the plugin
+
+### Preparation
+
+To prepare running the plugin you have to have access or set up a database containing the required data.
+See the [CA data repository](https://gitlab.heigit.org/climate-action/dev-ops/data-etl) for an explanation of how to
+achieve that.
+
+Optionally, you will need a CDASPI key if you want to run the temporal downscaling model.
+Acquire one from [ECMWF](https://cds.climate.copernicus.eu/how-to-api).
+
+Now copy the `.env_template` with `cp .env_template .env` and fill it with the above acquired information.
+
+### Execute
+
+There are two ways how to start the plugin.
+To run a single computation run `poetry run plugin compute --aoi-file resources/aoi-template.geojson`.
+See `poetry run plugin compute --help` for more info on customisation.
+To run the plugin as an entity connected to the CA platform, see [below](#development-setup).
+
+### Docker
+
+The tool is also [Dockerised](Dockerfile).
+
+To build and run the docker image execute
+
+```shell
+docker build . --tag heating-emissions
+docker run \
+  --env-file .env \
+  -v ./resources/aoi-template.geojson:/resources/aoi.geojson  \
+  -v ./results:/results \
+  --rm \
+  heating-emissions compute
+```
+
+To change the target AOI mount a different AOI file with `-v`.
+
 ## Development setup
 
-To run your plugin locally requires the following setup:
+To run your plugin locally as an entity of the CA platform requires the following setup:
 
 1. Set up the [infrastructure](https://gitlab.heigit.org/climate-action/infrastructure) locally in `devel` mode
 2. Copy your [.env.base_template](.env.base_template) to `.env.base` and update it
-3. Run `poetry run python heating_emissions/plugin.py`
+3. Run `poetry run plugin start`
 
 If you want to run your plugin through Docker, refer to
 the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-showcase).
-
-### Further requirements
-
-Make sure you have the following installed on your machine:
-- psql (PostgreSQL) v16.10 or higher
-- postgis v3.4.2 or higher
 
 ### Testing
 
@@ -91,52 +140,3 @@ To release a new plugin version
 4. Create a [release]((https://docs.gitlab.com/ee/user/project/releases/#create-a-release-in-the-releases-page)) on
    GitLab, including a changelog
 
-## Docker
-
-### Build
-
-The tool is also [Dockerised](Dockerfile).
-Images are automatically built and deployed in the [CI-pipeline](.gitlab-ci.yml).
-
-In case you want to manually build and run locally (e.g. to test a new feature in development), execute
-
-```shell
-docker build . --tag repo.heigit.org/climate-action/heating-emissions:devel
-```
-
-Note that this will overwrite any existing image with the same tag (i.e. the one you previously pulled from the Climate
-Action docker registry).
-
-To mimic the build behaviour of the CI you have to add `--build-arg CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)`
-to the above command.
-
-#### Canary
-
-To build a canary version update your `climatoology` dependency declaration to point to the `main` branch and update
-your lock file (`poetry update climatoology`).
-Then run
-
-```shell
-docker build . \
-  --build-arg CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD) \
-  --tag repo.heigit.org/climate-action/walkability:canary \
-  --push
-```
-
-### Run
-
-If you have the Climate Infrastructure running (see [Development Setup](#development-setup)) you can now run the
-container via
-
-```shell
-docker run --rm --network=host --env-file .env.base --env-file .env repo.heigit.org/climate-action/heating-emissions:devel
-```
-
-### Deploy
-
-Deployment is handled by the GitLab CI automatically.
-If for any reason you want to deploy manually (and have the required rights), after building the image, run
-
-```shell
-docker image push repo.heigit.org/climate-action/heating-emissions:devel
-```

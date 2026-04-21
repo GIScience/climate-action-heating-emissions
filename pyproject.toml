@@ -11,7 +11,7 @@ readme = "README.md"
 
 requires-python = ">=3.13.5,<3.14"
 dependencies = [
-    "climatoology @ git+https://gitlab.heigit.org/climate-action/climatoology.git@7.0.3",
+    "climatoology @ git+https://gitlab.heigit.org/climate-action/climatoology.git@7.1.3",
     "pydantic (>=2.8.2,<3.0.0)",
     "pydantic-settings (>=2.1.0,<3.0.0)",
     "pydantic-extra-types (>=2.10.5,<3.0.0)",
@@ -26,11 +26,15 @@ dependencies = [
     "ecmwf-datastores-client (>=0.4.1,<1.0.0)",
     "pandas-stubs (>=3.0.0.0,<3.1.0)",
     "psycopg[binary] (>=3.2.10,<4.0.0)",
-    "psycopg2-binary (>=2.9.11,<3.0.0)"
+    "psycopg2-binary (>=2.9.11,<3.0.0)",
+    "click (>=8.3.1,<9.0.0)"
 ]
 
 [project.urls]
 repository = "https://gitlab.heigit.org/climate-action/plugins/heating-emissions"
+
+[project.scripts]
+plugin = "heating_emissions.plugin:plugin"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^9.0.0"
@@ -51,11 +55,10 @@ quote-style = "single"
 
 [tool.ruff.lint]
 # https://docs.astral.sh/ruff/rules
-select=[
+select = [
     # defaults
     "F",
     "E4", "E7", "E9",
-
     # additional
     "A", # be sure not to shadow built-in functions
     "I", # isort to sort imports
@@ -63,13 +66,12 @@ select=[
 
     # docstring cleaning
     "D201", "D207", "D208", "D209", "D210", "D214", "D215", "D300", "D403",
-
     # auto-remove unused 'noqa' comments
     "RUF100", "RUF101",
 ]
 
 [tool.coverage.run]
-omit = ["test/*" , "heating_emissions/core/*"]
+omit = ["test/*", "heating_emissions/core/*"]
 
 [build-system]
 requires = ["poetry-core"]

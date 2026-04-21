@@ -1,0 +1,36 @@
+{
+  "type": "Feature",
+  "properties": {
+    "name": "Heidelberg Campus",
+    "id": "123"
+  },
+  "geometry": {
+    "type": "MultiPolygon",
+    "coordinates": [
+      [
+        [
+          [
+            8.66,
+            49.42
+          ],
+          [
+            8.66,
+            49.41
+          ],
+          [
+            8.67,
+            49.41
+          ],
+          [
+            8.67,
+            49.42
+          ],
+          [
+            8.66,
+            49.42
+          ]
+        ]
+      ]
+    ]
+  }
+}
