@@ -1,4 +1,5 @@
 Estimate greenhouse gas emissions resulting from heating residential buildings in any area within Germany.
+As the underlying data is derived from the 2022 census, the results correspond to 2022 conditions.
 
 This tool provides two different types of emission estimates:
 - direct (aka, scope 1) carbon dioxide emissions which are originate directly from residential buildings as a result of burning fuels (e.g., gas, oil, wood) to generate heat.
@@ -7,4 +8,3 @@ This tool provides two different types of emission estimates:
 Residences heated with electricity, heat pumps, or district heating do not emit carbon dioxide directly, but they nonetheless contribute to climate change, which is reflected in their
 life cycle emissions. In contrast, buildings heated by burning wood emit large amounts of carbon dioxide. However, since that carbon dioxide is biogenic instead of fossil (that is, it was captured into wood via photosynthesis in the recent past), their life cycle emissions are very low.
 
-More information can be found in the methodology introduction (by clicking 'Read about the methodology').

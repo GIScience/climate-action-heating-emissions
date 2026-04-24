@@ -12,6 +12,8 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Total life cycle emission
   artifacts ([#31](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/31))
 - stand-alone mode to run the plugin without the need of the CA platform.
+- Add future roadmap & explain temporal downscaling is not available in the current version of the plugin in the README ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
+- Clarify the data year '2022' & add scope 1 & life-cycle in purpose.md ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
 
 ### Fixed
 

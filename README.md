@@ -47,6 +47,7 @@ We use two types of emission factors: Direct (scope 1) and life cycle (scope 1, 
 Details are documented in our [methodology](https://gitlab.heigit.org/climate-action/plugins/heating-emissions#emission-factors).
 
 ### Weather data
+(This data and its related function is not available to the public yet limited by slow computation speed, but will be in the future after optimization)
 
 We
 use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
@@ -58,6 +59,23 @@ The weather data-based heating demand estimates are further used for the daily e
   *surface_pressure* ([reference: 7.2.1(b)](https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes))
 - wind speed calculated by *10m_u_component_of_wind* and *10m_v_component_of_wind*
 - surface_solar_radiation_downwards
+
+## Future roadmap
+### Ongoing
+- Downscaling to hourly emission estimates by linking energy consumption to local weather, including the map of yearly simulated results and line charts showing daily emissions
+- Explanatory analysis of heating emissions
+  - Adding histograms for living space per capita
+  - Adding proportional bar plots of energy carriers and building age to compare the specific AOI with Germany.
+
+### Short-term (around next 6 months)
+- Assessing and propagating uncertainty in the spatial allocation of energy carriers at the building level
+- Simulating the effects of interventions and behavioral changes on emissions
+
+### Long-term
+- Adding estimates of water heating emissions
+- Extend to other countries
+
+If you have any suggestions for other features or improvements, please feel free to reach out to us through `climateactionnavigator@heigit.org`.
 
 ## Starting the plugin
 
