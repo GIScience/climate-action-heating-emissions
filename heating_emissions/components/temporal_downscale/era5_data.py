@@ -37,6 +37,23 @@ def open_era5_data(file_path: str) -> xarray.Dataset:
     return dataset
 
 
+def snap_to_era5_grid(north: float, west: float, south: float, east: float) -> list[float]:
+    """Expand bbox to nearest ERA5 grid boundaries."""
+    resolution = 0.25  # ERA5 grid resolution in degrees
+    north_snapped = np.ceil(north / resolution) * resolution
+    west_snapped = np.floor(west / resolution) * resolution
+    south_snapped = np.floor(south / resolution) * resolution
+    east_snapped = np.ceil(east / resolution) * resolution
+
+    # Ensure at least one full grid cell is covered
+    if north_snapped - south_snapped < resolution:
+        north_snapped += resolution
+    if east_snapped - west_snapped < resolution:
+        east_snapped += resolution
+
+    return [north_snapped, west_snapped, south_snapped, east_snapped]
+
+
 # async def download_era5_data(
 def submit_era5_request(
     cdsapi_client: Client, year: int, month: int, variables: list[str], area: list, output_file: str
@@ -175,7 +192,7 @@ def get_era5_data_4_energy_estimation(
 
     # Define area from AOI bounding box
     minx, miny, maxx, maxy = aoi.buffer(0.000001).bounds  # do a small buffer to avoid issues with degenerate boxes
-    area = [maxy, minx, miny, maxx]  # North, West, South, East
+    area = snap_to_era5_grid(maxy, minx, miny, maxx)  # North, West, South, East
 
     ###############
     # Download ERA5 Data

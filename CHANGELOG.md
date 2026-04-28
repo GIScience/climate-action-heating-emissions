@@ -19,6 +19,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 - Fixed bug of temporal downscaling computation which is broken by added life cycle emission
   estimation ([#66](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/66))
+- Fixed bug of temporal downscaling computation when request area is smaller than ERA5 grid size
 
 ## [2.0.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/2.0.1) - 2026-02-12
 
