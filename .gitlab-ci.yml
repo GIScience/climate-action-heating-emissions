@@ -27,7 +27,6 @@ unit_tests:
     key: $CI_COMMIT_REF_NAME
     paths:
       - $PRE_COMMIT_HOME
-      - .venv
   before_script:
     - python3 -m venv .venv
     - source .venv/bin/activate
