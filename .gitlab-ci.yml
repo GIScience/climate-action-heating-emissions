@@ -24,9 +24,14 @@ unit_tests:
     POSTGRES_VERSION: 17
     POSTGRES_HOST_AUTH_METHOD: trust
   cache:
-    key: $CI_COMMIT_REF_NAME
+    key:
+      files:
+        - poetry.lock
+      prefix: $CI_COMMIT_REF_NAME
     paths:
       - $PRE_COMMIT_HOME
+      - .venv/
+    policy: pull-push
   before_script:
     - python3 -m venv .venv
     - source .venv/bin/activate
