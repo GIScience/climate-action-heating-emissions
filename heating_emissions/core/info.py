@@ -22,7 +22,7 @@ def get_info() -> PluginInfo:
         teaser='Estimate carbon dioxide emissions from residential heating in Germany.',
         purpose=Path('resources/purpose.md'),
         methodology=Path('resources/methodology.md'),
-        demo_input_parameters=ComputeInput(temporal_emission_year=2022),
+        demo_input_parameters=ComputeInput(temporal_emission_year=None),
         computation_shelf_life=timedelta(weeks=52),
     )
     return info

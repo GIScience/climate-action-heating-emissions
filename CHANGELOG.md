@@ -17,6 +17,10 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Add future roadmap & explain temporal downscaling is not available in the current version of the plugin in the README ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
 - Clarify the data year '2022' & add scope 1 & life-cycle in purpose.md ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
 
+### Changed
+
+- Disable temporal downscaling in the demo computation ([#72](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/72))
+
 ### Fixed
 
 - Fixed bug of temporal downscaling computation which is broken by added life cycle emission
