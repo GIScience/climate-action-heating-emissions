@@ -16,8 +16,6 @@ from heating_emissions.components.temporal_downscale.temporal_utils import (
 
 log = logging.getLogger(__name__)
 
-pd.options.mode.copy_on_write = True
-
 
 def estimate_hourly_energy_demand(weather_dataset: xarray.Dataset) -> pd.DataFrame:
     """

@@ -193,9 +193,9 @@ class Operator(BaseOperator[ComputeInput]):
         return return_artifacts
 
     def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
-        aoi_as_series = gpd.GeoSeries(data=[aoi], crs='EPSG:4326')
+        aoi_as_series = gpd.GeoSeries(data=[aoi], crs='EPSG:4326').to_crs('EPSG:32632')
 
-        germany = gpd.read_file('resources/germany_buffered_boundaries.json').buffer(2e-2)
+        germany = gpd.read_file('resources/germany_buffered_boundaries.geojson').buffer(3000)
         inside_germany = aoi_as_series.within(germany.geometry)
         if not inside_germany[0]:
             raise ClimatoologyUserError(

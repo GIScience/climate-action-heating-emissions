@@ -163,7 +163,7 @@ def clean_energy_source_data_all(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFr
 
 def clean_energy_source_data(census_data: gpd.GeoDataFrame, mode: str) -> tuple[pd.Series, pd.Series]:
     with pd.option_context('future.no_silent_downcasting', True):
-        cropped_energy_data = census_data.fillna(0).infer_objects(copy=False)
+        cropped_energy_data = census_data.fillna(0).infer_objects()
 
     building_energy_columns = list(ENERGY_SOURCES.keys())
     building_energy_columns.remove('unknown')

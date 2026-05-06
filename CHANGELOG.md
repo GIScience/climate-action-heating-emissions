@@ -20,6 +20,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 ### Changed
 
 - Disable temporal downscaling in the demo computation ([#72](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/72))
+- Use geojson in projected CRS for check if AOI is in Germany ([#57](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/57))
 
 ### Fixed
 
