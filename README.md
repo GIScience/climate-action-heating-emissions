@@ -2,63 +2,15 @@
 
 Space heating is the main driver of energy consumption in buildings, and therefore of greenhouse emissions.
 This plugin estimates annual building space heating emissions by combining open data from various sources.
-In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022
-census, and includes only _residential_ buildings.
+In its current, first version, the plugin relies primarily on gridded data (100-m resolution) from the German 2022 census, and includes only _residential_ buildings.
 
-We also provide the *simulated* daily emission estimates for a self-defined year.
-This estimate is simulated based on the [demand_ninja](https://doi.org/10.1038/s41560-023-01341-5) model and our
-emission factors.
+We also provide *simulated* daily emission estimates for a self-defined year.
+This estimate is simulated based on the [demand_ninja](https://doi.org/10.1038/s41560-023-01341-5) model and our emission factors.
+(This function is not available to the public yet limited by slow computation speed, but will be in the future after optimization)
+The code for this function can be found [here](heating_emissions/components/temporal_downscale).
 
 ## Data sources
-
-### Spatial data
-
-Gridded data from the German 2022 census can be
-downloaded [here](https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#Gitterdaten2022).
-We use the four following datasets:
-
-1. Population counts ("Bevölkerungszahlen in Gitterzellen")
-2. Living space per capita ("Durchschnittliche Wohnfläche je Bewohner in Gitterzellen")
-3. Building year of construction ("Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen")
-4. Heating energy carriers in residential buildings ("Gebäude mit Wohnraum nach Energieträger der Heizung in
-   Gitterzellen")
-
-### Energy consumption rates
-
-We use energy consumption values for buildings of different age classes
-from [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), which are based on measurements from over 300
-thousand buildings across Germany, and are adjusted by temperature differences.
-Co2online gave us permission to use their data in this plugin.
-
-| Age class    | Energy consumption (kWh/m²) | Building standard |
-|--------------|-----------------------------|-------------------|
-| Before 1919  | 134.6                       |                   |
-| 1919 to 1948 | 134.6                       |                   |
-| 1949 to 1978 | 135.7                       |                   |
-| 1979 to 1990 | 126.2                       | WSchVO 1          |
-| 1991 to 2000 | 93.3                        | WSchVO 3          |
-| 2001 to 2010 | 78.5                        | EnEV 2002         |
-| 2011 to 2019 | 74.1                        | EnEV 2007*        |
-| Since 2019   | 74.1                        | EnEV 2007*        |
-
-### Emission factors
-
-We use two types of emission factors: Direct (scope 1) and life cycle (scope 1, 2 and 3).
-Details are documented in our [methodology](https://gitlab.heigit.org/climate-action/plugins/heating-emissions#emission-factors).
-
-### Weather data
-(This data and its related function is not available to the public yet limited by slow computation speed, but will be in the future after optimization)
-
-We
-use [ERA5 reanalysis weather data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
-for the heating demand simulation by `demand_ninja` model.
-The weather data-based heating demand estimates are further used for the daily emission estimation.
-
-- 2m_temperature
-- specific humidity calculated by *2m_dewpoint_temperature* and
-  *surface_pressure* ([reference: 7.2.1(b)](https://www.ecmwf.int/en/elibrary/81626-ifs-documentation-cy49r1-part-iv-physical-processes))
-- wind speed calculated by *10m_u_component_of_wind* and *10m_v_component_of_wind*
-- surface_solar_radiation_downwards
+Data sources are documented in our [methodology](resources/methodology.md?ref_type=heads#data-sources).
 
 ## Future roadmap
 ### Ongoing

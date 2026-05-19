@@ -84,7 +84,7 @@ We use GHG (carbon dioxide equivalents) emission factors from the ProBas databas
 | Solar/Geothermal/Environmental Heat | 0.130                               | ProBas          |
 
 - **Note 4**: The Biomass/Biogas category includes different biogenic fuels for which ProBas does not provide emission factors. We thus use the same emission factor as for wood. This assumption is unlikely to have a large effect on the results at scales of whole neighborhoods and above, since less than 0.1% of residences in Germany are heated with this energy carrier.
--
+
 ### Other data sources
 - German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
 - German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal Environment Agency](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
