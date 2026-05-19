@@ -10,6 +10,7 @@ import shapely
 import xarray
 from climatoology.base.exception import ClimatoologyUserError
 from ecmwf.datastores import Client, Remote
+from requests.exceptions import HTTPError
 
 from heating_emissions.components.temporal_downscale.temporal_utils import VARIABLES_NAMES, era5_data_preprocess
 
@@ -223,5 +224,14 @@ def get_era5_data_4_energy_estimation(
         raise ClimatoologyUserError(
             f'Era5 data download exceeded the time limit of {runtime_limit / 60:.2f} minutes. Temporal flexible simulation will not be computed.'
         )
-    except Exception as e:
-        raise ClimatoologyUserError(f'Era5 data download failed by the following exception:\n{e}')
+    except HTTPError as http_err:
+        response = getattr(http_err, 'response', None)
+
+        if response is not None and response.status_code == 401:
+            raise ClimatoologyUserError(
+                'Era5 data download failed due to an invalid CDSAPI_KEY. Please check your .env file.'
+            ) from http_err
+        else:
+            raise ClimatoologyUserError('There was an error downloading Era5 data. Please try again later.')
+    except Exception:
+        raise ClimatoologyUserError('There was an error downloading Era5 data. Please try again later.')
