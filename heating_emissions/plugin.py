@@ -28,7 +28,8 @@ def plugin(ctx: Context) -> None:
 
     cdsapi_client = None
     if settings.cdsapi_key is not None:
-        cdsapi_client = cds_Client(url=settings.cdsapi_url, key=settings.cdsapi_key)
+        cdsapi_client = cds_Client(url=settings.cdsapi_url, key=settings.cdsapi_key, retry_after=60, maximum_tries=20)
+        cdsapi_client.check_authentication()
 
     operator = Operator(ca_database_url=settings.ca_database_url, cdsapi_client=cdsapi_client)
 

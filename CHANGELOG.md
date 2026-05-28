@@ -17,12 +17,14 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Add future roadmap & explain temporal downscaling is not available in the current version of the plugin in the README ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
 - Clarify the data year '2022' & add scope 1 & life-cycle in purpose.md ([#63](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/63))
 - Add how this plugin relates to climate action in purpose.md ([#76](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/76))
+- Add cdsapi_client authentication check ([#78](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/78))
 
 ### Changed
 
 - Disable temporal downscaling in the demo computation ([#72](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/72))
 - Use geojson in projected CRS for check if AOI is in Germany ([#57](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/57))
 - Simplify runtime_limit, define it in get_era5_data_4_energy_estimation ([#70](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/70))
+- Set retry time for cdsapi_client to 60 sec, set max number of tries to 20 ([#78](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/78))
 
 ### Fixed
 

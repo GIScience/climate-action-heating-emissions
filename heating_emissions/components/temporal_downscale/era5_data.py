@@ -235,5 +235,6 @@ def get_era5_data_4_energy_estimation(
             ) from http_err
         else:
             raise ClimatoologyUserError('There was an error downloading Era5 data. Please try again later.')
-    except Exception:
+    except Exception as e:
+        log.error(e)
         raise ClimatoologyUserError('There was an error downloading Era5 data. Please try again later.')
