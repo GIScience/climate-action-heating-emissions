@@ -1,7 +1,6 @@
 # You may ask yourself why this file has such a strange name.
 # Well ... python imports: https://discuss.python.org/t/warning-when-importing-a-local-module-with-the-same-name-as-a-2nd-or-3rd-party-module/27799
 import logging
-import time
 from typing import List, Optional
 
 import geopandas as gpd
@@ -70,9 +69,6 @@ class Operator(BaseOperator[ComputeInput]):
         language: LanguageAlpha2,
         **kwargs,
     ) -> List[Artifact]:
-        # record start time to monitor the running time and raise an error when the temporal estimation timeout.
-        plugin_start_time = time.time()
-
         # Check we are within bounds of census data coverage
         self.check_aoi(aoi, aoi_properties)
 
@@ -158,8 +154,6 @@ class Operator(BaseOperator[ComputeInput]):
 
         # temporal downscaling emissions
         if params.temporal_emission_year is not None:
-            optional_func_start_time = time.time() - plugin_start_time  # unit: seconds
-            runtime_limit = 121 * 60 - optional_func_start_time
             with self.catch_exceptions(indicator_name='Temporal_emissions', resources=resources):
                 assert self.cdsapi_client is not None, 'CDS API client must be configured to run temporal downscaling'
 
@@ -172,7 +166,6 @@ class Operator(BaseOperator[ComputeInput]):
                     aoi=aoi,
                     census_data=census_data,
                     savedir=resources.computation_dir / 'weather_data',
-                    runtime_limit=runtime_limit,  # 'resources/weather_data'
                 )
 
                 census_yearly_emi_user.index.names = ['index']

@@ -186,7 +186,7 @@ def get_era5_data_4_energy_estimation(
     aoi: shapely.MultiPolygon,
     savedir: str,
     estimate_months: list = [1, 12],
-    runtime_limit: float = 20 * 60,  # seconds
+    runtime_limit: float = 120 * 60,  # seconds
 ):
     # Define output directory
     os.makedirs(savedir, exist_ok=True)
@@ -198,7 +198,9 @@ def get_era5_data_4_energy_estimation(
     ###############
     # Download ERA5 Data
     ###############
-    log.debug('downloading era5 data...')
+    log.info(
+        'Downloading era5 data. If data download does not complete within the time limit, the computation will be aborted.'
+    )
     max_num_month = 4
     # if the request monthes too many, split it into several sub-tasks to avoid depriority
     # and raise error when out time limitation

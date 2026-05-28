@@ -138,7 +138,6 @@ def calculate_time_downscale_emissions(
     census_data: gpd.GeoDataFrame,
     savedir: str,
     estimate_months: list = [1, 12],
-    runtime_limit: float = 28 * 60,
 ) -> tuple[gpd.GeoDataFrame, pd.DataFrame]:
     """Calculate daily emissions for a year based on hourly energy demand estimation.
     return:
@@ -146,7 +145,9 @@ def calculate_time_downscale_emissions(
         2. the daily emissions for plot
     """
     # download yearly era5 data
-    get_era5_data_4_energy_estimation(cdsapi_client, year, city_name, aoi, savedir, estimate_months, runtime_limit)
+    get_era5_data_4_energy_estimation(
+        cdsapi_client, year, city_name, aoi, savedir, estimate_months, runtime_limit=120 * 60
+    )
 
     # data pre-processing: fillna in census data
     # todo: support temporal downscaling by both mode ['direct', 'life_cycle'] or selected mode.

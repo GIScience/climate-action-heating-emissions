@@ -18,9 +18,7 @@ class ComputeInput(BaseModel):
             'If `None` (the default) then do not apply temporal downscaling. '
             'The emissions are calculated based on '
             'simulated heating demand profiles derived from ERA5 weather data. '
-            'Warning: The download of the ERA5 weather data may take a long time. '
-            'If data download is not complete after 30 minutes, '
-            'the temporally-downscaled simulation will be aborted. ',
+            'Warning: The download of the ERA5 weather data may take a long time. ',
             ge=2017,
             le=datetime.now().year - 1,
             examples=[2022],
