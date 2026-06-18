@@ -1,0 +1,662 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-18 18:42+0200\n"
+"PO-Revision-Date: 2026-06-18 18:44+0200\n"
+"Last-Translator: Moritz Schott <moritz.schott@heigit.org>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: resources/locales/en/methodology.md:1
+msgid "How much carbon dioxide do we emit when heating our homes? This depends on three main factors:"
+msgstr "Wie viel Kohlendioxid verursachen wir beim Heizen unserer Wohnungen? Dies hängt von drei Hauptfaktoren ab:"
+
+#: resources/locales/en/methodology.md:3
+msgid ""
+"Heated area: how large is our home and how much of it do we heat? Do we live alone in a large house or do we share a "
+"small apartment? Do we heat the entire house throughout the cold season or only the rooms we use while we use them?"
+msgstr ""
+"Beheizte Fläche: Wie groß ist unsere Wohnstätte und wie viel davon heizen wir? Wohnen wir allein in einem großen Haus "
+"oder teilen wir uns eine kleine Wohnung? Heizen wir während der kalten Jahreszeit den gesamten Wohnraum oder nur "
+"Räume, während wir sie nutzen?"
+
+#: resources/locales/en/methodology.md:5
+msgid ""
+"Energy efficiency: how much energy do we need to heat one square meter? This depends on how well insulated buildings "
+"are, but also on how we ventilate our homes during winter."
+msgstr ""
+"Energieeffizienz: Wie viel Energie benötigen wir, um einen Quadratmeter zu heizen? Das hängt davon ab, wie gut "
+"Gebäude gedämmt sind, aber auch davon, wie wir unsere Wohnungen im Winter lüften."
+
+#: resources/locales/en/methodology.md:7
+msgid ""
+"Energy source: how do we heat? Do we use a gas boiler, an oil furnace, a fireplace, or a heat pump? The source (or "
+"\"carrier\") of energy determines how much CO₂ is emitted (and where) for each kWh of heating energy we use."
+msgstr ""
+"Energiequelle: Wie heizen wir? Nutzen wir einen Gaskessel, einen Ölofen, einen Kamin oder eine Wärmepumpe? Die "
+"Energiequelle bzw. der Energieträger bestimmt, wie viel CO₂ pro kWh Heizenergie, die wir verbrauchen, ausgestoßen "
+"wird (und wo)."
+
+#: resources/locales/en/methodology.md:9
+msgid ""
+"The 2022 German national census provides spatial information that allows us to estimate each of these key variables "
+"in any 100-m grid cell across Germany."
+msgstr ""
+"Der deutsche Zensus von 2022 liefert räumliche Daten, anhand derer wir all diese Schlüsselvariablen für jede 100-"
+"Meter-Gitterzelle in ganz Deutschland schätzen können."
+
+#: resources/locales/en/methodology.md:11
+msgid ""
+"multiply population by the average living space per capita to obtain total living space (i.e., the space that is "
+"presumably heated)."
+msgstr ""
+"Multiplikation der Einwohnerzahl mit der durchschnittlichen Wohnfläche pro Kopf, um die Gesamtwohnfläche zu erhalten "
+"(d. h. die Fläche, die vermutlich beheizt wird)."
+
+#: resources/locales/en/methodology.md:13
+msgid ""
+"calculate the average area-specific heating energy consumption (kWh per m²) of residential buildings based on "
+"buildings' year of construction."
+msgstr ""
+"Berechnung des durchschnittlichen flächenbezogenen Heizenergieverbrauchs (kWh pro m²) von Wohngebäuden auf der "
+"Grundlage des Baujahres der Gebäude."
+
+#: resources/locales/en/methodology.md:15
+msgid ""
+"calculate average carbon dioxide emissions per unit of heating energy (kg per kWh) based on the proportion of "
+"buildings with different heating energy carriers (e.g., gas, oil, wood, district heating, etc.)."
+msgstr ""
+"Berechnung der durchschnittlichen Kohlendioxidemissionen pro Einheit Heizenergie (kg pro kWh) auf der Grundlage des "
+"Anteils der Gebäude mit unterschiedlichen Heizenergieträgern (z. B. Gas, Öl, Holz, Fernwärme usw.)."
+
+#: resources/locales/en/methodology.md:17
+msgid ""
+"Emission estimates are the product of total living space, average area-specific energy consumption, and average "
+"emission factor."
+msgstr ""
+"Die Emissionsschätzungen sind das Produkt aus Gesamtwohnfläche, durchschnittlichem flächenbezogenen Energieverbrauch "
+"und durchschnittlichem Emissionsfaktor."
+
+#: resources/locales/en/methodology.md:19
+msgid "Data sources"
+msgstr "Datenquellen"
+
+#: resources/locales/en/methodology.md:21
+msgid "Spatial data"
+msgstr "Räumliche Daten"
+
+#: resources/locales/en/methodology.md:22
+#, python-brace-format
+msgid "Gridded data from the German 2022 census can be downloaded [here]{1}. We use the four following datasets:"
+msgstr ""
+"Rasterdaten des deutschen Zensus 2022 können [hier]{1} heruntergeladen werden. Wir verwenden die folgenden vier "
+"Datensätze:"
+
+#: resources/locales/en/methodology.md:24
+msgid "Population counts (\"Bevölkerungszahlen in Gitterzellen\")"
+msgstr "Bevölkerung (\"Bevölkerungszahlen in Gitterzellen\")"
+
+#: resources/locales/en/methodology.md:25
+msgid "Living space per capita (\"Durchschnittliche Wohnfläche je Bewohner in Gitterzellen\")"
+msgstr "Wohnfläche pro Kopf (\"Durchschnittliche Wohnfläche je Bewohner in Gitterzellen\")"
+
+#: resources/locales/en/methodology.md:26
+msgid "Building year of construction (\"Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen\")"
+msgstr "Baujahr der Gebäude (\"Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen\")"
+
+#: resources/locales/en/methodology.md:27
+msgid ""
+"Heating energy carriers in residential buildings (\"Gebäude mit Wohnraum nach Energieträger der Heizung in "
+"Gitterzellen\")"
+msgstr "Heizenergieträger in Wohngebäuden (\"Gebäude mit Wohnraum nach Energieträger der Heizung in Gitterzellen\")"
+
+#: resources/locales/en/methodology.md:29
+msgid "Area-specific energy consumptions"
+msgstr "Flächenbezogenene Energieverbräuche"
+
+#: resources/locales/en/methodology.md:30
+#, python-brace-format
+msgid ""
+"We use energy consumption values for buildings of different age classes from [co2online]{1}, which are based on "
+"measurements from over 300 thousand buildings across Germany, and are adjusted by temperature differences."
+msgstr ""
+"Wir verwenden Energieverbrauchswerte für Gebäude verschiedener Altersklassen aus [co2online]{1}, die auf Messungen in "
+"über 300.000 Gebäuden in ganz Deutschland basieren und um Temperaturunterschiede bereinigt sind."
+
+#: resources/locales/en/methodology.md:32
+msgid "Age class"
+msgstr "Altersklasse"
+
+#: resources/locales/en/methodology.md:32
+msgid "Energy consumption (kWh/m²)"
+msgstr "Energieverbrauch (kWh/m²)"
+
+#: resources/locales/en/methodology.md:32
+msgid "Building standard"
+msgstr "Gebäudestandard"
+
+#: resources/locales/en/methodology.md:32
+msgid "Before 1919"
+msgstr "Vor 1919"
+
+#: resources/locales/en/methodology.md:32
+msgctxt "resources/locales/en/methodology.md:32"
+msgid "134.6"
+msgstr "134,6"
+
+#: resources/locales/en/methodology.md:32
+msgid "1919 to 1948"
+msgstr "1919 bis 1948"
+
+#: resources/locales/en/methodology.md:32
+msgid "1949 to 1978"
+msgstr "1949 bis 1978"
+
+#: resources/locales/en/methodology.md:32
+msgid "135.7"
+msgstr "135,7"
+
+#: resources/locales/en/methodology.md:32
+msgid "1979 to 1990"
+msgstr "1979 bis 1990"
+
+#: resources/locales/en/methodology.md:32
+msgid "126.2"
+msgstr "126,2"
+
+#: resources/locales/en/methodology.md:32
+msgid "WSchVO 1"
+msgstr "WSchVO 1"
+
+#: resources/locales/en/methodology.md:32
+msgid "1991 to 2000"
+msgstr "1991 bis 2000"
+
+#: resources/locales/en/methodology.md:32
+msgid "93.3"
+msgstr "93,3"
+
+#: resources/locales/en/methodology.md:32
+msgid "WSchVO 3"
+msgstr "WSchVO 3"
+
+#: resources/locales/en/methodology.md:32
+msgid "2001 to 2010"
+msgstr "2001 bis 2010"
+
+#: resources/locales/en/methodology.md:32
+msgid "78.5"
+msgstr "78,5"
+
+#: resources/locales/en/methodology.md:32
+msgid "EnEV 2002"
+msgstr "EnEV 2002"
+
+#: resources/locales/en/methodology.md:32
+msgid "2011 to 2019"
+msgstr "2011 bis 2019"
+
+#: resources/locales/en/methodology.md:32
+msgctxt "resources/locales/en/methodology.md:32"
+msgid "74.1"
+msgstr "74,1"
+
+#: resources/locales/en/methodology.md:32
+msgctxt "resources/locales/en/methodology.md:32"
+msgid "EnEV 2007*"
+msgstr "EnEV 2007*"
+
+#: resources/locales/en/methodology.md:32
+msgid "Since 2019"
+msgstr "Seit 2019"
+
+#: resources/locales/en/methodology.md:44
+msgid "Emission factors"
+msgstr "Emissionsfaktoren"
+
+#: resources/locales/en/methodology.md:45
+msgid ""
+"We use emission factors from the ProBas database of Germany's Federal Environment Agency. We use two distinct sets of "
+"emission factors to estimate both direct and life cycle emissions."
+msgstr ""
+"Wir verwenden Emissionsfaktoren aus der ProBas-Datenbank des Umweltbundesamtes. Zur Schätzung sowohl der direkten "
+"Emissionen als auch der Lebenszyklus-Emissionen nutzen wir zwei unterschiedliche Sätze von Emissionsfaktoren."
+
+#: resources/locales/en/methodology.md:47
+msgid ""
+"**Direct (scope 1) emissions** are based on emission factors for \"unit processes\", meaning that they include "
+"emissions related to burning fuels for heat, but do not include other upstream and downstream emissions in the "
+"lifecycle of the fuels."
+msgstr ""
+"**Direkte Emissionen (Scope 1)** basieren auf Emissionsfaktoren für „Einzelprozesse“, was bedeutet, dass sie die "
+"Emissionen aus der Verbrennung von Brennstoffen zur Wärmeerzeugung umfassen, jedoch keine anderen vor- und "
+"nachgelagerten Emissionen im Lebenszyklus der Brennstoffe."
+
+#: resources/locales/en/methodology.md:49
+#, python-brace-format
+msgid "We use carbon dioxide emission factors from the ProBas database for [gas]{1}, [oil]{2}, and [coal]{3}."
+msgstr "Wir verwenden CO₂-Emissionsfaktoren aus der ProBas-Datenbank für [Gas]{1}, [Öl]{2} und [Kohle]{3}."
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Energy carrier"
+msgstr "Energieträger"
+
+#: resources/locales/en/methodology.md:51
+msgid "Emission factor (kg of CO₂/kWh)"
+msgstr "Emissionsfaktor (kg CO₂/kWh)"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Source / Notes"
+msgstr "Quelle / Anmerkungen"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Gas"
+msgstr "Gas"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "0.20029"
+msgstr "0,20029"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "ProBas"
+msgstr "ProBas"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Oil"
+msgstr "Öl"
+
+#: resources/locales/en/methodology.md:51
+msgid "0.26793"
+msgstr "0,26793"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Coal"
+msgstr "Kohle"
+
+#: resources/locales/en/methodology.md:51
+msgid "0.33661"
+msgstr "0,33661"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Wood pellets"
+msgstr "Holzpellets"
+
+#: resources/locales/en/methodology.md:51
+msgid "0.34000"
+msgstr "0,34000"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Note 1"
+msgstr "Anmerkung 1"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Biomass/Biogas"
+msgstr "Biomasse/Biogas"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "District heating"
+msgstr "Fernwärme"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "0.00000"
+msgstr "0,00000"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Note 2"
+msgstr "Anmerkung 2"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Electricity"
+msgstr "Strom"
+
+#: resources/locales/en/methodology.md:51
+msgctxt "resources/locales/en/methodology.md:51"
+msgid "Solar/Geothermal/Environmental Heat"
+msgstr "Solar/Geothermie/Umgebungswärme"
+
+#: resources/locales/en/methodology.md:62
+msgid ""
+"**Note 1**: direct emissions do not include the full lifecycle of the energy carriers. That is, we estimate the CO₂ "
+"released while burning biomass without considering that those carbon atoms were only recently captured through "
+"photosynthesis. Hence, we used emission factors similar to gas and coal for biogas/biomass and wood pellets, "
+"respectively."
+msgstr ""
+"**Anmerkung 1**: Die direkten Emissionen berücksichtigen nicht den gesamten Lebenszyklus der Energieträger. Das "
+"heißt, wir schätzen die bei der Verbrennung von Biomasse freigesetzten CO₂-Emissionen, ohne zu berücksichtigen, dass "
+"diese Kohlenstoffatome erst kürzlich durch Photosynthese gebunden wurden. Daher haben wir für Biogas/Biomasse bzw. "
+"Holzpellets Emissionsfaktoren verwendet, die denen von Gas und Kohle ähneln."
+
+#: resources/locales/en/methodology.md:64
+msgid ""
+"**Note 2**: No CO₂ is emitted directly from heating buildings with electricity, heat pumps, and district heating, so "
+"these emission factors are 0. Heating such buildings can nonetheless generate emissions elsewhere (for example, at "
+"power or district heating plants), which are captured by the life-cycle emission estimates."
+msgstr ""
+"**Anmerkung 2**: Bei der Beheizung von Gebäuden mit Strom, Wärmepumpen und Fernwärme entsteht kein direkter CO₂-"
+"Ausstoß, daher betragen diese Emissionsfaktoren 0. Die Beheizung solcher Gebäude kann jedoch an anderer Stelle "
+"Emissionen verursachen (beispielsweise in Kraftwerken oder Fernwärmeanlagen), die in Schätzungen der Lebenszyklus-"
+"Emissionen berücksichtigt werden."
+
+#: resources/locales/en/methodology.md:66
+msgid ""
+"**Note 3**: For buildings with unknown energy carrier, we use the average emission factor across the 8 categories "
+"above, weighting by the number of buildings with each carrier across all of Germany."
+msgstr ""
+"**Anmerkung 3**: Bei Gebäuden mit unbekanntem Energieträger verwenden wir den durchschnittlichen Emissionsfaktor der "
+"oben genannten acht Kategorien, gewichtet nach der Anzahl der Gebäude mit dem jeweiligen Energieträger in ganz "
+"Deutschland."
+
+#: resources/locales/en/methodology.md:69
+msgid ""
+"**Life cycle emissions** additionally include upstream and downstream emissions (e.g., energy production, processing, "
+"and distribution), and thus are based on Life Cycle Inventory emission factors from ProBas."
+msgstr ""
+"**Lebenszyklus-Emissionen** umfassen darüber hinaus vor- und nachgelagerte Emissionen (z. B. Energieerzeugung, "
+"Verarbeitung und Vertrieb) und basieren somit auf den Emissionsfaktoren aus den Lebenszyklus-Inventaren von ProBas."
+
+#: resources/locales/en/methodology.md:71
+msgid ""
+"In contrast to direct emissions, which include only carbon dioxide, life cycle emissions include other greenhouse "
+"gases and are thus reported in units of CO₂-equivalents by multiplying the emission of different gases by their "
+"respective global warming potential (GWP) over 100 years (ProBas uses GWP values from the IPCC AR5 report)."
+msgstr ""
+"Im Gegensatz zu direkten Emissionen, die ausschließlich Kohlendioxid umfassen, beinhalten Lebenszyklus-Emissionen "
+"auch andere Treibhausgase und werden daher in CO₂-Äquivalenten angegeben, indem die Emissionen der verschiedenen Gase "
+"mit ihrem jeweiligen Treibhauspotenzial (GWP) über einen Zeitraum von 100 Jahren multipliziert werden (ProBas "
+"verwendet GWP-Werte aus dem IPCC-AR5-Bericht)."
+
+#: resources/locales/en/methodology.md:73
+#, python-brace-format
+msgid ""
+"We use GHG (carbon dioxide equivalents) emission factors from the ProBas database. For [gas]{1} and [oil]{2} we "
+"assume buildings use condensing boilers. For [coal]{3} we assume lignite briquettes. For [wood]{4} we assume wood "
+"pieces are burned in a central heating system. For [district heating]{5}, we assume the German mix in 2020. Note that "
+"this is an average value, and the actual emissions can vary widely depending on the energy source at the district "
+"heating plant, which could be coal, gas, wood, a heat pump, etc. Similarly, for [electricity]{6} we assume the "
+"average German mix in 2020. For [heat pumps]{7} we assume air heat pumps powered with the average German electricity "
+"mix in 2020."
+msgstr ""
+"Wir verwenden Emissionsfaktoren für THG (CO₂-Äquivalente) aus der ProBas-Datenbank. Für [Gas]{1} und [Öl]{2} nehmen "
+"wir an, dass in den Gebäuden Brennwertkessel genutzt werden. Für [Kohle]{3} gehen wir von Braunkohlebriketts aus. Für "
+"[Holz]{4} nehmen wir an, dass Holzstücke in einer Zentralheizungsanlage verbrannt werden. Für [Fernwärme]{5} gehen "
+"wir vom deutschen Energiemix im Jahr 2020 aus. Beachte, dass es sich hierbei um einen Durchschnittswert handelt und "
+"die tatsächlichen Emissionen je nach Energiequelle des Fernwärmekraftwerks, z.B. Kohle, Gas, Holz oder eine "
+"Wärmepumpe, stark variieren können. Ebenso gehen wir bei [Strom]{6} vom durchschnittlichen deutschen Energiemix im "
+"Jahr 2020 aus. Bei [Wärmepumpen]{7} gehen wir von Luftwärmepumpen aus, die mit dem durchschnittlichen deutschen "
+"Strommix im Jahr 2020 betrieben werden."
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Energy carrier"
+msgstr "Energieträger"
+
+#: resources/locales/en/methodology.md:75
+msgid "Emission factor (kg of CO₂-eq./kWh)"
+msgstr "Emissionsfaktor (kg CO₂-äq./kWh)"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Source / Notes"
+msgstr "Quelle / Anmerkungen"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Gas"
+msgstr "Gas"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.232"
+msgstr "0,232"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "ProBas"
+msgstr "ProBas"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Oil"
+msgstr "Öl"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.318"
+msgstr "0,318"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Coal"
+msgstr "Kohle"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.646"
+msgstr "0,646"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Wood pellets"
+msgstr "Holzpellets"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "0.017"
+msgstr "0,017"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Biomass/Biogas"
+msgstr "Biomasse/Biogas"
+
+#: resources/locales/en/methodology.md:75
+msgid "Note 4"
+msgstr "Anmerkung 4"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "District heating"
+msgstr "Fernwärme"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.154"
+msgstr "0,154"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Electricity"
+msgstr "Strom"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.417"
+msgstr "0,417"
+
+#: resources/locales/en/methodology.md:75
+msgctxt "resources/locales/en/methodology.md:75"
+msgid "Solar/Geothermal/Environmental Heat"
+msgstr "Solar/Geothermie/Umwgebungswärme"
+
+#: resources/locales/en/methodology.md:75
+msgid "0.130"
+msgstr "0,130"
+
+#: resources/locales/en/methodology.md:86
+#, python-format
+msgid ""
+"**Note 4**: The Biomass/Biogas category includes different biogenic fuels for which ProBas does not provide emission "
+"factors. We thus use the same emission factor as for wood. This assumption is unlikely to have a large effect on the "
+"results at scales of whole neighborhoods and above, since less than 0.1% of residences in Germany are heated with "
+"this energy carrier."
+msgstr ""
+"**Anmerkung 4**: Die Kategorie „Biomasse/Biogas“ umfasst verschiedene biogene Brennstoffe, für die ProBas keine "
+"Emissionsfaktoren bereitstellt. Wir verwenden daher denselben Emissionsfaktor wie für Holz. Diese Annahme dürfte auf "
+"der Ebene ganzer Stadtteile und darüber hinaus kaum Auswirkungen auf die Ergebnisse haben, da weniger als 0,1 % der "
+"Haushalte in Deutschland mit diesem Energieträger beheizt werden."
+
+#: resources/locales/en/methodology.md:88
+msgid "Other data sources"
+msgstr "Andere Datenquellen"
+
+#: resources/locales/en/methodology.md:89
+#, python-brace-format
+msgid ""
+"German average area-specific heating energy consumption in residential buildings (127.1 kWh/m² per year): [co2online]"
+"{1}"
+msgstr ""
+"Durchschnittlicher flächenbezogener Heizenergieverbrauch in Wohngebäuden in Deutschland (127,1 kWh/m² pro Jahr): "
+"[co2online]{1}"
+
+#: resources/locales/en/methodology.md:90
+#, python-brace-format
+msgid ""
+"German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal "
+"Environment Agency]{1}"
+msgstr ""
+"Durchschnittliche Pro-Kopf-Kohlendioxidemissionen durch das Heizen von Wohnraum in Deutschland (2,2 t pro Jahr): "
+"[Umweltbundesamt]{1}"
+
+#: resources/locales/en/methodology.md:91
+msgid ""
+"German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the "
+"proportion of buildings with different energy carriers across the entire country using the emission factors listed "
+"above."
+msgstr ""
+"Deutscher durchschnittlicher Emissionsfaktor (0,199 kg Kohlendioxid pro kWh verbrauchter Heizenergie): Berechnet auf "
+"der Grundlage des Anteils der Gebäude mit verschiedenen Energieträgern im gesamten Bundesgebiet unter Verwendung der "
+"oben aufgeführten Emissionsfaktoren."
+
+#: resources/locales/en/methodology.md:93
+msgid "Uncertainty"
+msgstr "Unsicherheit"
+
+#: resources/locales/en/methodology.md:95
+msgid "Uncertainty of the input data"
+msgstr "Unsicherheit der Eingabedaten"
+
+#: resources/locales/en/methodology.md:97
+msgid ""
+"Spatial data from the German census: As this is official data from administrative sources, we assume very low "
+"(negligible) uncertainty"
+msgstr ""
+"Räumliche Daten aus dem deutschen Zensus: Da es sich um offizielle amtliche Daten handelt, gehen wir von einer sehr "
+"geringen (vernachlässigbaren) Unsicherheit aus"
+
+#: resources/locales/en/methodology.md:98
+#, python-brace-format
+msgid "Area-specific energy consumptions from co2online: 9 % uncertainty ([co2online, UBA, 2019]{1})"
+msgstr "Flächenbezogene Energieverbrauchswerte von co2online: 9 % Unsicherheit ([co2online, UBA, 2019]{1})"
+
+#: resources/locales/en/methodology.md:99
+msgid "Emission factors from The German Environment Agency: not given"
+msgstr "Emissionsfaktoren vom Umweltbundesamt: nicht angegeben"
+
+#: resources/locales/en/methodology.md:101
+msgid "Uncertainty from Weighting by Building Count Instead of Building Area"
+msgstr "Unsicherheit durch die Gewichtung nach Anzahl der Gebäude statt nach Gebäudefläche"
+
+#: resources/locales/en/methodology.md:103
+msgid ""
+"To estimate the average area-specific energy consumption in each grid cell, we weight empirical heating energy "
+"consumption values for each building age class by the fraction of buildings in each age class, based on Census data. "
+"For each grid cell, we know how many buildings belong to each age class, but we lack information about their sizes or "
+"heated floor areas. Therefore, we assume that all buildings have the same heated area."
+msgstr ""
+"Um den durchschnittlichen flächenbezogenen Energieverbrauch in jeder Gitterzelle zu schätzen, gewichten wir die "
+"empirischen Heizenergieverbrauchswerte der einzelnen Gebäudealtersklassen mit dem Anteil der Gebäude in der "
+"jeweiligen Altersklasse, basierend auf Zensusdaten. Für jede Gitterzelle wissen wir, wie viele Gebäude zu jeder "
+"Altersklasse gehören, doch fehlen uns Informationen über ihre Größe oder beheizte Fläche. Daher nehmen wir für alle "
+"Gebäude die gleiche beheizte Fläche an."
+
+#: resources/locales/en/methodology.md:105
+msgid ""
+"However, this assumption can introduce uncertainty within a grid cell because buildings of different ages can differ "
+"greatly in size. For example, imagine a grid cell with three buildings: one older building from the 1949–1978 age "
+"class with a heated area of 1,000 m² and two newer buildings from the 2011–2019 age class, each with 150 m²."
+msgstr ""
+"Diese Annahme kann jedoch zu Unsicherheiten innerhalb einer Gitterzelle führen, da sich Gebäude unterschiedlichen "
+"Alters in ihrer Größe erheblich unterscheiden können. Stelle Dir beispielsweise eine Gitterzelle mit drei Gebäuden "
+"vor: ein älteres Gebäude aus der Altersklasse 1949–1978 mit einer beheizten Fläche von 1.000 m² und zwei neuere "
+"Gebäude aus der Altersklasse 2011–2019 mit jeweils 150 m²."
+
+#: resources/locales/en/methodology.md:107
+msgid ""
+"Our method only accounts for the number of buildings, not their sizes. It therefore assigns one-third of the weight "
+"to the older building and two-thirds to the newer ones when calculating the average energy consumption. In reality, "
+"the older building represents most of the heated area in the grid cell. Since older buildings tend to consume more "
+"energy due to poorer insulation, this approach would underestimate the true heating energy consumption in this "
+"example, since the high-energy-demand building receives too little weight in the calculation."
+msgstr ""
+"Unsere Methode berücksichtigt nur die Anzahl der Gebäude, aber nicht deren Größe. Bei der Berechnung des "
+"durchschnittlichen Energieverbrauchs werden daher dem älteren Gebäude ein Drittel der Gewichtung und den neueren "
+"Gebäuden zwei Drittel der Gewichtung zugewiesen. Tatsächlich macht das ältere Gebäude den größten Teil der beheizten "
+"Fläche in der Gitterzelle aus. Da ältere Gebäude aufgrund ihrer schlechteren Dämmung tendenziell mehr Energie "
+"verbrauchen, würde dieser Ansatz den tatsächlichen Heizenergieverbrauch in diesem Beispiel unterschätzen, da das "
+"Gebäude mit hohem Energiebedarf bei der Berechnung zu gering gewichtet wird."
+
+#: resources/locales/en/methodology.md:109
+msgid ""
+"Similar uncertainty is introduced in the weighting by the fraction of buildings with each type of heating energy "
+"carrier (from Census data) to obtain the average emission factor in each grid cell."
+msgstr ""
+"Eine ähnliche Unsicherheit ergibt sich bei der Gewichtung mit dem Anteil der Gebäude mit den jeweiligen "
+"Heizenergieträgern (basierend auf Zensusdaten) zur Ermittlung des durchschnittlichen Emissionsfaktors in jeder "
+"Gitterzelle."
+
+#: resources/locales/en/methodology.md:111
+msgid ""
+"Moreover, we do not account for potential correlations between the age of the buildings and their energy carrier. "
+"Older buildings are more likely to have dirty energy carriers, such as oil heaters, while newer buildings are more "
+"likely to have heat pumps. Ignoring the potential correlations results in an underestimation of emissions."
+msgstr ""
+"Zudem berücksichtigen wir keine möglichen Zusammenhänge zwischen dem Alter der Gebäude und ihrem Energieträger. "
+"Ältere Gebäude verfügen eher über klimaschädliche Energiequellen wie Ölheizungen, während neuere Gebäude eher mit "
+"Wärmepumpen ausgestattet sind. Die Nichtbeachtung dieser möglichen Zusammenhänge führt zu einer Unterschätzung der "
+"Emissionen."
+
+#: resources/locales/en/methodology.md:113
+msgid "Basic Knowledge"
+msgstr "Grundwissen"
+
+#: resources/locales/en/methodology.md:115
+msgid "What's scope 1, 2, and 3 emissions?"
+msgstr "Was sind Sope 1, 2 und 3 Emissionen?"
+
+#: resources/locales/en/methodology.md:116
+msgid ""
+"**Scope 1** emissions are direct emissions that occur at buildings themselves, such as burning fuel in a home "
+"furnace. Those from power plants or district heating plants are not included here."
+msgstr ""
+"**Scope 1** Emissionen sind direkte Emissionen, die in den Gebäuden selbst entstehen, z.B. durch die Verbrennung von "
+"Brennstoffen in einer Hausheizung. Emissionen aus Kraftwerken oder Fernwärmeanlagen sind hier nicht enthalten."
+
+#: resources/locales/en/methodology.md:117
+msgid ""
+"**Scope 2** emissions are indirect emissions from the generation of energy consumed by the reporting entity. If a "
+"building is heated with electricity or district heating, the emissions from generating that electricity or heat are "
+"considered scope 2 emissions."
+msgstr ""
+"**Scope 2** Emissionen sind indirekte Emissionen, die bei der Erzeugung der Energie entstehen, die von der "
+"berichtenden Einheit verbraucht wird. Wird ein Gebäude mit Strom oder Fernwärme beheizt, gelten die Emissionen aus "
+"der Erzeugung dieses Stroms oder dieser Wärme als Scope-2-Emissionen."
+
+#: resources/locales/en/methodology.md:118
+msgid "**Scope 3** emissions are all other indirect emissions that occur"
+msgstr "**Scope 3** Emissionen sind alle anderen anfallenden indirekten Emissionen"

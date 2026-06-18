@@ -10,11 +10,11 @@ The 2022 German national census provides spatial information that allows us to e
 
 1. multiply population by the average living space per capita to obtain total living space (i.e., the space that is presumably heated).
 
-2. calculate the average heating energy consumption rate (kWh per m²) of residential buildings based on buildings' year of construction.
+2. calculate the average area-specific heating energy consumption (kWh per m²) of residential buildings based on buildings' year of construction.
 
 3. calculate average carbon dioxide emissions per unit of heating energy (kg per kWh) based on the proportion of buildings with different heating energy carriers (e.g., gas, oil, wood, district heating, etc.).
 
-Emission estimates are the product of total living space, average energy consumption rate, and average emission factor.
+Emission estimates are the product of total living space, average area-specific energy consumption, and average emission factor.
 
 ## Data sources
 
@@ -26,7 +26,7 @@ Gridded data from the German 2022 census can be downloaded [here](https://www.ze
 3. Building year of construction ("Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen")
 4. Heating energy carriers in residential buildings ("Gebäude mit Wohnraum nach Energieträger der Heizung in Gitterzellen")
 
-### Energy consumption rates
+### Area-specific energy consumptions
 We use energy consumption values for buildings of different age classes from [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), which are based on measurements from over 300 thousand buildings across Germany, and are adjusted by temperature differences.
 
 | Age class    | Energy consumption (kWh/m²) | Building standard |
@@ -86,7 +86,7 @@ We use GHG (carbon dioxide equivalents) emission factors from the ProBas databas
 - **Note 4**: The Biomass/Biogas category includes different biogenic fuels for which ProBas does not provide emission factors. We thus use the same emission factor as for wood. This assumption is unlikely to have a large effect on the results at scales of whole neighborhoods and above, since less than 0.1% of residences in Germany are heated with this energy carrier.
 
 ### Other data sources
-- German average heating energy consumption rate in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- German average area-specific heating energy consumption in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
 - German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal Environment Agency](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
 - German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country using the emission factors listed above.
 
@@ -95,12 +95,12 @@ We use GHG (carbon dioxide equivalents) emission factors from the ProBas databas
 ### Uncertainty of the input data
 
 1. Spatial data from the German census: As this is official data from administrative sources, we assume very low (negligible) uncertainty
-2. Energy consumption rates from co2online: 9 % uncertainty ([co2online, UBA, 2019](https://www.umweltbundesamt.de/publikationen/hintergrundbericht-wohnen-sanieren))
+2. Area-specific energy consumptions from co2online: 9 % uncertainty ([co2online, UBA, 2019](https://www.umweltbundesamt.de/publikationen/hintergrundbericht-wohnen-sanieren))
 3. Emission factors from The German Environment Agency: not given
 
 ### Uncertainty from Weighting by Building Count Instead of Building Area
 
-To estimate the average energy consumption rate in each grid cell, we weight empirical heating energy consumption values for each building age class by the fraction of buildings in each age class, based on Census data. For each grid cell, we know how many buildings belong to each age class, but we lack information about their sizes or heated floor areas. Therefore, we assume that all buildings have the same heated area.
+To estimate the average area-specific energy consumption in each grid cell, we weight empirical heating energy consumption values for each building age class by the fraction of buildings in each age class, based on Census data. For each grid cell, we know how many buildings belong to each age class, but we lack information about their sizes or heated floor areas. Therefore, we assume that all buildings have the same heated area.
 
 However, this assumption can introduce uncertainty within a grid cell because buildings of different ages can differ greatly in size. For example, imagine a grid cell with three buildings: one older building from the 1949–1978 age class with a heated area of 1,000 m² and two newer buildings from the 2011–2019 age class, each with 150 m².
 

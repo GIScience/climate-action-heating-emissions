@@ -7,6 +7,7 @@ import geopandas as gpd
 import shapely
 from climatoology.base.baseoperator import AoiProperties, Artifact, BaseOperator, ComputationResources
 from climatoology.base.exception import ClimatoologyUserError
+from climatoology.base.i18n import tr
 from climatoology.base.plugin_info import PluginInfo
 from ecmwf.datastores import Client
 
@@ -50,12 +51,13 @@ log = logging.getLogger(__name__)
 class Operator(BaseOperator[ComputeInput]):
     def __init__(self, ca_database_url: str, cdsapi_client: Optional[Client]):
         super().__init__()
-
+        log.info('Initialising operator')
         engine = create_engine(ca_database_url, echo=False, plugins=['geoalchemy2'], poolclass=NullPool)
         metadata = MetaData(schema='census_de')
         metadata.reflect(bind=engine)
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
         self.cdsapi_client = cdsapi_client
+        log.debug('Operator initialised')
 
     def info(self) -> PluginInfo:
         return get_info()
@@ -84,10 +86,10 @@ class Operator(BaseOperator[ComputeInput]):
             result=result, resources=resources, output='life_cycle_co2_emissions'
         )
         heating_absolute_direct_emissions_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='direct_co2_emissions', per_capita=False
+            result=result, resources=resources, output='direct_co2_emissions', is_per_capita=False
         )
         heating_absolute_life_cycle_emissions_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='life_cycle_co2_emissions', per_capita=False
+            result=result, resources=resources, output='life_cycle_co2_emissions', is_per_capita=False
         )
         energy_consumption_artifact = build_gridded_artifact(
             result=result, resources=resources, output='heat_consumption'
@@ -154,7 +156,7 @@ class Operator(BaseOperator[ComputeInput]):
 
         # temporal downscaling emissions
         if params.temporal_emission_year is not None:
-            with self.catch_exceptions(indicator_name='Temporal_emissions', resources=resources):
+            with self.catch_exceptions(indicator_name=tr('Temporal_emissions'), resources=resources):
                 assert self.cdsapi_client is not None, 'CDS API client must be configured to run temporal downscaling'
 
                 year = params.temporal_emission_year
@@ -172,7 +174,7 @@ class Operator(BaseOperator[ComputeInput]):
                 yearly_emissions_artifact = build_gridded_artifact(
                     result=census_yearly_emi_user,
                     resources=resources,
-                    per_capita=False,
+                    is_per_capita=False,
                     output=f'yearly_emissions:{year}',
                 )
                 daily_emission_line = plot_daily_emission_lineplot(

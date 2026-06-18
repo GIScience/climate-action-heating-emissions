@@ -41,7 +41,7 @@ def test_build_gridded_artifact(per_capita, output, expected_name, compute_resou
         }
     )
 
-    artifact = build_gridded_artifact(test_df, compute_resources, output=output, per_capita=per_capita)
+    artifact = build_gridded_artifact(test_df, compute_resources, output=output, is_per_capita=per_capita)
     assert artifact.name == expected_name
     assert artifact.modality == ArtifactModality.VECTOR_MAP_LAYER
 

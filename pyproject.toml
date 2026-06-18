@@ -45,6 +45,8 @@ requests-mock = "^1.12.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
+translate-toolkit = "^3.19.11"
+mistletoe = "^1.5.1"
 
 [tool.ruff]
 line-length = 120

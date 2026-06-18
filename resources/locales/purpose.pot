@@ -1,0 +1,48 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-18 18:42+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 3.19.11\n"
+
+#: resources/locales/en/purpose.md:1
+msgid ""
+"Estimate greenhouse gas emissions resulting from heating residential buildings in any area within Germany. This tool "
+"shows not just how much buildings emit, but also why; enabling targeted interventions in the neighborhoods where "
+"renovation or fuel-switching can have the greatest effect. As the underlying data is derived from the 2022 census, the "
+"results correspond to 2022 conditions."
+msgstr ""
+
+#: resources/locales/en/purpose.md:5
+msgid "This tool provides two different types of emission estimates:"
+msgstr ""
+
+#: resources/locales/en/purpose.md:6
+msgid ""
+"direct (scope 1) carbon dioxide emissions which originate directly from residential buildings as a result of burning "
+"fuels (e.g., gas, oil, wood) to generate heat."
+msgstr ""
+
+#: resources/locales/en/purpose.md:7
+msgid ""
+"life cycle greenhouse gas emissions (scope 2), which include all greenhouse gases (carbon dioxide, methane, F-gases, "
+"etc.) emitted in order to generate heat. This includes direct emissions from buildings, but also emissions at power "
+"plants that generate electricity to power heat pumps, or heat water delivered to residences through district heating "
+"networks."
+msgstr ""
+
+#: resources/locales/en/purpose.md:9
+msgid ""
+"Residences heated with electricity, heat pumps, or district heating do not emit carbon dioxide directly, but they "
+"nonetheless contribute to climate change, which is reflected in their life cycle emissions. In contrast, buildings "
+"heated by burning wood emit large amounts of carbon dioxide. However, since that carbon dioxide is biogenic instead of "
+"fossil (that is, it was captured into wood via photosynthesis in the recent past), their life cycle emissions are very "
+"low."
+msgstr ""

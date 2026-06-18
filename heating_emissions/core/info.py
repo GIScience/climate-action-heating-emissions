@@ -1,6 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
 
+from climatoology.base.i18n import N_
 from climatoology.base.plugin_info import PluginAuthor, PluginInfo, generate_plugin_info
 from pydantic import HttpUrl
 
@@ -19,9 +20,7 @@ def get_info() -> PluginInfo:
             ),
         ],
         concerns=set(),
-        teaser='Estimate carbon dioxide emissions from residential heating in Germany.',
-        purpose=Path('resources/purpose.md'),
-        methodology=Path('resources/methodology.md'),
+        teaser=N_('Estimate carbon dioxide emissions from residential heating in Germany.'),
         demo_input_parameters=ComputeInput(temporal_emission_year=None),
         computation_shelf_life=timedelta(weeks=52),
     )

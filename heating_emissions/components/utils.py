@@ -2,6 +2,7 @@ import logging
 from enum import StrEnum
 
 import geopandas as gpd
+from climatoology.base.i18n import N_
 
 log = logging.getLogger(__name__)
 
@@ -42,35 +43,35 @@ HEAT_CONSUMPTION = {  # in kWh/m2
 
 # Category orders for building ages and energy sources
 BUILDING_AGES = {
-    'pre_1919': 'pre-1919',
+    'pre_1919': N_('pre-1919'),
     '1919_1948': '1919-1948',
     '1949_1978': '1949-1978',
     '1979_1990': '1979-1990',
     '1991_2000': '1991-2000',
     '2001_2010': '2001-2010',
     '2011_2019': '2011-2019',
-    'post_2020': 'post-2020',
-    'unknown': 'Unknown',
+    'post_2020': N_('post-2020'),
+    'unknown': N_('Unknown'),
 }
 
 ENERGY_SOURCES = {
-    'wood': 'Wood',
-    'coal': 'Coal',
-    'heating_oil': 'Heating oil',
-    'gas': 'Gas',
-    'biomass_biogas': 'Biomass / Biogas',
-    'solar_geothermal_heat_pumps': 'Solar / Geothermal / Heat pumps',
-    'electricity': 'Electricity',
-    'district_heating': 'District heating',
-    'unknown': 'Unknown',
+    'wood': N_('Wood'),
+    'coal': N_('Coal'),
+    'heating_oil': N_('Heating oil'),
+    'gas': N_('Gas'),
+    'biomass_biogas': N_('Biomass / Biogas'),
+    'solar_geothermal_heat_pumps': N_('Solar / Geothermal / Heat pumps'),
+    'electricity': N_('Electricity'),
+    'district_heating': N_('District heating'),
+    'unknown': N_('Unknown'),
 }
 
 
 class Topics(StrEnum):
-    DIRECT_EMISSIONS = 'direct_emissions'
-    LIFE_CYCLE_EMISSIONS = 'life_cycle_emissions'
-    PARAMETERS = 'parameters'
-    TEMPORAL = 'temporally flexible simulation'
+    DIRECT_EMISSIONS = N_('direct_emissions')
+    LIFE_CYCLE_EMISSIONS = N_('life_cycle_emissions')
+    PARAMETERS = N_('parameters')
+    TEMPORAL = N_('temporally flexible simulation')
 
 
 def get_aoi_area(aoi_as_geoseries: gpd.GeoSeries) -> float:
@@ -105,5 +106,5 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
 def postprocess_uncalculated_census_data(uncalculated_census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     uncalculated_census_data[['dominant_age', 'dominant_energy']] = uncalculated_census_data[
         ['dominant_age', 'dominant_energy']
-    ].fillna('Unknown')
+    ].fillna(N_('Unknown'))
     return uncalculated_census_data
