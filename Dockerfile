@@ -15,7 +15,8 @@ COPY $PACKAGE_NAME $PACKAGE_NAME
 COPY resources resources
 COPY README.md ./README.md
 
-RUN poetry run pybabel compile -d resources/locales
+# see https://github.com/python-babel/babel/issues/1268
+RUN poetry run pybabel compile -d resources/locales; exit 0
 
 RUN if [[ -n "${CI_COMMIT_SHORT_SHA}" ]]; then sed -E -i "s/^(version *= *\"[^+]*)\"/\\1+${CI_COMMIT_SHORT_SHA}\"/" pyproject.toml; fi;
 
