@@ -1016,21 +1016,21 @@ files = [
 
 [[package]]
 name = "ecmwf-datastores-client"
-version = "0.5.1"
+version = "0.5.3"
 description = "ECMWF Data Stores Service (DSS) API Python client"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "ecmwf_datastores_client-0.5.1-py3-none-any.whl", hash = "sha256:3dce212f2da773e22f509c25c7c10144789658107e0a37d09e02cbeffc38ec57"},
-    {file = "ecmwf_datastores_client-0.5.1.tar.gz", hash = "sha256:0ebf6304dc267befa506ce805208d5c7a675e1b0dd76da1dad5dc8501d318cc4"},
+    {file = "ecmwf_datastores_client-0.5.3-py3-none-any.whl", hash = "sha256:c840fdfd5ddfac07ba4f536b4b79c870096371d3f3e33acf74a8f791c64497dd"},
+    {file = "ecmwf_datastores_client-0.5.3.tar.gz", hash = "sha256:15bd614a138c88fc8f6556aefdb4f2e3a5107ad1fc8b7ba18fab06dd69e3ec52"},
 ]
 
 [package.dependencies]
-attrs = "*"
+attrs = ">=23.1.0"
 multiurl = ">=0.3.7"
-requests = "*"
-typing-extensions = "*"
+requests = ">=2.5.0"
+typing-extensions = ">=4.13.0"
 
 [package.extras]
 legacy = ["cdsapi (>=0.7.6)"]
@@ -2249,14 +2249,14 @@ xml = ["lxml (>=5.3.0)"]
 
 [[package]]
 name = "pandas-stubs"
-version = "3.0.3.260530"
+version = "3.0.5.260730"
 description = "Type annotations for pandas"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "pandas_stubs-3.0.3.260530-py3-none-any.whl", hash = "sha256:a6277eb1c8cebf48d9b2413fcd2e9a6b4ff479c934a223c29eacbc3058c4cb55"},
-    {file = "pandas_stubs-3.0.3.260530.tar.gz", hash = "sha256:d1efe47b2e5a312c047d7feabec5cb7a55365747983420077e9fcbe9ab74f714"},
+    {file = "pandas_stubs-3.0.5.260730-py3-none-any.whl", hash = "sha256:60e90e3e1eda6937e337e243cbe6217e151c11137cd7eddf832af537c7310bfd"},
+    {file = "pandas_stubs-3.0.5.260730.tar.gz", hash = "sha256:f70a232c57d93a5a2c81f8a53953e10891a5374bc92652277deb325e2e4d0ff3"},
 ]
 
 [package.dependencies]
@@ -2449,14 +2449,14 @@ files = [
 
 [[package]]
 name = "pre-commit"
-version = "4.6.0"
+version = "4.6.1"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "pre_commit-4.6.0-py2.py3-none-any.whl", hash = "sha256:e2cf246f7299edcabcf15f9b0571fdce06058527f0a06535068a86d38089f29b"},
-    {file = "pre_commit-4.6.0.tar.gz", hash = "sha256:718d2208cef53fdc38206e40524a6d4d9576d103eb16f0fec11c875e7716e9d9"},
+    {file = "pre_commit-4.6.1-py2.py3-none-any.whl", hash = "sha256:0e3b2942510d1fb34eec167a3ec57331bf8442122f1153a9fb8b58f5c49b2717"},
+    {file = "pre_commit-4.6.1.tar.gz", hash = "sha256:03e809865c7d178b9979d06c761fcbfe6808fdaded8581a745bb110e52050421"},
 ]
 
 [package.dependencies]
@@ -4155,19 +4155,19 @@ telegram = ["requests"]
 
 [[package]]
 name = "translate-toolkit"
-version = "3.19.13"
+version = "3.19.17"
 description = "Tools and API for translation and localization engineering."
 optional = false
 python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "translate_toolkit-3.19.13-py3-none-any.whl", hash = "sha256:a2c6d9b1ce488d259d504797b1a00a0aaa596bfd4d284f47c263b67e89cf1ea1"},
-    {file = "translate_toolkit-3.19.13.tar.gz", hash = "sha256:56e57673c6a17d6cd75176fc31b207b1baf1a5008e09e17c810d940dbe6b41ed"},
+    {file = "translate_toolkit-3.19.17-py3-none-any.whl", hash = "sha256:54260ed1803db6d950b65abf2b53ca7fa1bb38ae800a145230acd5a4641c6df7"},
+    {file = "translate_toolkit-3.19.17.tar.gz", hash = "sha256:1381542791a0759a7c7f2ff7157f354f0c4bfab66a6d97834d3f631c6f659a04"},
 ]
 
 [package.dependencies]
 lxml = ">=6.1.0,<7.0"
-unicode-segmentation-rs = ">=0.2.0,<0.3"
+unicode-segmentation-rs = ">=0.2.0,<0.4"
 
 [package.extras]
 all = ["translate-toolkit[chardet,fluent,ical,ini,levenshtein,markdown,php,rc,spellcheck,subtitles,toml,yaml]"]
@@ -4176,7 +4176,7 @@ fluent = ["fluent.syntax (>=0.19.0,<0.20)"]
 ical = ["vobject (==0.9.9)"]
 ini = ["iniparse (==0.5)"]
 levenshtein = ["RapidFuzz (>=3.14.0)"]
-markdown = ["mistletoe (>=1.4.0,<1.6.0)"]
+markdown = ["mistletoe (>=1.4.0,<1.7.0)"]
 php = ["phply (>=1.2.6,<1.3)"]
 rc = ["pyparsing (>=3.2.0,<3.4)"]
 spellcheck = ["pyenchant (==3.3.0)"]
