@@ -3,10 +3,8 @@
 import logging
 from typing import List, Optional
 
-import geopandas as gpd
 import shapely
 from climatoology.base.baseoperator import AoiProperties, Artifact, BaseOperator, ComputationResources
-from climatoology.base.exception import ClimatoologyUserError
 from climatoology.base.i18n import tr
 from climatoology.base.plugin_info import PluginInfo
 from ecmwf.datastores import Client
@@ -40,7 +38,7 @@ from heating_emissions.components.line_artifacts import (
 from heating_emissions.components.temporal_downscale.temporal_estimation import calculate_time_downscale_emissions
 from heating_emissions.components.utils import (
     calculate_heating_emissions,
-    get_aoi_area,
+    check_aoi,
 )
 from heating_emissions.core.info import get_info
 from heating_emissions.core.input import ComputeInput
@@ -57,6 +55,7 @@ class Operator(BaseOperator[ComputeInput]):
         metadata.reflect(bind=engine)
         self.ca_database_connection = DatabaseConnection(engine=engine, metadata=metadata)
         self.cdsapi_client = cdsapi_client
+        self.aoi_constraints = self.info().aoi_constraints
         log.debug('Operator initialised')
 
     def info(self) -> PluginInfo:
@@ -72,7 +71,7 @@ class Operator(BaseOperator[ComputeInput]):
         **kwargs,
     ) -> List[Artifact]:
         # Check we are within bounds of census data coverage
-        self.check_aoi(aoi, aoi_properties)
+        assert check_aoi(aoi=aoi, aoi_properties=aoi_properties, aoi_constraints=self.aoi_constraints)
 
         census_data, uncalculated_census_data = collect_census_data(db_connection=self.ca_database_connection, aoi=aoi)
         result = calculate_heating_emissions(census_data)
@@ -186,20 +185,3 @@ class Operator(BaseOperator[ComputeInput]):
                 return_artifacts.extend([yearly_emissions_artifact, daily_emission_line_artifact])
 
         return return_artifacts
-
-    def check_aoi(self, aoi: shapely.MultiPolygon, aoi_properties: AoiProperties) -> None:
-        aoi_as_series = gpd.GeoSeries(data=[aoi], crs='EPSG:4326').to_crs('EPSG:32632')
-
-        germany = gpd.read_file('resources/germany_buffered_boundaries.geojson').buffer(3000)
-        inside_germany = aoi_as_series.within(germany.geometry)
-        if not inside_germany[0]:
-            raise ClimatoologyUserError(
-                f'For now, estimates of heating emissions are only available for Germany. {aoi_properties.name} is '
-                'outside Germany. We are working on expanding the tool to other countries'
-            )
-
-        aoi_utm32n_area_km2 = get_aoi_area(aoi_as_series)
-        if aoi_utm32n_area_km2 > 30000:
-            raise ClimatoologyUserError(
-                f'The selected area is too large: {aoi_utm32n_area_km2} km². Currently, the maximum allowed area is 30000 km². Please select a smaller area or a sub-region of your selected area.'
-            )

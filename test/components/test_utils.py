@@ -1,11 +1,14 @@
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-from shapely import box
+import pytest
+from climatoology.base.aoi import AreaConstraint
+from climatoology.base.exception import ClimatoologyUserError, InputValidationError
+from shapely import MultiPolygon
 
 from heating_emissions.components.utils import (
     calculate_heating_emissions,
-    get_aoi_area,
+    check_aoi,
     postprocess_uncalculated_census_data,
 )
 
@@ -81,12 +84,6 @@ def test_calculate_heating_emissions_missing_data():
     assert result['life_cycle_co2_emissions'][0] == expected_absolute_life_cycle
 
 
-def test_get_aoi_area():
-    aoi = gpd.GeoSeries(box(0, 0, 1000, 1000), crs='EPSG:3857')
-    area = get_aoi_area(aoi)
-    assert area == 1.0
-
-
 def test_postprocess_uncalculate_census_data():
     df = gpd.GeoDataFrame(
         {
@@ -98,3 +95,39 @@ def test_postprocess_uncalculate_census_data():
     result = postprocess_uncalculated_census_data(df)
     assert all(result['dominant_age'] == ['Unknown', '1949-1978', 'Unknown'])
     assert all(result['dominant_energy'] == ['Unknown', 'Gas', 'Unknown'])
+
+
+def test_check_aoi_valid(operator, default_german_aoi, default_aoi_properties):
+    aoi_constraints = operator.info().aoi_constraints
+
+    assert check_aoi(aoi=default_german_aoi, aoi_properties=default_aoi_properties, aoi_constraints=aoi_constraints)
+
+
+def test_check_aoi_invalid_geom(operator, default_aoi_properties):
+    aoi_constraints = operator.info().aoi_constraints
+
+    aoi_outside_supported_regions = MultiPolygon(
+        polygons=[
+            [
+                [
+                    [6.0, 49.0],
+                    [6.0, 49.1],
+                    [6.1, 49.1],
+                    [6.1, 49.0],
+                    [6.0, 49.0],
+                ]
+            ]
+        ]
+    )
+
+    with pytest.raises(ClimatoologyUserError, match=r'The selected area is outside of the valid regions'):
+        check_aoi(
+            aoi=aoi_outside_supported_regions, aoi_properties=default_aoi_properties, aoi_constraints=aoi_constraints
+        )
+
+
+def test_check_aoi_invalid_area_size(default_german_aoi, default_aoi_properties):
+    aoi_constraints = [[AreaConstraint(max_area=0.4)]]
+
+    with pytest.raises(InputValidationError, match=r"The selected area doesn't meet the area constraint limits"):
+        check_aoi(aoi=default_german_aoi, aoi_properties=default_aoi_properties, aoi_constraints=aoi_constraints)

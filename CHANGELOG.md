@@ -7,8 +7,6 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/2.0.1...main)
 
-- Updated the plugin to use the climatoology version 7.1.4
-
 ### Added
 
 - Total life cycle emission
@@ -19,6 +17,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Add how this plugin relates to climate action in purpose.md ([#76](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/76))
 - Add cdsapi_client authentication check ([#78](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/78))
 - Translation to German ([#65](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/65))
+- Add AOI constraints to avoid errors ([#85](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/85))
 
 ### Changed
 
@@ -26,6 +25,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 - Use geojson in projected CRS for check if AOI is in Germany ([#57](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/57))
 - Simplify runtime_limit, define it in get_era5_data_4_energy_estimation ([#70](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/70))
 - Set retry time for cdsapi_client to 60 sec, set max number of tries to 20 ([#78](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/78))
+- Update Climatoology to 7.4.0
 
 ### Fixed
 

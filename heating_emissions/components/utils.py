@@ -2,7 +2,10 @@ import logging
 from enum import StrEnum
 
 import geopandas as gpd
+from climatoology.base.aoi import AoiConstraintSets, AoiProperties, CoveredByGeomConstraint
+from climatoology.base.exception import ClimatoologyUserError, InputValidationError
 from climatoology.base.i18n import N_
+from shapely import MultiPolygon
 
 log = logging.getLogger(__name__)
 
@@ -74,12 +77,6 @@ class Topics(StrEnum):
     TEMPORAL = N_('temporally flexible simulation')
 
 
-def get_aoi_area(aoi_as_geoseries: gpd.GeoSeries) -> float:
-    reprojected_aoi_df = aoi_as_geoseries.to_crs(aoi_as_geoseries.estimate_utm_crs())
-    area_km2 = round(reprojected_aoi_df.geometry.area.sum() / 1e6, 2)
-    return area_km2
-
-
 def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     census_data['average_sqm_per_person'] = census_data['average_sqm_per_person'].fillna(
         census_data['average_sqm_per_person'].mean()
@@ -108,3 +105,29 @@ def postprocess_uncalculated_census_data(uncalculated_census_data: gpd.GeoDataFr
         ['dominant_age', 'dominant_energy']
     ].fillna(N_('Unknown'))
     return uncalculated_census_data
+
+
+def check_aoi(aoi: MultiPolygon, aoi_properties: AoiProperties, aoi_constraints: AoiConstraintSets) -> bool:
+    if len(aoi_constraints) > 1:
+        raise NotImplementedError('Only one tier of AOI Constraints is currently supported')
+
+    constraints = aoi_constraints[0]
+
+    valid = True
+    for con in constraints:
+        valid = valid and con.check(aoi_geometry=aoi, aoi_properties=aoi_properties)
+
+        if not valid:
+            log.error(f'{aoi=} failed constraint check: {con}')
+            # We intentionally raise a ClimatoologyUserError for the CoveredByGeomConstraint because this error type
+            # will not be cached. We don't want to cache this error because the HEAL data may spontaneously be expanded
+            # to cover new regions, in which case we should immediately be able to run for those regions.
+            if isinstance(con, CoveredByGeomConstraint):
+                raise ClimatoologyUserError(
+                    'The selected area is outside of the valid regions. '
+                    'Please contact us to add new areas to this assessment tool.'
+                )
+            else:
+                raise InputValidationError("The selected area doesn't meet the area constraint limits")
+
+    return valid
