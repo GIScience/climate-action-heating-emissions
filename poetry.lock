@@ -15,19 +15,18 @@ files = [
 
 [[package]]
 name = "affine"
-version = "2.4.0"
+version = "3.0.1"
 description = "Matrices describing affine transformation of the plane"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "affine-2.4.0-py3-none-any.whl", hash = "sha256:8a3df80e2b2378aef598a83c1392efd47967afec4242021a0b06b4c7cbc61a92"},
-    {file = "affine-2.4.0.tar.gz", hash = "sha256:a24d818d6a836c131976d22f8c27b8d3ca32d0af64c1d8d29deb7bafa4da1eea"},
+    {file = "affine-3.0.1-py3-none-any.whl", hash = "sha256:cda3b303325e7bf2bf34817e68753a0d1c4cacbdd451fe67c4878dc2ecbaa540"},
+    {file = "affine-3.0.1.tar.gz", hash = "sha256:e1b3c38c5d4d3ef5024a182a6d1bf1e0c51ab221825781c741aeb4d0c079a7e2"},
 ]
 
-[package.extras]
-dev = ["coveralls", "flake8", "pydocstyle"]
-test = ["pytest (>=4.6)", "pytest-cov"]
+[package.dependencies]
+attrs = ">=21.3.0"
 
 [[package]]
 name = "alembic"
@@ -576,7 +575,7 @@ test = ["pytest-cov"]
 
 [[package]]
 name = "climatoology"
-version = "7.4.0"
+version = "7.4.1"
 description = "This package provides the underlying functionality to implement Climate Action Operators and Plugins and to interact with the backend."
 optional = false
 python-versions = ">=3.13.5,<3.14"
@@ -585,6 +584,7 @@ files = []
 develop = false
 
 [package.dependencies]
+affine = ">=3.0.0,<4.0.0"
 alembic = ">=1.16.1,<2.0.0"
 alembic-postgresql-enum = ">=1.7.0,<2.0.0"
 alembic-utils = ">=0.8.8,<0.9.0"
@@ -619,13 +619,13 @@ tqdm = ">=4.66.1,<5.0.0"
 urllib3 = ">=2.6.3,<3.0.0"
 
 [package.extras]
-fixtures = ["freezegun (>=1.5.5,<2.0.0)", "moto[s3] (>=5.2.2,<6.0.0)", "pytest (>=9.1.1,<10.0.0)", "pytest-alembic (>=0.12.1,<0.13.0)", "pytest-mock (>=3.15.1,<4.0.0)", "pytest-postgresql (>=8.1.0,<9.0.0)", "responses (>=0.26.2,<0.27.0)"]
+fixtures = ["freezegun (>=1.5.5,<2.0.0)", "moto[s3] (>=5.2.2,<6.0.0)", "pytest (>=9.1.1,<10.0.0)", "pytest-alembic (>=0.12.1,<0.13.0)", "pytest-mock (>=3.15.1,<4.0.0)", "pytest-postgresql (>=9.0.0,<10.0.0)", "responses (>=0.26.2,<0.27.0)"]
 
 [package.source]
 type = "git"
 url = "https://gitlab.heigit.org/climate-action/climatoology.git"
-reference = "7.4.0"
-resolved_reference = "e2761dbec4bdde5024d6d642a46ce0e9e9f12d2f"
+reference = "7.4.1"
+resolved_reference = "db8c3bee3f5450b61d2075e31e9c2b02fae10f4b"
 
 [[package]]
 name = "colorama"
@@ -4181,4 +4181,4 @@ viz = ["cartopy (>=0.24)", "matplotlib (>=3.10)", "nc-time-axis", "seaborn"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13.5,<3.14"
-content-hash = "df5ebcdeb2b4283afebed6b46654f94e98ecae9333d86f0ff54c50fa1faab842"
+content-hash = "586e542d20cf1c322a6a715be658fd70bb8a019a046edf0968c181c93a49a2b0"
