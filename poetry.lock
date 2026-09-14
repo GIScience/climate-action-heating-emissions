@@ -4037,14 +4037,14 @@ telegram = ["envwrap", "requests"]
 
 [[package]]
 name = "translate-toolkit"
-version = "3.19.19"
+version = "3.20.0"
 description = "Tools and API for translation and localization engineering."
 optional = false
 python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "translate_toolkit-3.19.19-py3-none-any.whl", hash = "sha256:6fb0dd92fc1214a1dc1a5632dfbc22409a18747ccf565708b4f29b53146c0650"},
-    {file = "translate_toolkit-3.19.19.tar.gz", hash = "sha256:f8099801886845f46f63457ceb312284421b76711e76e9053b9c1ae50b2faf16"},
+    {file = "translate_toolkit-3.20.0-py3-none-any.whl", hash = "sha256:7f11fc8addccc1f4aafa073f5624b264897a2bb688d4308a53154f2792b929f3"},
+    {file = "translate_toolkit-3.20.0.tar.gz", hash = "sha256:0cfa591c205331ce2238ea2a8fc4c3204bf399af05ad90da6ed3e3058ed315ec"},
 ]
 
 [package.dependencies]
