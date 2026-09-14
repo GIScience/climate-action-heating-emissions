@@ -3135,14 +3135,14 @@ dev = ["pre-commit", "pytest-asyncio", "tox"]
 
 [[package]]
 name = "pytest-postgresql"
-version = "8.1.0"
+version = "9.1.0"
 description = "Postgresql fixtures and fixture factories for Pytest."
 optional = false
 python-versions = ">=3.10"
 groups = ["test"]
 files = [
-    {file = "pytest_postgresql-8.1.0-py3-none-any.whl", hash = "sha256:0868bb3374fa4f454efd73ac1d7b23d2da623782044371b84d39f83a0893f56f"},
-    {file = "pytest_postgresql-8.1.0.tar.gz", hash = "sha256:ffd24027a28aba3d05a909fb03ee87d1d474574c3504f332d6047e8699170adc"},
+    {file = "pytest_postgresql-9.1.0-py3-none-any.whl", hash = "sha256:78d5b04e321c1d9b2ac86c837aa536f833f4141bd297196d54b6755a3aeba008"},
+    {file = "pytest_postgresql-9.1.0.tar.gz", hash = "sha256:d340789d6f43cac901fc14f52b15723279bd66db4db7a6506d969417c36cdf04"},
 ]
 
 [package.dependencies]
@@ -3151,6 +3151,9 @@ packaging = "*"
 port-for = ">=0.7.3"
 psycopg = ">=3.0.0"
 pytest = ">=8.2"
+
+[package.extras]
+async = ["aiofiles (>=23.0)", "pytest-asyncio (>=1.4)"]
 
 [[package]]
 name = "python-dateutil"
@@ -4295,4 +4298,4 @@ viz = ["cartopy (>=0.24)", "matplotlib (>=3.10)", "nc-time-axis", "seaborn"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13.5,<3.14"
-content-hash = "586e542d20cf1c322a6a715be658fd70bb8a019a046edf0968c181c93a49a2b0"
+content-hash = "a683e3c85b174a096613e79b971313b02471f08408d2547a2e8d99857704e6f0"
