@@ -80,40 +80,7 @@ the [Plugin Showcase](https://gitlab.heigit.org/climate-action/plugins/plugin-sh
 
 ### Translations
 
-We use [GNU gettext](https://www.gnu.org/software/gettext/) with support
-of [pybabel](https://babel.pocoo.org/en/latest/) for translations.
-In case a string or Markdown file was updated, the translation needs to be adapted.
-To do so run
-
-1. Extract .pot templates
-   ```shell
-   # If changes to the .md files were made run
-   poetry run md2po -P -S resources/locales/en/*.md resources/locales
-   # If changes to strings in the source code were made run
-   poetry run pybabel extract heating_emissions/ \
-       -w 120 \
-       -o resources/locales/messages.pot \
-       --keyword=tr \
-       --copyright-holder="HeiGIT gGmbH" \
-       --project=heating-emissions
-   ```
-2. Update .po files
-   ```shell
-   poetry run pybabel update \
-       -w 120 \
-       -i resources/locales/<the-changed-file>.pot \
-       -D <the-changed-file> \
-       -d resources/locales/
-   ```
-3. Now update the fresh .po files with the new translations
-4. If changes were made to the .md files, for each available language run
-   ```shell
-   poetry run po2md \
-     -m 120 \
-     -i resources/locales/<target-lang>/LC_MESSAGES/ \
-     -t resources/locales/en/ \
-     -o resources/locales/<target-lang>
-   ```
+The process for translating plugins to other languages is described in [here](doc/translations.md).
 
 ### Testing
 
