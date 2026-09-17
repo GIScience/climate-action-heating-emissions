@@ -131,3 +131,7 @@ def check_aoi(aoi: MultiPolygon, aoi_properties: AoiProperties, aoi_constraints:
                 raise InputValidationError("The selected area doesn't meet the area constraint limits")
 
     return valid
+
+
+def format_with_separators(x: int | float):
+    return (f'{x:,}' if isinstance(x, int) else f'{x:,.1f}').replace(',', ' ')

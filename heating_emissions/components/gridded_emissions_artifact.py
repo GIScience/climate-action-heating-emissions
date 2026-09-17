@@ -17,7 +17,7 @@ from climatoology.base.i18n import N_, tr, translate_dataframe
 from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
 
-from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES, Topics
+from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES, Topics, format_with_separators
 
 log = logging.getLogger(__name__)
 
@@ -40,6 +40,8 @@ def build_gridded_artifact(
     result: gpd.GeoDataFrame, resources: ComputationResources, output: Output | str, is_per_capita: bool = True
 ) -> Artifact:
     legend_lower_cap = 0
+    legend_val_1 = None
+    legend_val_2 = None
     low_bound_tick_label = f'{legend_lower_cap}'
 
     emission_type = tr(EmissionType.per_capita) if is_per_capita else tr(EmissionType.absolute)
@@ -49,10 +51,14 @@ def build_gridded_artifact(
             if is_per_capita:
                 output_column = 'direct_co2_emissions_per_capita'
                 file_name = 'direct_heating_emissions_per_capita'
+                legend_val_1 = 1000
+                legend_val_2 = 2000
                 legend_upper_cap = 3000
             else:
                 output_column = 'direct_co2_emissions'
                 file_name = 'direct_heating_emissions_absolute'
+                legend_val_1 = 50000
+                legend_val_2 = 100000
                 legend_upper_cap = 150000
 
             layer_name = tr('{emission_type} direct CO₂ emissions (kg/year)').format(emission_type=emission_type)
@@ -66,10 +72,14 @@ def build_gridded_artifact(
             if is_per_capita:
                 output_column = 'life_cycle_co2_emissions_per_capita'
                 file_name = 'life_cycle_heating_emissions_per_capita'
+                legend_val_1 = 1000
+                legend_val_2 = 2000
                 legend_upper_cap = 3000
             else:
                 output_column = 'life_cycle_co2_emissions'
                 file_name = 'life_cycle_heating_emissions_absolute'
+                legend_val_1 = 50000
+                legend_val_2 = 100000
                 legend_upper_cap = 150000
 
             layer_name = tr('{emission_type} life cycle GHG emissions (kg CO₂eq/year)').format(
@@ -131,8 +141,12 @@ def build_gridded_artifact(
                 output_column, output_year = output.split(':')
                 file_name = output_column
                 if is_per_capita:
+                    legend_val_1 = 1000
+                    legend_val_2 = 2000
                     legend_upper_cap = 3000
                 else:
+                    legend_val_1 = 50000
+                    legend_val_2 = 100000
                     legend_upper_cap = 150000
 
                 layer_name = tr('{emission_type} CO₂ emissions (simulated, {output_year}) (kg/year)').format(
@@ -155,12 +169,21 @@ def build_gridded_artifact(
 
     # Define colors and legend
     norm = Normalize(vmin=legend_lower_cap, vmax=legend_upper_cap)
-    cmap = matplotlib.colormaps.get('YlOrRd')
+    cmap = matplotlib.colormaps.get('viridis')
     cmap.set_under('#808080')
     artifact_data_4326['color'] = artifact_data[output_column].apply(lambda v: Color(to_hex(cmap(norm(v)))))
+
+    legend_upper_cap_str = format_with_separators(legend_upper_cap)
+    ticks = {f'> {legend_upper_cap_str}': 1, low_bound_tick_label: 0}
+
+    if legend_val_1 is not None and legend_val_2 is not None:
+        for i, legend_val in enumerate([legend_val_1, legend_val_2]):
+            legend_val_str = format_with_separators(legend_val)
+            ticks[legend_val_str] = (i + 1) / 3
+
     legend_data = ContinuousLegendData(
-        cmap_name='YlOrRd',
-        ticks={f'> {legend_upper_cap}': 1, low_bound_tick_label: 0},
+        cmap_name='viridis',
+        ticks=ticks,
     )
     gridded_artifact_metadata = ArtifactMetadata(
         name=layer_name,
