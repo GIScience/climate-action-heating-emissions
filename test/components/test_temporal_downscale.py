@@ -39,10 +39,10 @@ def test_collect_building_hourly_energy_demand(
 
 
 def test_calculate_hourly_emissions_permonth():
-    calculated_census_data = gpd.read_file('resources/test/temporal_downscale/census_data_heidelberg.gpkg').set_index(
+    calculated_census_data = gpd.read_file('test/resources/temporal_downscale/census_data_heidelberg.gpkg').set_index(
         'raster_id_100m'
     )
-    hourly_demand = pd.read_csv('resources/test/temporal_downscale/hourly_demand_2022-1_heidelberg.csv')
+    hourly_demand = pd.read_csv('test/resources/temporal_downscale/hourly_demand_2022-1_heidelberg.csv')
 
     calculated_census_data.rename(columns={'emission_factor': 'direct'}, inplace=True)
     emission_map, emission_hourly_regional = calculate_hourly_emissions_permonth(hourly_demand, calculated_census_data)

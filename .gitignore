@@ -18,5 +18,6 @@ resources/Zensus2022_Gebaeude_nach_Baujahr_in_Mikrozensus_Klassen_100m-Gitter.cs
 resources/Zensus2022_Gebaeude_mit_Wohnraum_nach_Energietraeger_der_Heizung_100m-Gitter.csv
 resources/weather_data/
 resources/test/temporal_downscale/weather_data/era5_data_heidelberg_2022_1/
+test/resources/temporal_downscale/weather_data/era5_data_heidelberg_2022_1/
 
 heating_emissions/components/temporal_downscale/temporal_estimation_locally.py

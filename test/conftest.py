@@ -117,7 +117,7 @@ def test_database_url(db_test_engine):
 
 @pytest.fixture
 def default_era5_data_dir():
-    return Path('resources/test/temporal_downscale/weather_data')
+    return Path('test/resources/temporal_downscale/weather_data')
 
 
 @pytest.fixture

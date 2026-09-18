@@ -11,6 +11,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 - Switch colormap in emission maps to `viridis` and add anchor points to legend ([#83](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/83))
 - Update Climatoology to 7.4.1
+- reduced size of docker image by using python-slim, multi-stage build, and including only the required files
 
 ## [3.0.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/3.0.0) - 2026-09-08
 
