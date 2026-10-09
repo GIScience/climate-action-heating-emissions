@@ -33,7 +33,7 @@ class Output(StrEnum):
 
 class EmissionType(StrEnum):
     per_capita = N_('Per capita')
-    absolute = N_('Absolute')
+    absolute = N_('Total')
 
 
 def build_gridded_artifact(
@@ -62,10 +62,12 @@ def build_gridded_artifact(
                 legend_upper_cap = 150000
 
             layer_name = tr('{emission_type} direct CO₂ emissions (kg/year)').format(emission_type=emission_type)
-            caption = tr(
-                '{emission_type} direct CO₂ emissions from residential heating per year per 100-m pixel'
+            caption = tr('{emission_type} direct CO₂ emissions from heating residential buildings').format(
+                emission_type=emission_type
+            )
+            description = tr(
+                '{emission_type} direct CO₂ emissions from heating residential buildings. Estimated based on data from the 2022 German census.'
             ).format(emission_type=emission_type)
-            description = tr('**Estimated** direct CO₂ emissions from heating residential buildings.')
             tags = {tr(Topics.DIRECT_EMISSIONS)}
 
         case Output.life_cycle_co2_emissions:
@@ -85,10 +87,12 @@ def build_gridded_artifact(
             layer_name = tr('{emission_type} life cycle GHG emissions (kg CO₂eq/year)').format(
                 emission_type=emission_type
             )
-            caption = tr(
-                '{emission_type} life cycle GHG emissions from residential heating per 100-m pixel (kg CO₂eq/year)'
-            ).format(emission_type=emission_type)
-            description = tr('**Estimated** life cycle GHG emissions from heating residential buildings.')
+            caption = tr('{emission_type} life cycle GHG emissions from residential heating (kg CO₂eq/year)').format(
+                emission_type=emission_type
+            )
+            description = tr(
+                'Life cycle GHG emissions from heating residential buildings. Estimated based on data from the 2022 German census.'
+            )
             tags = {tr(Topics.LIFE_CYCLE_EMISSIONS)}
 
         case Output.heat_consumption:
@@ -96,10 +100,11 @@ def build_gridded_artifact(
             file_name = output
             legend_upper_cap = 135
             legend_lower_cap = 70
+            low_bound_tick_label = f'{legend_lower_cap}'
             layer_name = tr('Energy consumption (kWh/m²/year)')
-            caption = tr('Average area-specific heating energy consumption in residential buildings (estimated)')
+            caption = tr('Average heating energy consumption per unit area in residential buildings (estimated)')
             description = tr(
-                '**Estimated** area-specific energy consumption for heating residential buildings based on building age data.'
+                'Annual energy consumption to heat one m² of residential heating space, estimated based on the count of buildings of different ages in each grid cell reported in the 2022 German census.'
             )
             tags = {tr(Topics.PARAMETERS)}
 
@@ -110,8 +115,8 @@ def build_gridded_artifact(
             legend_lower_cap = 10
             low_bound_tick_label = f'< {legend_lower_cap}'
             layer_name = tr('Living space (m² per person)')
-            caption = tr('Average living space per capita')
-            description = tr('Average living space per capita (m²) in 100-m grid cells (data from 2022 German census)')
+            caption = tr('Average living space per person')
+            description = tr('Average living space per person (m²). Data from 2022 German census.')
             tags = {tr(Topics.PARAMETERS)}
 
         case Output.direct_emission_factor:
@@ -121,7 +126,7 @@ def build_gridded_artifact(
             layer_name = tr('Direct emission factor (kg of CO₂ per kWh)')
             caption = tr('Average direct emission factor from heating (estimated)')
             description = tr(
-                '**Estimated** average direct emission factor (kg of CO₂ per kWh) from heating residential buildings.'
+                'Average direct emission factor (kg of CO₂ per kWh) from heating residential buildings, estimated based on the count of buildings with different energy carriers in each grid cell reported in the 2022 German census.'
             )
             tags = {tr(Topics.DIRECT_EMISSIONS)}
 
@@ -132,11 +137,10 @@ def build_gridded_artifact(
             layer_name = tr('Life cycle emission factor (kg of CO₂eq per kWh)')
             caption = tr('Average life cycle emission factor from heating (estimated)')
             description = tr(
-                '**Estimated** average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings.'
+                'Average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, estimated based on the count of buildings with different energy carriers in each grid cell reported in the 2022 German census.'
             )
             tags = {tr(Topics.LIFE_CYCLE_EMISSIONS)}
         case _:
-            # TODO: this if statement should be redundant?
             if 'yearly_emissions' in output:
                 output_column, output_year = output.split(':')
                 file_name = output_column
@@ -156,7 +160,7 @@ def build_gridded_artifact(
                     '{emission_type} CO₂ emissions from residential heating per 100-m pixel (simulated, {output_year})'
                 ).format(emission_type=emission_type, output_year=output_year)
                 description = tr(
-                    'Direct (scope 1) CO₂ emissions from heating residential buildings (simulated, {output_year}). '
+                    'Direct CO₂ emissions from heating residential buildings (simulated, {output_year}). '
                     'This result is computed based on simulated heating demand by demand_ninja model.'
                 ).format(output_year=output_year)
                 tags = {tr(Topics.TEMPORAL)}
@@ -219,13 +223,17 @@ def build_gridded_artifact_classdata(
         case ClassdataOutput.dominant_age:
             layer_name = tr('Dominant building construction year')
             caption = tr('Dominant building construction year')
-            description = tr('Dominant building construction year in 100-m grid cells (data from 2022 German census)')
+            description = tr(
+                'Most frequent building construction year class per 100-m grid cell, based on data from 2022 German census.'
+            )
             color_categories = BUILDING_AGES
 
         case ClassdataOutput.dominant_energy:
             layer_name = tr('Dominant building energy carrier')
             caption = tr('Dominant building energy carrier')
-            description = tr('Dominant building energy carrier in 100-m grid cells (data from 2022 German census)')
+            description = tr(
+                'Most frequent building energy carrier per 100-m grid cell, based on data from 2022 German census.'
+            )
             color_categories = ENERGY_SOURCES
         case _:
             raise NotImplementedError(f'{output} not implemented')

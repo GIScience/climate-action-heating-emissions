@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: heating_emissions VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-17 11:35+0200\n"
+"POT-Creation-Date: 2026-10-09 08:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "Per capita"
 msgstr ""
 
 #: heating_emissions/components/gridded_emissions_artifact.py:36
-msgid "Absolute"
+msgid "Total"
 msgstr ""
 
 #: heating_emissions/components/gridded_emissions_artifact.py:64
@@ -30,116 +30,125 @@ msgstr ""
 msgid "{emission_type} direct CO₂ emissions (kg/year)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:66
+#: heating_emissions/components/gridded_emissions_artifact.py:65
 #, python-brace-format
-msgid "{emission_type} direct CO₂ emissions from residential heating per year per 100-m pixel"
+msgid "{emission_type} direct CO₂ emissions from heating residential buildings"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:68
-msgid "**Estimated** direct CO₂ emissions from heating residential buildings."
+#: heating_emissions/components/gridded_emissions_artifact.py:69
+#, python-brace-format
+msgid ""
+"{emission_type} direct CO₂ emissions from heating residential buildings. Estimated based on data from the 2022 German"
+" census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:85
+#: heating_emissions/components/gridded_emissions_artifact.py:87
 #, python-brace-format
 msgid "{emission_type} life cycle GHG emissions (kg CO₂eq/year)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:89
+#: heating_emissions/components/gridded_emissions_artifact.py:90
 #, python-brace-format
-msgid "{emission_type} life cycle GHG emissions from residential heating per 100-m pixel (kg CO₂eq/year)"
+msgid "{emission_type} life cycle GHG emissions from residential heating (kg CO₂eq/year)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:91
-msgid "**Estimated** life cycle GHG emissions from heating residential buildings."
+#: heating_emissions/components/gridded_emissions_artifact.py:94
+msgid "Life cycle GHG emissions from heating residential buildings. Estimated based on data from the 2022 German census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:99
+#: heating_emissions/components/gridded_emissions_artifact.py:104
 msgid "Energy consumption (kWh/m²/year)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:100 heating_emissions/components/histogram_artifacts.py:204
-msgid "Average area-specific heating energy consumption in residential buildings (estimated)"
+#: heating_emissions/components/gridded_emissions_artifact.py:105
+msgid "Average heating energy consumption per unit area in residential buildings (estimated)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:102
-msgid "**Estimated** area-specific energy consumption for heating residential buildings based on building age data."
+#: heating_emissions/components/gridded_emissions_artifact.py:107
+msgid ""
+"Annual energy consumption to heat one m² of residential heating space, estimated based on the count of buildings of "
+"different ages in each grid cell reported in the 2022 German census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:112
+#: heating_emissions/components/gridded_emissions_artifact.py:117
 msgid "Living space (m² per person)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:113
-msgid "Average living space per capita"
+#: heating_emissions/components/gridded_emissions_artifact.py:118
+msgid "Average living space per person"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:114
-msgid "Average living space per capita (m²) in 100-m grid cells (data from 2022 German census)"
+#: heating_emissions/components/gridded_emissions_artifact.py:119
+msgid "Average living space per person (m²). Data from 2022 German census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:121
+#: heating_emissions/components/gridded_emissions_artifact.py:126
 msgid "Direct emission factor (kg of CO₂ per kWh)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:122
+#: heating_emissions/components/gridded_emissions_artifact.py:127
 msgid "Average direct emission factor from heating (estimated)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:124
-msgid "**Estimated** average direct emission factor (kg of CO₂ per kWh) from heating residential buildings."
+#: heating_emissions/components/gridded_emissions_artifact.py:129
+msgid ""
+"Average direct emission factor (kg of CO₂ per kWh) from heating residential buildings, estimated based on the count "
+"of buildings with different energy carriers in each grid cell reported in the 2022 German census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:132
+#: heating_emissions/components/gridded_emissions_artifact.py:137
 msgid "Life cycle emission factor (kg of CO₂eq per kWh)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:133
+#: heating_emissions/components/gridded_emissions_artifact.py:138
 msgid "Average life cycle emission factor from heating (estimated)"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:135
-msgid "**Estimated** average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings."
-msgstr ""
-
-#: heating_emissions/components/gridded_emissions_artifact.py:152
-#, python-brace-format
-msgid "{emission_type} CO₂ emissions (simulated, {output_year}) (kg/year)"
+#: heating_emissions/components/gridded_emissions_artifact.py:140
+msgid ""
+"Average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, estimated based on the "
+"count of buildings with different energy carriers in each grid cell reported in the 2022 German census."
 msgstr ""
 
 #: heating_emissions/components/gridded_emissions_artifact.py:156
 #, python-brace-format
+msgid "{emission_type} CO₂ emissions (simulated, {output_year}) (kg/year)"
+msgstr ""
+
+#: heating_emissions/components/gridded_emissions_artifact.py:160
+#, python-brace-format
 msgid "{emission_type} CO₂ emissions from residential heating per 100-m pixel (simulated, {output_year})"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:159
+#: heating_emissions/components/gridded_emissions_artifact.py:163
 #, python-brace-format
 msgid ""
-"Direct (scope 1) CO₂ emissions from heating residential buildings (simulated, {output_year}). This result is computed"
-" based on simulated heating demand by demand_ninja model."
+"Direct CO₂ emissions from heating residential buildings (simulated, {output_year}). This result is computed based on "
+"simulated heating demand by demand_ninja model."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:220
-#: heating_emissions/components/gridded_emissions_artifact.py:221
+#: heating_emissions/components/gridded_emissions_artifact.py:224
+#: heating_emissions/components/gridded_emissions_artifact.py:225
 msgid "Dominant building construction year"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:222
-msgid "Dominant building construction year in 100-m grid cells (data from 2022 German census)"
+#: heating_emissions/components/gridded_emissions_artifact.py:227
+msgid "Most frequent building construction year class per 100-m grid cell, based on data from 2022 German census."
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:226
-#: heating_emissions/components/gridded_emissions_artifact.py:227
+#: heating_emissions/components/gridded_emissions_artifact.py:232
+#: heating_emissions/components/gridded_emissions_artifact.py:233
 msgid "Dominant building energy carrier"
 msgstr ""
 
-#: heating_emissions/components/gridded_emissions_artifact.py:228
-msgid "Dominant building energy carrier in 100-m grid cells (data from 2022 German census)"
+#: heating_emissions/components/gridded_emissions_artifact.py:235
+msgid "Most frequent building energy carrier per 100-m grid cell, based on data from 2022 German census."
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:23
 #, python-brace-format
 msgid ""
-"Average direct carbon dioxide emissions from heating residential buildings (estimated) are {mean_data} tonnes per "
+"Average direct per capita CO₂ emissions from heating residential buildings (estimated) are {mean_data} tonnes per "
 "person per year, but range from {min_data} to  {max_data} tonnes."
 msgstr ""
 
@@ -150,8 +159,8 @@ msgstr ""
 #: heating_emissions/components/histogram_artifacts.py:46
 #, python-brace-format
 msgid ""
-"Average life cycle GHG emissions from heating residential buildings (estimated) are {mean_data} tonnes of CO₂-eq. per"
-" person per year, but range from {min_data} to  {max_data} tonnes."
+"Average life cycle GHG per capita emissions from heating residential buildings (estimated) are {mean_data} tonnes of "
+"CO₂-eq. per person per year, but range from {min_data} to  {max_data} tonnes."
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:53
@@ -172,8 +181,8 @@ msgstr ""
 #: heating_emissions/components/histogram_artifacts.py:88
 #, python-brace-format
 msgid ""
-"Average direct emission factor from heating residential buildings (estimated) is {mean_data} kg of carbon dioxide per"
-" kWh, but range from {min_data} to  {max_data}."
+"Average direct emission factor of heating energy carriers in residential buildings (estimated) is {mean_data} kg of "
+"carbon dioxide per kWh, but range from {min_data} to  {max_data}."
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:95
@@ -183,8 +192,8 @@ msgstr ""
 #: heating_emissions/components/histogram_artifacts.py:111
 #, python-brace-format
 msgid ""
-"Average life cycle emission factor from heating residential buildings (estimated) is {mean_data} kg CO₂-eq. per kWh, "
-"but range from {min_data} to  {max_data}."
+"Average life cycle emission factor of heating energy carriers in residential buildings (estimated) is {mean_data} kg "
+"CO₂-eq. per kWh, but range from {min_data} to  {max_data}."
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:118
@@ -201,8 +210,8 @@ msgid "Per capita direct carbon dioxide emissions from residential heating (esti
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:144 heating_emissions/components/histogram_artifacts.py:173
-#: heating_emissions/components/histogram_artifacts.py:205 heating_emissions/components/histogram_artifacts.py:237
-#: heating_emissions/components/histogram_artifacts.py:269
+#: heating_emissions/components/histogram_artifacts.py:205 heating_emissions/components/histogram_artifacts.py:239
+#: heating_emissions/components/histogram_artifacts.py:273
 #, python-format
 msgid "% of 100-m grid cells in area of interest"
 msgstr ""
@@ -212,8 +221,8 @@ msgid "annual tonnes of carbon dioxide per person"
 msgstr ""
 
 #: heating_emissions/components/histogram_artifacts.py:154 heating_emissions/components/histogram_artifacts.py:183
-#: heating_emissions/components/histogram_artifacts.py:215 heating_emissions/components/histogram_artifacts.py:247
-#: heating_emissions/components/histogram_artifacts.py:279
+#: heating_emissions/components/histogram_artifacts.py:215 heating_emissions/components/histogram_artifacts.py:249
+#: heating_emissions/components/histogram_artifacts.py:283
 msgid "German average"
 msgstr ""
 
@@ -235,25 +244,29 @@ msgstr ""
 msgid "Buildings in %{y:.1f} % of cells consume %{x} kWh of heating energy per square meter per year <extra></extra>"
 msgstr ""
 
+#: heating_emissions/components/histogram_artifacts.py:204
+msgid "Average heating energy consumption per square meter of residential space (estimated)"
+msgstr ""
+
 #: heating_emissions/components/histogram_artifacts.py:208
 msgid "kWh per square meter per year"
 msgstr ""
 
-#: heating_emissions/components/histogram_artifacts.py:229 heating_emissions/components/histogram_artifacts.py:261
+#: heating_emissions/components/histogram_artifacts.py:229 heating_emissions/components/histogram_artifacts.py:263
 #, python-brace-format, python-format
 msgid "Buildings in %{y:.1f} % of cells emit %{x} kg of carbon dioxide per kWh of heating energy used <extra></extra>"
 msgstr ""
 
-#: heating_emissions/components/histogram_artifacts.py:236
-msgid "Average direct emission factor from heating in residential buildings (estimated)"
+#: heating_emissions/components/histogram_artifacts.py:237
+msgid "Average direct emission factor of heating energy carriers in residential buildings (estimated)"
 msgstr ""
 
-#: heating_emissions/components/histogram_artifacts.py:240 heating_emissions/components/histogram_artifacts.py:272
+#: heating_emissions/components/histogram_artifacts.py:242 heating_emissions/components/histogram_artifacts.py:276
 msgid "kg of carbon dioxide per kWh of heating"
 msgstr ""
 
-#: heating_emissions/components/histogram_artifacts.py:268
-msgid "Average life cycle emission factor from heating in residential buildings (estimated)"
+#: heating_emissions/components/histogram_artifacts.py:271
+msgid "Average life cycle emission factor of heating energy carriers in residential buildings (estimated)"
 msgstr ""
 
 #: heating_emissions/components/line_artifacts.py:15

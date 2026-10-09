@@ -20,7 +20,7 @@ def format_summary(summary: str, figure: Figure) -> str:
 
 def build_per_capita_direct_co2_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
     summary = tr(
-        'Average direct carbon dioxide emissions from heating residential buildings (estimated) '
+        'Average direct per capita CO₂ emissions from heating residential buildings (estimated) '
         'are {mean_data} tonnes per person per year, '
         'but range from {min_data} to '
         ' {max_data} tonnes.'
@@ -43,7 +43,7 @@ def build_per_capita_life_cycle_co2_histogram_artifact(
     aoi_aggregate: Figure, resources: ComputationResources
 ) -> Artifact:
     summary = tr(
-        'Average life cycle GHG emissions from heating residential buildings (estimated) '
+        'Average life cycle GHG per capita emissions from heating residential buildings (estimated) '
         'are {mean_data} tonnes of CO₂-eq. per person per year, '
         'but range from {min_data} to '
         ' {max_data} tonnes.'
@@ -85,7 +85,7 @@ def build_energy_histogram_artifact(aoi_aggregate: Figure, resources: Computatio
 
 def build_direct_emission_factor_histogram_artifact(aoi_aggregate: Figure, resources: ComputationResources) -> Artifact:
     summary = tr(
-        'Average direct emission factor from heating residential buildings (estimated) '
+        'Average direct emission factor of heating energy carriers in residential buildings (estimated) '
         'is {mean_data} kg of carbon dioxide per kWh, '
         'but range from {min_data} to '
         ' {max_data}.'
@@ -108,7 +108,7 @@ def build_life_cycle_emission_factor_histogram_artifact(
     aoi_aggregate: Figure, resources: ComputationResources
 ) -> Artifact:
     summary = tr(
-        'Average life cycle emission factor from heating residential buildings (estimated) '
+        'Average life cycle emission factor of heating energy carriers in residential buildings (estimated) '
         'is {mean_data} kg CO₂-eq. per kWh, '
         'but range from {min_data} to '
         ' {max_data}.'
@@ -201,7 +201,7 @@ def plot_energy_consumption_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text=tr('Average area-specific heating energy consumption in residential buildings (estimated)'),
+                text=tr('Average heating energy consumption per square meter of residential space (estimated)'),
                 subtitle=dict(text=tr('% of 100-m grid cells in area of interest'), font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),
@@ -233,7 +233,9 @@ def plot_direct_emission_factor_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text=tr('Average direct emission factor from heating in residential buildings (estimated)'),
+                text=tr(
+                    'Average direct emission factor of heating energy carriers in residential buildings (estimated)'
+                ),
                 subtitle=dict(text=tr('% of 100-m grid cells in area of interest'), font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),
@@ -265,7 +267,9 @@ def plot_life_cycle_emission_factor_histogram(
         ),
         layout=go.Layout(
             title=dict(
-                text=tr('Average life cycle emission factor from heating in residential buildings (estimated)'),
+                text=tr(
+                    'Average life cycle emission factor of heating energy carriers in residential buildings (estimated)'
+                ),
                 subtitle=dict(text=tr('% of 100-m grid cells in area of interest'), font=dict(color='gray', size=10)),
             ),
             font=dict(size=12),

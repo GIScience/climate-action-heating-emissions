@@ -1,13 +1,13 @@
-Wie viel Kohlendioxid verursachen wir beim Heizen unserer Wohnungen? Dies hängt von drei Hauptfaktoren ab:
+Wie viel Kohlendioxid stoßen wir beim Heizen unserer Wohnungen aus? Dies hängt von drei Hauptfaktoren ab:
 
 1. Beheizte Fläche: Wie groß ist unsere Wohnstätte und wie viel davon heizen wir? Wohnen wir allein in einem großen Haus
-   oder teilen wir uns eine kleine Wohnung? Heizen wir während der kalten Jahreszeit den gesamten Wohnraum oder nur
-   Räume, während wir sie nutzen?
+   oder teilen wir uns eine kleine Wohnung? Heizen wir während der kalten Jahreszeit das ganze Haus oder nur Räume,
+   während wir sie nutzen?
 
-2. Energieeffizienz: Wie viel Energie benötigen wir, um einen Quadratmeter zu heizen? Das hängt davon ab, wie gut
-   Gebäude gedämmt sind, aber auch davon, wie wir unsere Wohnungen im Winter lüften.
+2. Energieeffizienz: Wie viel Energie benötigen wir, um einen Quadratmeter Wohnfläche zu heizen? Das hängt davon ab, wie
+   gut Gebäude gedämmt sind, aber auch davon, wie wir unsere Wohnungen im Winter lüften.
 
-3. Energiequelle: Wie heizen wir? Nutzen wir einen Gaskessel, einen Ölofen, einen Kamin oder eine Wärmepumpe? Die
+3. Energiequelle: Woher kommt die Wärme? Nutzen wir einen Gaskessel, einen Ölofen, einen Kamin oder eine Wärmepumpe? Die
    Energiequelle bzw. der Energieträger bestimmt, wie viel CO₂ pro kWh Heizenergie, die wir verbrauchen, ausgestoßen
    wird (und wo).
 
@@ -17,28 +17,30 @@ Der deutsche Zensus von 2022 liefert räumliche Daten, anhand derer wir all dies
 1. Multiplikation der Einwohnerzahl mit der durchschnittlichen Wohnfläche pro Kopf, um die Gesamtwohnfläche zu erhalten
    (d. h. die Fläche, die vermutlich beheizt wird).
 
-2. Berechnung des durchschnittlichen flächenbezogenen Heizenergieverbrauchs (kWh pro m²) von Wohngebäuden auf der
-   Grundlage des Baujahres der Gebäude.
+2. Berechnung des durchschnittlichen Heizenergieverbrauchs pro Flächeneinheit (kWh pro m²) anhand des Anteils der in
+   verschiedenen Zeiträumen errichteten Gebäude, da sich die Baustandards im Laufe der Zeit verändert haben und neuere
+   Gebäude in der Regel besser gedämmt sind.
 
-3. Berechnung der durchschnittlichen Kohlendioxidemissionen pro Einheit Heizenergie (kg pro kWh) auf der Grundlage des
-   Anteils der Gebäude mit unterschiedlichen Heizenergieträgern (z. B. Gas, Öl, Holz, Fernwärme usw.).
+3. Berechnung der durchschnittlichen Kohlendioxidemissionen pro Einheit Heizenergie (sog. "Emissionsfaktor", gemessen in
+   kg pro kWh) auf der Grundlage des Anteils der Gebäude mit unterschiedlichen Heizenergieträgern (z. B. Gas, Öl, Holz,
+   Fernwärme usw.).
 
-Die Emissionsschätzungen sind das Produkt aus Gesamtwohnfläche, durchschnittlichem flächenbezogenen Energieverbrauch und
+Die Emissionsschätzungen sind das Produkt aus Gesamtwohnfläche, durchschnittlichem Energieverbrauch pro Quadratmeter und
 durchschnittlichem Emissionsfaktor.
 
 ## Datenquellen
 
 ### Räumliche Daten
 Rasterdaten des deutschen Zensus 2022 können
-[hier](https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#Gitterdaten2022) heruntergeladen werden. Wir
-verwenden die folgenden vier Datensätze:
+[hier](https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Zensus2022/_inhalt.html#sprg1403932)
+heruntergeladen werden. Wir verwenden die folgenden vier Datensätze:
 
 1. Bevölkerung ("Bevölkerungszahlen in Gitterzellen")
 2. Wohnfläche pro Kopf ("Durchschnittliche Wohnfläche je Bewohner in Gitterzellen")
 3. Baujahr der Gebäude ("Gebäude nach Baujahr in Mikrozensus-Klassen in Gitterzellen")
 4. Heizenergieträger in Wohngebäuden ("Gebäude mit Wohnraum nach Energieträger der Heizung in Gitterzellen")
 
-### Flächenbezogenene Energieverbräuche
+### Energieverbrauch
 Wir verwenden Energieverbrauchswerte für Gebäude verschiedener Altersklassen aus
 [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit), die auf Messungen in über 300.000 Gebäuden in ganz
 Deutschland basieren und um Temperaturunterschiede bereinigt sind.
@@ -56,12 +58,12 @@ Deutschland basieren und um Temperaturunterschiede bereinigt sind.
 
 
 ### Emissionsfaktoren
-Wir verwenden Emissionsfaktoren aus der ProBas-Datenbank des Umweltbundesamtes. Zur Schätzung sowohl der direkten
-Emissionen als auch der Lebenszyklus-Emissionen nutzen wir zwei unterschiedliche Sätze von Emissionsfaktoren.
+Wir verwenden Emissionsfaktoren aus der ProBas-Datenbank des Umweltbundesamtes. Zur Schätzung der direkten Emissionen
+und der Lebenszyklus-Emissionen nutzen wir zwei unterschiedliche Sätze von Emissionsfaktoren.
 
-**Direkte Emissionen (Scope 1)** basieren auf Emissionsfaktoren für „Einzelprozesse“, was bedeutet, dass sie die
-Emissionen aus der Verbrennung von Brennstoffen zur Wärmeerzeugung umfassen, jedoch keine anderen vor- und
-nachgelagerten Emissionen im Lebenszyklus der Brennstoffe.
+**Direkte Emissionen** basieren auf Emissionsfaktoren für „Einzelprozesse“, was bedeutet, dass sie die Emissionen aus
+der Verbrennung von Brennstoffen zur Wärmeerzeugung umfassen, jedoch keine anderen vor- und nachgelagerten Emissionen im
+Lebenszyklus der Brennstoffe.
 
 Wir verwenden CO₂-Emissionsfaktoren aus der ProBas-Datenbank für
 [Gas](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=4c06c7a1-cdec-46cd-9929-0df2a70b8897&version=02.44.152&stock=PUBLIC&lang=de),
@@ -113,8 +115,7 @@ gehen wir von Braunkohlebriketts aus. Für
 nehmen wir an, dass Holzstücke in einer Zentralheizungsanlage verbrannt werden. Für
 [Fernwärme](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=6dc315d7-c017-46ed-99f8-05ff57de1702&lang=de)
 gehen wir vom deutschen Energiemix im Jahr 2020 aus. Beachte, dass es sich hierbei um einen Durchschnittswert handelt
-und die tatsächlichen Emissionen je nach Energiequelle des Fernwärmekraftwerks, z.B. Kohle, Gas, Holz oder eine
-Wärmepumpe, stark variieren können. Ebenso gehen wir bei
+und die tatsächlichen Emissionen je nach Energiequelle des Fernwärmenetzes stark variieren können. Ebenso gehen wir bei
 [Strom](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=6abaf6e8-ad5f-434d-bd0d-9d4682bba924&version=02.44.152&stock=PUBLIC&lang=en)
 vom durchschnittlichen deutschen Energiemix im Jahr 2020 aus. Bei
 [Wärmepumpen](https://data.probas.umweltbundesamt.de/datasetdetail/process.xhtml?uuid=0d3ea28c-3efa-449f-897c-8dfaa291c4e7&version=02.44.152&stock=PUBLIC&lang=en)
@@ -137,8 +138,8 @@ gehen wir von Luftwärmepumpen aus, die mit dem durchschnittlichen deutschen Str
   Haushalte in Deutschland mit diesem Energieträger beheizt werden.
 
 ### Andere Datenquellen
-- Durchschnittlicher flächenbezogener Heizenergieverbrauch in Wohngebäuden in Deutschland (127,1 kWh/m² pro Jahr):
-  [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- Durchschnittlicher witterungsbereinigter Heizenergieverbrauch pro Quadratmeter in Wohngebäuden in Deutschland (127,1
+  kWh/m² pro Jahr): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
 - Durchschnittliche Pro-Kopf-Kohlendioxidemissionen durch das Heizen von Wohnraum in Deutschland (2,2 t pro Jahr):
   [Umweltbundesamt](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
 - Deutscher durchschnittlicher Emissionsfaktor (0,199 kg Kohlendioxid pro kWh verbrauchter Heizenergie): Berechnet auf
@@ -149,46 +150,44 @@ gehen wir von Luftwärmepumpen aus, die mit dem durchschnittlichen deutschen Str
 
 ### Unsicherheit der Eingabedaten
 
-1. Räumliche Daten aus dem deutschen Zensus: Da es sich um offizielle amtliche Daten handelt, gehen wir von einer sehr
-   geringen (vernachlässigbaren) Unsicherheit aus
+1. Räumliche Daten des Zensus 2022: Aus Datenschutzgründen verwendet der Zensus die Cell-Key-Methode, bei der die
+   Gebäudezahlen in jeder Gitterzelle durch zufällige Überlagerungen leicht verändert werden. Dadurch sind die
+   durchschnittlichen Heizenergieverbräuche und die durchschnittlichen Emissionsfaktoren wahrscheinlich verzerrt,
+   insbesondere in Gitterzellen mit nur wenigen Gebäuden. Das Ausmaß dieser Unsicherheit lässt sich leider
+   methodenbedingt nicht quantifizieren.
 2. Flächenbezogene Energieverbrauchswerte von co2online: 9 % Unsicherheit ([co2online, UBA,
    2019](https://www.umweltbundesamt.de/publikationen/hintergrundbericht-wohnen-sanieren))
 3. Emissionsfaktoren vom Umweltbundesamt: nicht angegeben
 
-### Unsicherheit durch die Gewichtung nach Anzahl der Gebäude statt nach Gebäudefläche
+### Unsicherheit durch die Gewichtung nach Anzahl der Gebäude statt nach beheizter Fläche
 
 Um den durchschnittlichen flächenbezogenen Energieverbrauch in jeder Gitterzelle zu schätzen, gewichten wir die
 empirischen Heizenergieverbrauchswerte der einzelnen Gebäudealtersklassen mit dem Anteil der Gebäude in der jeweiligen
-Altersklasse, basierend auf Zensusdaten. Für jede Gitterzelle wissen wir, wie viele Gebäude zu jeder Altersklasse
-gehören, doch fehlen uns Informationen über ihre Größe oder beheizte Fläche. Daher nehmen wir für alle Gebäude die
-gleiche beheizte Fläche an.
+Altersklasse, basierend auf Zensusdaten. Der Zensus gibt für jede Gitterzelle nur an, wie viele Gebäude zu jeder
+Baualtersklasse gehören, nicht jedoch deren beheizte Fläche. Unsere Berechnungen gehen daher davon aus, dass alle
+Gebäude dieselbe beheizte Fläche haben.
 
-Diese Annahme kann jedoch zu Unsicherheiten innerhalb einer Gitterzelle führen, da sich Gebäude unterschiedlichen Alters
-in ihrer Größe erheblich unterscheiden können. Stelle Dir beispielsweise eine Gitterzelle mit drei Gebäuden vor: ein
-älteres Gebäude aus der Altersklasse 1949–1978 mit einer beheizten Fläche von 1.000 m² und zwei neuere Gebäude aus der
-Altersklasse 2011–2019 mit jeweils 150 m².
+Diese Annahme führt zu Unsicherheiten, da sich Gebäude unterschiedlichen Alters in ihrer Größe unterscheiden können.
+Angenommen, eine Gitterzelle enthält drei Gebäude: ein älteres Gebäude mit 1.000 m² und zwei neuere Gebäude mit jeweils
+150 m². Da unsere Methode nur die Anzahl der Gebäude berücksichtigt, gewichtet sie bei der Berechnung des
+durchschnittlichen Energieverbrauchs das ältere Gebäude mit einem Drittel und die neueren Gebäude mit zwei Dritteln.
+Tatsächlich entfällt jedoch der Großteil der beheizten Fläche in der Gitterzelle auf das ältere Gebäude. Da ältere
+Gebäude aufgrund schlechterer Dämmung tendenziell mehr Energie verbrauchen, würde unser Ansatz den tatsächlichen
+Heizenergieverbrauch in diesem Beispiel unterschätzen, weil das Gebäude mit hohem Energiebedarf in der Berechnung zu
+wenig Gewicht erhält.
 
-Unsere Methode berücksichtigt nur die Anzahl der Gebäude, aber nicht deren Größe. Bei der Berechnung des
-durchschnittlichen Energieverbrauchs werden daher dem älteren Gebäude ein Drittel der Gewichtung und den neueren
-Gebäuden zwei Drittel der Gewichtung zugewiesen. Tatsächlich macht das ältere Gebäude den größten Teil der beheizten
-Fläche in der Gitterzelle aus. Da ältere Gebäude aufgrund ihrer schlechteren Dämmung tendenziell mehr Energie
-verbrauchen, würde dieser Ansatz den tatsächlichen Heizenergieverbrauch in diesem Beispiel unterschätzen, da das Gebäude
-mit hohem Energiebedarf bei der Berechnung zu gering gewichtet wird.
-
-Eine ähnliche Unsicherheit ergibt sich bei der Gewichtung mit dem Anteil der Gebäude mit den jeweiligen
-Heizenergieträgern (basierend auf Zensusdaten) zur Ermittlung des durchschnittlichen Emissionsfaktors in jeder
-Gitterzelle.
+Dasselbe Problem tritt bei der Schätzung des durchschnittlichen Emissionsfaktors in jeder Gitterzelle auf, die auf der
+Anzahl der Gebäude mit unterschiedlichen Energieträgern beruht.
 
 Zudem berücksichtigen wir keine möglichen Zusammenhänge zwischen dem Alter der Gebäude und ihrem Energieträger. Ältere
 Gebäude verfügen eher über klimaschädliche Energiequellen wie Ölheizungen, während neuere Gebäude eher mit Wärmepumpen
 ausgestattet sind. Die Nichtbeachtung dieser möglichen Zusammenhänge führt zu einer Unterschätzung der Emissionen.
 
-## Grundwissen
+## Literatur
 
-### Was sind Sope 1, 2 und 3 Emissionen?
-1. **Scope 1** Emissionen sind direkte Emissionen, die in den Gebäuden selbst entstehen, z.B. durch die Verbrennung von
-   Brennstoffen in einer Hausheizung. Emissionen aus Kraftwerken oder Fernwärmeanlagen sind hier nicht enthalten.
-2. **Scope 2** Emissionen sind indirekte Emissionen, die bei der Erzeugung der Energie entstehen, die von der
-   berichtenden Einheit verbraucht wird. Wird ein Gebäude mit Strom oder Fernwärme beheizt, gelten die Emissionen aus
-   der Erzeugung dieses Stroms oder dieser Wärme als Scope-2-Emissionen.
-3. **Scope 3** Emissionen sind alle anderen anfallenden indirekten Emissionen
+Eine ausführlichere Beschreibung der Methodik und der Datenquellen des Tools sowie Informationen zur Validierung der
+Ergebnisse und zur Anwendung des Tools in der kommunalen Wärmeplanung finden Sie hier:
+
+* Kong G., Ulrich V., Knoblauch S., Martin M., Schott M., von Elverfeldt K., Zipf A., Block S. 2027. Residential heating
+  emissions tool in the Climate Action Navigator: High-resolution estimation based on open data. Computers, Environment
+  and Urban Systems, 131, https://doi.org/10.1016/j.compenvurbsys.2026.102525.
