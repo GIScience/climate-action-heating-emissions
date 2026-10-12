@@ -150,7 +150,6 @@ def calculate_time_downscale_emissions(
     )
 
     # data pre-processing: fillna in census data
-    # todo: support temporal downscaling by both mode ['direct', 'life_cycle'] or selected mode.
     census_data['direct'] = census_data['direct'].fillna(census_data['direct'].mean())
 
     # calculate the emissions for each month in a year
