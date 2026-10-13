@@ -173,8 +173,7 @@ def build_gridded_artifact(
 
     # Define colors and legend
     norm = Normalize(vmin=legend_lower_cap, vmax=legend_upper_cap)
-    cmap = matplotlib.colormaps.get('viridis')
-    cmap.set_under('#808080')
+    cmap = matplotlib.colormaps['viridis'].with_extremes(under='#808080')
     artifact_data_4326['color'] = artifact_data[output_column].apply(lambda v: Color(to_hex(cmap(norm(v)))))
 
     legend_upper_cap_str = format_with_separators(legend_upper_cap)
