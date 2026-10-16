@@ -15,6 +15,9 @@ def test_operator_info_request(operator):
 def test_operator_compute_german_request(
     operator, default_compute_input, default_german_aoi, default_aoi_properties, compute_resources
 ):
+    compute_input = default_compute_input.model_copy(deep=True)
+    compute_input.include_direct_emissions = False
+
     computed_artifacts = operator.compute(
         resources=compute_resources,
         aoi=default_german_aoi,
@@ -23,7 +26,7 @@ def test_operator_compute_german_request(
         language=DEFAULT_LANGUAGE,
     )
 
-    assert len(computed_artifacts) == 15
+    assert len(computed_artifacts) == 10
     for artifact in computed_artifacts:
         assert isinstance(artifact, Artifact)
 
@@ -39,6 +42,7 @@ def test_operator_compute_german_request_all_optionals(
 ):
     compute_input = default_compute_input.model_copy(deep=True)
     compute_input.temporal_emission_year = 2022
+    compute_input.include_direct_emissions = True
 
     def fake_estimate_months(*args, **kwargs):
         kwargs['estimate_months'] = [1, 2]

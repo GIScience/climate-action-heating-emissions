@@ -7,6 +7,7 @@ from climatoology.base.exception import ClimatoologyUserError, InputValidationEr
 from shapely import MultiPolygon
 
 from heating_emissions.components.utils import (
+    NO_DATA_LABEL,
     calculate_heating_emissions,
     check_aoi,
     postprocess_uncalculated_census_data,
@@ -93,8 +94,8 @@ def test_postprocess_uncalculate_census_data():
         }
     )
     result = postprocess_uncalculated_census_data(df)
-    assert all(result['dominant_age'] == ['Unknown', '1949-1978', 'Unknown'])
-    assert all(result['dominant_energy'] == ['Unknown', 'Gas', 'Unknown'])
+    assert all(result['dominant_age'] == [NO_DATA_LABEL, '1949-1978', NO_DATA_LABEL])
+    assert all(result['dominant_energy'] == [NO_DATA_LABEL, 'Gas', NO_DATA_LABEL])
 
 
 def test_check_aoi_valid(operator, default_german_aoi, default_aoi_properties):

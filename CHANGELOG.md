@@ -9,7 +9,11 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ### Changed
 
+- Made direct emission estimates an optional result
+- Fixed how ties are displayed in dominant building age and energy source maps
+- Change color of "Wood" dominant energy carrier to lighter color
 - Switch colormap in emission maps to `viridis` and add anchor points to legend ([#83](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/83))
+
 - Update Climatoology to 7.4.1
 - reduced size of docker image by using python-slim, multi-stage build, and including only the required files
 - Update CI and dockerfile to simplify and correct poetry installing location

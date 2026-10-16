@@ -8,6 +8,7 @@ from heating_emissions.components.gridded_emissions_artifact import (
     build_gridded_artifact,
     build_gridded_artifact_classdata,
 )
+from heating_emissions.components.utils import NO_DATA_LABEL
 
 ROOT_DIR = Path(__file__).parent.parent.parent
 
@@ -58,8 +59,8 @@ def test_build_gridded_artifact_classdata(compute_resources, output, expected_na
         {
             'x_mp_100m': [4500000, 4500100, 4500200],
             'y_mp_100m': [3500000, 3500100, 3500200],
-            'dominant_age': ['1949-1978', '1979-1990', 'Unknown'],
-            'dominant_energy': ['Gas', 'District heating', 'Unknown'],
+            'dominant_age': ['1949-1978', '1979-1990', NO_DATA_LABEL],
+            'dominant_energy': ['Gas', 'District heating', NO_DATA_LABEL],
         }
     )
 

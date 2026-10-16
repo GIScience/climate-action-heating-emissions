@@ -17,7 +17,14 @@ from climatoology.base.i18n import N_, tr, translate_dataframe
 from matplotlib.colors import Normalize, to_hex
 from pydantic_extra_types.color import Color
 
-from heating_emissions.components.utils import BUILDING_AGES, ENERGY_SOURCES, Topics, format_with_separators
+from heating_emissions.components.utils import (
+    BUILDING_AGES,
+    ENERGY_SOURCES,
+    NO_DATA_LABEL,
+    TIE_LABEL,
+    Topics,
+    format_with_separators,
+)
 
 log = logging.getLogger(__name__)
 
@@ -66,8 +73,10 @@ def build_gridded_artifact(
                 emission_type=emission_type
             )
             description = tr(
-                '{emission_type} direct CO₂ emissions from heating residential buildings. Estimated based on data from the 2022 German census.'
-            ).format(emission_type=emission_type)
+                'Estimated direct {emission_type} carbon dioxide emissions from heating residential buildings.\n\n'
+                'This includes only carbon dioxide emitted directly from buildings as a result of burning a fuel.\n\n'
+                'Results are based on data from the 2022 German census.'
+            ).format(emission_type=emission_type.lower())
             tags = {tr(Topics.DIRECT_EMISSIONS)}
 
         case Output.life_cycle_co2_emissions:
@@ -91,8 +100,13 @@ def build_gridded_artifact(
                 emission_type=emission_type
             )
             description = tr(
-                'Life cycle GHG emissions from heating residential buildings. Estimated based on data from the 2022 German census.'
-            )
+                'Estimated {emission_type} greenhouse gas emissions from heating residential buildings.\n\n'
+                'This includes all greenhouse gases (carbon dioxide, methane, F-gases, etc.) emitted directly '
+                'from buildings, as well as emitted at power plants that generate electricity for heat pumps, or that '
+                'heat water delivered to residences through district heating networks. Emissions associated to the '
+                'upstream extraction and processing of fuels are also included.\n\n'
+                'Results are based on data from the 2022 German census.'
+            ).format(emission_type=emission_type.lower())
             tags = {tr(Topics.LIFE_CYCLE_EMISSIONS)}
 
         case Output.heat_consumption:
@@ -104,7 +118,8 @@ def build_gridded_artifact(
             layer_name = tr('Energy consumption (kWh/m²/year)')
             caption = tr('Average heating energy consumption per unit area in residential buildings (estimated)')
             description = tr(
-                'Annual energy consumption to heat one m² of residential heating space, estimated based on the count of buildings of different ages in each grid cell reported in the 2022 German census.'
+                'Annual energy consumption to heat one m² of residential heating space, estimated based on the count '
+                'of buildings of different ages in each grid cell reported in the 2022 German census.'
             )
             tags = {tr(Topics.PARAMETERS)}
 
@@ -126,7 +141,12 @@ def build_gridded_artifact(
             layer_name = tr('Direct emission factor (kg of CO₂ per kWh)')
             caption = tr('Average direct emission factor from heating (estimated)')
             description = tr(
-                'Average direct emission factor (kg of CO₂ per kWh) from heating residential buildings, estimated based on the count of buildings with different energy carriers in each grid cell reported in the 2022 German census.'
+                'Average direct emission factor (kg of CO₂ per kWh) from heating residential buildings, '
+                'estimated based on the count of buildings with different energy carriers in each grid cell reported '
+                'in the 2022 German census.\n\n'
+                'Note that these emission factors consider only carbon dioxide emitted directly from buildings when burning fuels '
+                '(either bio- or fossil fuels), and thus the emission factor of wood is high, while those of heat pumps '
+                'and district heating are zero.'
             )
             tags = {tr(Topics.DIRECT_EMISSIONS)}
 
@@ -137,7 +157,9 @@ def build_gridded_artifact(
             layer_name = tr('Life cycle emission factor (kg of CO₂eq per kWh)')
             caption = tr('Average life cycle emission factor from heating (estimated)')
             description = tr(
-                'Average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, estimated based on the count of buildings with different energy carriers in each grid cell reported in the 2022 German census.'
+                'Average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, '
+                'estimated based on the count of buildings with different energy carriers in each grid cell '
+                'reported in the 2022 German census.'
             )
             tags = {tr(Topics.LIFE_CYCLE_EMISSIONS)}
         case _:
@@ -223,7 +245,9 @@ def build_gridded_artifact_classdata(
             layer_name = tr('Dominant building construction year')
             caption = tr('Dominant building construction year')
             description = tr(
-                'Most frequent building construction year class per 100-m grid cell, based on data from 2022 German census.'
+                'Most frequent building construction year class per 100-m grid cell.\n\n'
+                'Ties occur when there is not a single most common construction year class in the grid cell.'
+                'Based on data from 2022 German census.'
             )
             color_categories = BUILDING_AGES
 
@@ -231,7 +255,9 @@ def build_gridded_artifact_classdata(
             layer_name = tr('Dominant building energy carrier')
             caption = tr('Dominant building energy carrier')
             description = tr(
-                'Most frequent building energy carrier per 100-m grid cell, based on data from 2022 German census.'
+                'Most frequent building energy carrier per 100-m grid cell.\n\n'
+                'Ties occur when there is not a single most common energy carrier in the grid cell.'
+                'Based on data from 2022 German census.'
             )
             color_categories = ENERGY_SOURCES
         case _:
@@ -246,11 +272,14 @@ def build_gridded_artifact_classdata(
     artifact_data_4326 = artifact_data.to_crs('EPSG:4326')
 
     # Define colors and legend
+    categories = {k: v for k, v in color_categories.items() if k != 'unknown'}
+
     cmap = matplotlib.colormaps.get('coolwarm_r')
-    color_list = cmap(np.linspace(0, 0.9, len(color_categories) - 1))
+    color_list = cmap(np.linspace(0, 0.9, len(categories)))
     color_list = [Color(to_hex(_)) for _ in color_list]
-    color_list.append(Color('#808080'))  # the last category: unknown
-    color_map = dict(zip(color_categories.values(), color_list))
+    color_map = dict(zip(categories.values(), color_list))
+    color_map[TIE_LABEL] = Color('#A9A9A9')
+    color_map[NO_DATA_LABEL] = Color('#D3D3D3')
     artifact_data_4326['color'] = artifact_data[output_column].map(color_map)
 
     tr_color_map = {tr(k): v for k, v in color_map.items()}

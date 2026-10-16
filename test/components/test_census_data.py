@@ -12,6 +12,7 @@ from heating_emissions.components.census_data import (
     get_census_tables_from_db,
     get_clipped_census_grid,
 )
+from heating_emissions.components.utils import NO_DATA_LABEL, TIE_LABEL
 
 
 def test_get_census_tables_from_db(operator):
@@ -71,6 +72,8 @@ def test_get_clipped_census_grid_no_data(operator):
     'dominant_character, data, expected',
     [
         ('dominant_age', {'pre_1919': [5], 'post_2000': [3]}, 'pre-1919'),
+        ('dominant_age', {'pre_1919': [3], 'post_2000': [3]}, TIE_LABEL),
+        ('dominant_age', {'pre_1919': [0], 'post_2000': [0]}, NO_DATA_LABEL),
         ('dominant_energy', {'wood': [4], 'gas': [2]}, 'Wood'),
     ],
 )
@@ -99,7 +102,7 @@ def test_clean_building_age_data_remove_uninhabited_areas():
         {
             'total_buildings': {inhabited_cell_id: 3, cell_id_wo_buildings: 3},
             'pre_1919': {inhabited_cell_id: 3.0, cell_id_wo_buildings: np.nan},
-            '1919_1948': {inhabited_cell_id: 3.0, cell_id_wo_buildings: np.nan},
+            '1919_1948': {inhabited_cell_id: 2.0, cell_id_wo_buildings: np.nan},
             '1949_1978': {inhabited_cell_id: None, cell_id_wo_buildings: None},
             '1979_1990': {inhabited_cell_id: None, cell_id_wo_buildings: None},
             '1991_2000': {inhabited_cell_id: None, cell_id_wo_buildings: None},

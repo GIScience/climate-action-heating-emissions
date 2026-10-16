@@ -78,14 +78,8 @@ class Operator(BaseOperator[ComputeInput]):
 
         # Gridded artifacts
         result.index.names = ['index']
-        heating_per_capita_direct_emissions_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='direct_co2_emissions'
-        )
         heating_per_capita_life_cycle_emissions_artifact = build_gridded_artifact(
             result=result, resources=resources, output='life_cycle_co2_emissions'
-        )
-        heating_absolute_direct_emissions_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='direct_co2_emissions', is_per_capita=False
         )
         heating_absolute_life_cycle_emissions_artifact = build_gridded_artifact(
             result=result, resources=resources, output='life_cycle_co2_emissions', is_per_capita=False
@@ -93,18 +87,16 @@ class Operator(BaseOperator[ComputeInput]):
         energy_consumption_artifact = build_gridded_artifact(
             result=result, resources=resources, output='heat_consumption'
         )
-        living_space_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='average_sqm_per_person'
-        )
-        direct_emission_factor_artifact = build_gridded_artifact(
-            result=result, resources=resources, output='direct_emission_factor'
-        )
         life_cycle_emission_factor_artifact = build_gridded_artifact(
             result=result, resources=resources, output='life_cycle_emission_factor'
         )
 
         # Gridded artifacts -- original (uncalculated) census data
         uncalculated_census_data.index.names = ['index']
+
+        living_space_artifact = build_gridded_artifact(
+            result=result, resources=resources, output='average_sqm_per_person'
+        )
         building_age_artifact = build_gridded_artifact_classdata(
             uncalculated_census_data=uncalculated_census_data, resources=resources, output='dominant_age'
         )
@@ -113,10 +105,6 @@ class Operator(BaseOperator[ComputeInput]):
         )
 
         # Histograms
-        direct_per_capita_histogram = plot_per_capita_direct_co2_histogram(census_data=census_data)
-        direct_per_capita_histogram_artifact = build_per_capita_direct_co2_histogram_artifact(
-            aoi_aggregate=direct_per_capita_histogram, resources=resources
-        )
         life_cycle_per_capita_histogram = plot_per_capita_life_cycle_co2_histogram(census_data=census_data)
         life_cycle_per_capita_histogram_artifact = build_per_capita_life_cycle_co2_histogram_artifact(
             aoi_aggregate=life_cycle_per_capita_histogram, resources=resources
@@ -126,32 +114,57 @@ class Operator(BaseOperator[ComputeInput]):
             aoi_aggregate=energy_histogram, resources=resources
         )
 
-        direct_emission_factor_histogram = plot_direct_emission_factor_histogram(census_data=census_data)
-        direct_emission_factor_histogram_artifact = build_direct_emission_factor_histogram_artifact(
-            aoi_aggregate=direct_emission_factor_histogram, resources=resources
-        )
         life_cycle_emission_factor_histogram = plot_life_cycle_emission_factor_histogram(census_data=census_data)
         life_cycle_emission_factor_histogram_artifact = build_life_cycle_emission_factor_histogram_artifact(
             aoi_aggregate=life_cycle_emission_factor_histogram, resources=resources
         )
 
         return_artifacts = [
-            heating_per_capita_direct_emissions_artifact,
             heating_per_capita_life_cycle_emissions_artifact,
-            direct_per_capita_histogram_artifact,
             life_cycle_per_capita_histogram_artifact,
             energy_consumption_histogram_artifact,
-            direct_emission_factor_histogram_artifact,
             life_cycle_emission_factor_histogram_artifact,
-            heating_absolute_direct_emissions_artifact,
             heating_absolute_life_cycle_emissions_artifact,
             energy_consumption_artifact,
             living_space_artifact,
-            direct_emission_factor_artifact,
             life_cycle_emission_factor_artifact,
             building_age_artifact,
             building_energy_source_artifact,
         ]
+
+        # Optional: compute direct (i.e., scope 1) CO2 emissions
+        if params.include_direct_emissions:
+            heating_per_capita_direct_emissions_artifact = build_gridded_artifact(
+                result=result, resources=resources, output='direct_co2_emissions'
+            )
+
+            heating_absolute_direct_emissions_artifact = build_gridded_artifact(
+                result=result, resources=resources, output='direct_co2_emissions', is_per_capita=False
+            )
+
+            direct_emission_factor_artifact = build_gridded_artifact(
+                result=result, resources=resources, output='direct_emission_factor'
+            )
+
+            direct_per_capita_histogram = plot_per_capita_direct_co2_histogram(census_data=census_data)
+            direct_per_capita_histogram_artifact = build_per_capita_direct_co2_histogram_artifact(
+                aoi_aggregate=direct_per_capita_histogram, resources=resources
+            )
+
+            direct_emission_factor_histogram = plot_direct_emission_factor_histogram(census_data=census_data)
+            direct_emission_factor_histogram_artifact = build_direct_emission_factor_histogram_artifact(
+                aoi_aggregate=direct_emission_factor_histogram, resources=resources
+            )
+
+            return_artifacts.extend(
+                [
+                    heating_per_capita_direct_emissions_artifact,
+                    direct_per_capita_histogram_artifact,
+                    direct_emission_factor_histogram_artifact,
+                    heating_absolute_direct_emissions_artifact,
+                    direct_emission_factor_artifact,
+                ]
+            )
 
         # temporal downscaling emissions
         if params.temporal_emission_year is not None:

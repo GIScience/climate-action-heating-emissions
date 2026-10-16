@@ -11,6 +11,15 @@ feature_flags = FeatureFlags()
 
 
 class ComputeInput(BaseModel):
+    include_direct_emissions: Annotated[
+        Optional[bool],
+        Field(
+            title=N_('Include direct emission estimates'),
+            description=N_('Select if you want estimates of scope 1 carbon dioxide emitted directly from buildings.'),
+            default=False,
+            json_schema_extra={'x-mark-important': True},
+        ),
+    ]
     temporal_emission_year: Annotated[
         Optional[int],
         Field(

@@ -58,16 +58,19 @@ BUILDING_AGES = {
 }
 
 ENERGY_SOURCES = {
-    'wood': N_('Wood'),
     'coal': N_('Coal'),
     'heating_oil': N_('Heating oil'),
     'gas': N_('Gas'),
+    'wood': N_('Wood'),
     'biomass_biogas': N_('Biomass / Biogas'),
     'solar_geothermal_heat_pumps': N_('Solar / Geothermal / Heat pumps'),
     'electricity': N_('Electricity'),
     'district_heating': N_('District heating'),
     'unknown': N_('Unknown'),
 }
+
+TIE_LABEL = N_('Tie')
+NO_DATA_LABEL = N_('No data')
 
 
 class Topics(StrEnum):
@@ -103,7 +106,7 @@ def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFra
 def postprocess_uncalculated_census_data(uncalculated_census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     uncalculated_census_data[['dominant_age', 'dominant_energy']] = uncalculated_census_data[
         ['dominant_age', 'dominant_energy']
-    ].fillna(N_('Unknown'))
+    ].fillna(N_(NO_DATA_LABEL))
     return uncalculated_census_data
 
 

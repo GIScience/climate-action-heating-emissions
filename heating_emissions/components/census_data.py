@@ -14,6 +14,8 @@ from heating_emissions.components.utils import (
     EMISSION_FACTORS_LIFE_CYCLE,
     ENERGY_SOURCES,
     HEAT_CONSUMPTION,
+    NO_DATA_LABEL,
+    TIE_LABEL,
     postprocess_uncalculated_census_data,
 )
 
@@ -205,8 +207,12 @@ def extract_dominant_characteristics(census_dominant_data: gpd.GeoDataFrame, dom
         case _:
             raise ValueError(f'Unknown dominant_character: {dominant_character}')
 
-    census_dominant_data = census_dominant_data.rename(columns=new_columns_names)
-    census_dominant_data = census_dominant_data.idxmax(axis=1)
-    census_dominant_data = census_dominant_data.fillna('Unknown')
+    counts = census_dominant_data.rename(columns=new_columns_names)
+    max_vals = counts.max(axis=1)
+    n_at_max = counts.eq(max_vals, axis=0).sum(axis=1)
 
-    return census_dominant_data
+    dominant = counts.idxmax(axis=1)
+    dominant = dominant.mask(n_at_max > 1, TIE_LABEL)
+    dominant = dominant.mask(max_vals <= 0, NO_DATA_LABEL)
+
+    return dominant
