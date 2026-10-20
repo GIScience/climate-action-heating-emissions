@@ -142,6 +142,8 @@ gehen wir von Luftwärmepumpen aus, die mit dem durchschnittlichen deutschen Str
   kWh/m² pro Jahr): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
 - Durchschnittliche Pro-Kopf-Kohlendioxidemissionen durch das Heizen von Wohnraum in Deutschland (2,2 t pro Jahr):
   [Umweltbundesamt](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
+- Durchschnittliche Wohnfläche pro Kopf in Deutschland (46,3 Quadratmeter): [Zensus
+  2022](https://ergebnisse.zensus2022.de/datenbank/online/statistic/1000A/table/1000A-0004/search/s/RHVyY2hzY2huaXR0bGljaGUlMjBXb2huZmwlQzMlQTRjaGUlMjBqZSUyMEJld29obmVy)
 - Deutscher durchschnittlicher Emissionsfaktor (0,199 kg Kohlendioxid pro kWh verbrauchter Heizenergie): Berechnet auf
   der Grundlage des Anteils der Gebäude mit verschiedenen Energieträgern im gesamten Bundesgebiet unter Verwendung der
   oben aufgeführten Emissionsfaktoren.

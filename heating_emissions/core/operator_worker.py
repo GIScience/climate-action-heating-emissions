@@ -23,11 +23,13 @@ from heating_emissions.components.histogram_artifacts import (
     build_direct_emission_factor_histogram_artifact,
     build_energy_histogram_artifact,
     build_life_cycle_emission_factor_histogram_artifact,
+    build_living_space_histogram_artifact,
     build_per_capita_direct_co2_histogram_artifact,
     build_per_capita_life_cycle_co2_histogram_artifact,
     plot_direct_emission_factor_histogram,
     plot_energy_consumption_histogram,
     plot_life_cycle_emission_factor_histogram,
+    plot_living_space_per_capita_histogram,
     plot_per_capita_direct_co2_histogram,
     plot_per_capita_life_cycle_co2_histogram,
 )
@@ -119,11 +121,17 @@ class Operator(BaseOperator[ComputeInput]):
             aoi_aggregate=life_cycle_emission_factor_histogram, resources=resources
         )
 
+        living_space_histogram = plot_living_space_per_capita_histogram(census_data=census_data)
+        living_space_histogram_artifact = build_living_space_histogram_artifact(
+            aoi_aggregate=living_space_histogram, resources=resources
+        )
+
         return_artifacts = [
             heating_per_capita_life_cycle_emissions_artifact,
             life_cycle_per_capita_histogram_artifact,
             energy_consumption_histogram_artifact,
             life_cycle_emission_factor_histogram_artifact,
+            living_space_histogram_artifact,
             heating_absolute_life_cycle_emissions_artifact,
             energy_consumption_artifact,
             living_space_artifact,

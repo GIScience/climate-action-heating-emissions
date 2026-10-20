@@ -18,12 +18,12 @@ ROOT_DIR = Path(__file__).parent.parent.parent
     [
         (True, 'direct_co2_emissions', 'Per capita direct CO₂ emissions (kg/year)'),
         (False, 'direct_co2_emissions', 'Total direct CO₂ emissions (kg/year)'),
-        (True, 'life_cycle_co2_emissions', 'Per capita life cycle GHG emissions (kg CO₂eq/year)'),
-        (False, 'life_cycle_co2_emissions', 'Total life cycle GHG emissions (kg CO₂eq/year)'),
+        (True, 'life_cycle_co2_emissions', 'Per capita life-cycle GHG emissions (kg CO₂eq/year)'),
+        (False, 'life_cycle_co2_emissions', 'Total life-cycle GHG emissions (kg CO₂eq/year)'),
         (True, 'heat_consumption', 'Energy consumption (kWh/m²/year)'),
         (True, 'average_sqm_per_person', 'Living space (m² per person)'),
         (True, 'direct_emission_factor', 'Direct emission factor (kg of CO₂ per kWh)'),
-        (True, 'life_cycle_emission_factor', 'Life cycle emission factor (kg of CO₂eq per kWh)'),
+        (True, 'life_cycle_emission_factor', 'Life-cycle emission factor (kg of CO₂eq per kWh)'),
     ],
 )
 def test_build_gridded_artifact(per_capita, output, expected_name, compute_resources):

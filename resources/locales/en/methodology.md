@@ -88,6 +88,7 @@ We use GHG (carbon dioxide equivalents) emission factors from the ProBas databas
 ### Other data sources
 - Average German, weather-adjusted space heating energy consumption per square meter in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
 - German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal Environment Agency](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
+- Average living space per capita in Germany (46.3 square meters): [2022 German Census](https://ergebnisse.zensus2022.de/datenbank/online/statistic/1000A/table/1000A-0004/search/s/RHVyY2hzY2huaXR0bGljaGUlMjBXb2huZmwlQzMlQTRjaGUlMjBqZSUyMEJld29obmVy)
 - German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country using the emission factors listed above.
 
 ## Uncertainty

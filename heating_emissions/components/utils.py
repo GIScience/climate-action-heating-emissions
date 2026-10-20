@@ -74,19 +74,22 @@ NO_DATA_LABEL = N_('No data')
 
 
 class Topics(StrEnum):
-    DIRECT_EMISSIONS = N_('direct_emissions')
-    LIFE_CYCLE_EMISSIONS = N_('life_cycle_emissions')
-    PARAMETERS = N_('parameters')
-    TEMPORAL = N_('temporally flexible simulation')
+    DIRECT_EMISSIONS = N_('Extra: Direct emissions')
+    LIFE_CYCLE_EMISSIONS = N_('1: Life-cycle emissions')
+    PARAMETERS = N_('2: Emission drivers')
+    TEMPORAL = N_('Extra:Hourly estimates')
 
 
 def calculate_heating_emissions(census_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    census_data['average_sqm_per_person'] = census_data['average_sqm_per_person'].fillna(
-        census_data['average_sqm_per_person'].mean()
+    census_data['average_sqm_per_person'] = (
+        census_data['average_sqm_per_person'].fillna(census_data['average_sqm_per_person'].mean()).round(1)
     )
-    census_data['heat_consumption'] = census_data['heat_consumption'].fillna(census_data['heat_consumption'].mean())
+    census_data['heat_consumption'] = (
+        census_data['heat_consumption'].fillna(census_data['heat_consumption'].mean()).round(1)
+    )
+
     for mode in ['direct', 'life_cycle']:
-        census_data[f'{mode}_emission_factor'] = census_data[mode].fillna(census_data[mode].mean())
+        census_data[f'{mode}_emission_factor'] = census_data[mode].fillna(census_data[mode].mean()).round(3)
 
         census_data[f'{mode}_heated_area'] = census_data['population'] * census_data['average_sqm_per_person']
         census_data[f'{mode}_co2_emissions'] = (

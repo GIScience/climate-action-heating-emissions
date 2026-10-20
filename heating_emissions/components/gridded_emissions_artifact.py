@@ -93,10 +93,10 @@ def build_gridded_artifact(
                 legend_val_2 = 100000
                 legend_upper_cap = 150000
 
-            layer_name = tr('{emission_type} life cycle GHG emissions (kg CO₂eq/year)').format(
+            layer_name = tr('{emission_type} life-cycle GHG emissions (kg CO₂eq/year)').format(
                 emission_type=emission_type
             )
-            caption = tr('{emission_type} life cycle GHG emissions from residential heating (kg CO₂eq/year)').format(
+            caption = tr('{emission_type} life-cycle GHG emissions from residential heating (kg CO₂eq/year)').format(
                 emission_type=emission_type
             )
             description = tr(
@@ -148,20 +148,20 @@ def build_gridded_artifact(
                 '(either bio- or fossil fuels), and thus the emission factor of wood is high, while those of heat pumps '
                 'and district heating are zero.'
             )
-            tags = {tr(Topics.DIRECT_EMISSIONS)}
+            tags = {tr(Topics.PARAMETERS)}
 
         case Output.life_cycle_emission_factor:
             output_column = 'life_cycle_emission_factor'
             file_name = 'life_cycle_emission_factor'
             legend_upper_cap = 0.3
-            layer_name = tr('Life cycle emission factor (kg of CO₂eq per kWh)')
-            caption = tr('Average life cycle emission factor from heating (estimated)')
+            layer_name = tr('Life-cycle emission factor (kg of CO₂eq per kWh)')
+            caption = tr('Average life-cycle emission factor from heating (estimated)')
             description = tr(
-                'Average life cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, '
+                'Average life-cycle emission factor (kg of CO₂eq per kWh) from heating residential buildings, '
                 'estimated based on the count of buildings with different energy carriers in each grid cell '
                 'reported in the 2022 German census.'
             )
-            tags = {tr(Topics.LIFE_CYCLE_EMISSIONS)}
+            tags = {tr(Topics.PARAMETERS)}
         case _:
             if 'yearly_emissions' in output:
                 output_column, output_year = output.split(':')
