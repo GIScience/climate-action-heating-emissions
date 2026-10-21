@@ -1,6 +1,6 @@
 [project]
 name = "heating-emissions"
-version = "3.1.0"
+version = "3.1.1"
 description = "This indicator computes annual carbon dioxide emissions from residential space heating in an area of interest within Germany"
 authors = [
     { name = "Sebastian Block", email = "sebastian.block@heigit.org" },

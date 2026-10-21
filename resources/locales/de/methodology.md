@@ -137,16 +137,19 @@ gehen wir von Luftwärmepumpen aus, die mit dem durchschnittlichen deutschen Str
   der Ebene ganzer Stadtteile und darüber hinaus kaum Auswirkungen auf die Ergebnisse haben, da weniger als 0,1 % der
   Haushalte in Deutschland mit diesem Energieträger beheizt werden.
 
-### Andere Datenquellen
-- Durchschnittlicher witterungsbereinigter Heizenergieverbrauch pro Quadratmeter in Wohngebäuden in Deutschland (127,1
-  kWh/m² pro Jahr): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
-- Durchschnittliche Pro-Kopf-Kohlendioxidemissionen durch das Heizen von Wohnraum in Deutschland (2,2 t pro Jahr):
-  [Umweltbundesamt](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
-- Durchschnittliche Wohnfläche pro Kopf in Deutschland (46,3 Quadratmeter): [Zensus
+### Quelle der durchschnittlichen deutschen Referenzwerte
+- Witterungsbereinigter Heizenergieverbrauch pro Quadratmeter in Wohngebäuden (127,1 kWh/m² pro Jahr):
+  [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- Wohnfläche pro Kopf (46,3 Quadratmeter): [Zensus
   2022](https://ergebnisse.zensus2022.de/datenbank/online/statistic/1000A/table/1000A-0004/search/s/RHVyY2hzY2huaXR0bGljaGUlMjBXb2huZmwlQzMlQTRjaGUlMjBqZSUyMEJld29obmVy)
-- Deutscher durchschnittlicher Emissionsfaktor (0,199 kg Kohlendioxid pro kWh verbrauchter Heizenergie): Berechnet auf
-  der Grundlage des Anteils der Gebäude mit verschiedenen Energieträgern im gesamten Bundesgebiet unter Verwendung der
-  oben aufgeführten Emissionsfaktoren.
+- Lebenszyklus-Emissionsfaktor (0,238 kg CO₂ pro kWh verbrauchter Heizenergie): berechnet auf Grundlage des Anteils der
+  Gebäude mit unterschiedlichen Energieträgern bundesweit.
+- Lebenszyklus-THG-Emissionen pro Person (1,59 Tonnen pro Jahr): bevölkerungsgewichteter Mittelwert der
+  Pro-Kopf-Emissionen über alle Rasterzellen in Deutschland.
+- Direkter Emissionsfaktor (0,194 kg CO₂ pro kWh verbrauchter Heizenergie): berechnet auf Grundlage des Anteils der
+  Gebäude mit unterschiedlichen Energieträgern bundesweit.
+- Direkte CO₂-Emissionen pro Person (1,27 Tonnen pro Jahr): bevölkerungsgewichteter Mittelwert der Pro-Kopf-Emissionen
+  über alle Rasterzellen in Deutschland.
 
 ## Unsicherheit
 

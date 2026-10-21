@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project mostly adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/3.1.0...main)
+## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/3.1.1...main)
+
+## [3.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/3.1.1) - 2026-10-21
+
+### Added
+
+- Distinct reference German average values for the histograms life-cycle and direct emission factors and emissions per capita ([#89](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/89))
 
 ## [3.1.0](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/3.1.0) - 2026-10-20
 

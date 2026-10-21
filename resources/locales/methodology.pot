@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 10:14+0200\n"
+"POT-Creation-Date: 2026-10-21 13:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -479,41 +479,52 @@ msgid ""
 msgstr ""
 
 #: resources/locales/en/methodology.md:88
-msgid "Other data sources"
+msgid "Source of German average reference values"
 msgstr ""
 
 #: resources/locales/en/methodology.md:89
 msgid ""
-"Average German, weather-adjusted space heating energy consumption per square meter in residential buildings (127.1 kWh/m"
-"² per year): [co2online]{1}"
+"Weather-adjusted space heating energy consumption per square meter in residential buildings (127.1 kWh/m² per year): "
+"[co2online]{1}"
 msgstr ""
 
 #: resources/locales/en/methodology.md:90
-msgid ""
-"German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal "
-"Environment Agency]{1}"
+msgid "Living space per capita (46.3 square meters): [2022 German Census]{1}"
 msgstr ""
 
 #: resources/locales/en/methodology.md:91
-msgid "Average living space per capita in Germany (46.3 square meters): [2022 German Census]{1}"
+msgid ""
+"Life-cycle emission factor (0.238 kg of CO₂ per kWh of heating energy used): calculated based on the proportion of "
+"buildings with different energy carriers across the entire country."
 msgstr ""
 
 #: resources/locales/en/methodology.md:92
 msgid ""
-"German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the "
-"proportion of buildings with different energy carriers across the entire country using the emission factors listed "
-"above."
+"Life-cycle GHG emissions per person (1.59 tonnes per year): population-weighted mean of per capita emissions across all "
+"grid cells in Germany."
+msgstr ""
+
+#: resources/locales/en/methodology.md:93
+msgid ""
+"Direct emission factor (0.194 kg of CO₂ per kWh of heating energy used): calculated based on the proportion of "
+"buildings with different energy carriers across the entire country."
 msgstr ""
 
 #: resources/locales/en/methodology.md:94
-msgid "Uncertainty"
+msgid ""
+"Direct CO₂ emissions per person (1.27 tonnes per year): population-weighted mean of per capita emissions across all "
+"grid cells in Germany."
 msgstr ""
 
 #: resources/locales/en/methodology.md:96
-msgid "Uncertainty of the input data"
+msgid "Uncertainty"
 msgstr ""
 
 #: resources/locales/en/methodology.md:98
+msgid "Uncertainty of the input data"
+msgstr ""
+
+#: resources/locales/en/methodology.md:100
 msgid ""
 "Spatial data from the German 2022 census: to protect data privacy, the census uses the cell-key method to introduce "
 "random noise into the building counts at each grid cell. This means the average heating energy consumption rates and "
@@ -521,19 +532,19 @@ msgid ""
 "magnitude of this uncertainty is, by design, impossible to quantify."
 msgstr ""
 
-#: resources/locales/en/methodology.md:99
+#: resources/locales/en/methodology.md:101
 msgid "Area-specific energy consumptions from co2online: 9 % uncertainty ([co2online, UBA, 2019]{1})"
 msgstr ""
 
-#: resources/locales/en/methodology.md:100
+#: resources/locales/en/methodology.md:102
 msgid "Emission factors from the German Environment Agency: not given"
 msgstr ""
 
-#: resources/locales/en/methodology.md:102
+#: resources/locales/en/methodology.md:104
 msgid "Uncertainty from weighting by building count instead of heated area"
 msgstr ""
 
-#: resources/locales/en/methodology.md:104
+#: resources/locales/en/methodology.md:106
 msgid ""
 "To estimate the average area-specific energy consumption in each grid cell, we weight empirical heating energy "
 "consumption values for each building age class by the fraction of buildings in each age class, based on census data. "
@@ -541,7 +552,7 @@ msgid ""
 "areas. Therefore, our calculations assumes that all buildings have the same heated area."
 msgstr ""
 
-#: resources/locales/en/methodology.md:106
+#: resources/locales/en/methodology.md:108
 msgid ""
 "This assumption introduces uncertainty because buildings of different ages can differ in size. Imagine a grid cell with "
 "three buildings: one older building of 1,000 m² and two newer buildings of 150 m² each. Since our method only accounts "
@@ -552,30 +563,30 @@ msgid ""
 "little weight in the calculation."
 msgstr ""
 
-#: resources/locales/en/methodology.md:108
+#: resources/locales/en/methodology.md:110
 msgid ""
 "The same problem emerges in the estimation of the average emission factor in each grid cell, which is based on the "
 "number of buildings with different energy carriers."
 msgstr ""
 
-#: resources/locales/en/methodology.md:110
+#: resources/locales/en/methodology.md:112
 msgid ""
 "Moreover, we do not account for potential correlations between the age of the buildings and their energy carrier. Older "
 "buildings are more likely to have dirty energy carriers, such as oil heaters, while newer buildings are more likely to "
 "have heat pumps. Ignoring the potential correlations results in an underestimation of emissions."
 msgstr ""
 
-#: resources/locales/en/methodology.md:112
+#: resources/locales/en/methodology.md:114
 msgid "References"
 msgstr ""
 
-#: resources/locales/en/methodology.md:114
+#: resources/locales/en/methodology.md:116
 msgid ""
 "For a more detailed description of the methodology and data sources behind the tool, as well as on the validation of "
 "the results and application of the tool for municipal heating planning, see:"
 msgstr ""
 
-#: resources/locales/en/methodology.md:116
+#: resources/locales/en/methodology.md:118
 msgid ""
 "Kong G., Ulrich V., Knoblauch S., Martin M., Schott M., von Elverfeldt K., Zipf A., Block S. 2027. Residential heating "
 "emissions tool in the Climate Action Navigator: High-resolution estimation based on open data. Computers, Environment "

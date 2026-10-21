@@ -169,7 +169,7 @@ def plot_per_capita_direct_co2_histogram(
         ),
     )
     hist_plot.add_vline(
-        x=2.2,
+        x=1.27,
         line_width=1.5,
         line_dash='dot',
         annotation_text=tr('German average'),
@@ -198,7 +198,7 @@ def plot_per_capita_life_cycle_co2_histogram(
         ),
     )
     hist_plot.add_vline(
-        x=2.2,
+        x=1.59,
         line_width=1.5,
         line_dash='dot',
         annotation_text=tr('German average'),
@@ -262,7 +262,7 @@ def plot_direct_emission_factor_histogram(
         ),
     )
     hist_plot.add_vline(
-        x=0.199,
+        x=0.194,
         line_width=1.5,
         line_dash='dot',
         annotation_text=tr('German average'),
@@ -294,7 +294,7 @@ def plot_life_cycle_emission_factor_histogram(
         ),
     )
     hist_plot.add_vline(
-        x=0.199,
+        x=0.238,
         line_width=1.5,
         line_dash='dot',
         annotation_text=tr('German average'),

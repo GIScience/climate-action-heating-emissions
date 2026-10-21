@@ -85,11 +85,13 @@ We use GHG (carbon dioxide equivalents) emission factors from the ProBas databas
 
 - **Note 4**: The Biomass/Biogas category includes different biogenic fuels for which ProBas does not provide emission factors. We thus use the same emission factor as for wood. This assumption is unlikely to have a large effect on the results at scales of whole neighborhoods and above, since less than 0.1% of residences in Germany are heated with this energy carrier.
 
-### Other data sources
-- Average German, weather-adjusted space heating energy consumption per square meter in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
-- German average per capita carbon dioxide emissions from residential heating (2.2 t per year): [German Federal Environment Agency](https://www.umweltbundesamt.de/bild/durchschnittlicher-co2-fussabdruck-pro-kopf-in)
-- Average living space per capita in Germany (46.3 square meters): [2022 German Census](https://ergebnisse.zensus2022.de/datenbank/online/statistic/1000A/table/1000A-0004/search/s/RHVyY2hzY2huaXR0bGljaGUlMjBXb2huZmwlQzMlQTRjaGUlMjBqZSUyMEJld29obmVy)
-- German average emission factor (0.199 kg of carbon dioxide per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country using the emission factors listed above.
+### Source of German average reference values
+- Weather-adjusted space heating energy consumption per square meter in residential buildings (127.1 kWh/m² per year): [co2online](https://www.wohngebaeude.info/daten/#/heizen/bundesweit)
+- Living space per capita (46.3 square meters): [2022 German Census](https://ergebnisse.zensus2022.de/datenbank/online/statistic/1000A/table/1000A-0004/search/s/RHVyY2hzY2huaXR0bGljaGUlMjBXb2huZmwlQzMlQTRjaGUlMjBqZSUyMEJld29obmVy)
+- Life-cycle emission factor (0.238 kg of CO₂ per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country.
+- Life-cycle GHG emissions per person (1.59 tonnes per year): population-weighted mean of per capita emissions across all grid cells in Germany.
+- Direct emission factor (0.194 kg of CO₂ per kWh of heating energy used): calculated based on the proportion of buildings with different energy carriers across the entire country.
+- Direct CO₂ emissions per person (1.27 tonnes per year): population-weighted mean of per capita emissions across all grid cells in Germany.
 
 ## Uncertainty
 
