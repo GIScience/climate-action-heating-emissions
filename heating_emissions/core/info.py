@@ -15,7 +15,7 @@ def get_info() -> PluginInfo:
     germany = gpd.read_file('resources/germany_buffered_boundaries.geojson').buffer(2500).to_crs(4326)
     aoi_constraints = [
         [
-            AreaConstraint(max_area=30_000),
+            AreaConstraint(max_area=1000),
             CoveredByGeomConstraint(
                 description='Germany',
                 geom=mapping(germany.union_all()),

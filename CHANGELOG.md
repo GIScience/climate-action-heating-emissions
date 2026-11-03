@@ -7,6 +7,10 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/compare/3.1.1...main)
 
+### Changed
+
+- Reduce AOI size limit to 1000 km² ([#93](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/work_items/93))
+
 ## [3.1.1](https://gitlab.heigit.org/climate-action/plugins/heating-emissions/-/releases/3.1.1) - 2026-10-21
 
 ### Added
