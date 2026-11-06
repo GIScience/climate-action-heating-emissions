@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from climatoology.base.aoi import AreaConstraint
-from climatoology.base.exception import ClimatoologyUserError, InputValidationError
+from climatoology.base.exception import InputValidationError
 from shapely import MultiPolygon
 
 from heating_emissions.components.utils import (
@@ -121,7 +121,7 @@ def test_check_aoi_invalid_geom(operator, default_aoi_properties):
         ]
     )
 
-    with pytest.raises(ClimatoologyUserError, match=r'The selected area is outside of the valid regions'):
+    with pytest.raises(InputValidationError, match=r'The selected area is outside of the valid regions'):
         check_aoi(
             aoi=aoi_outside_supported_regions, aoi_properties=default_aoi_properties, aoi_constraints=aoi_constraints
         )

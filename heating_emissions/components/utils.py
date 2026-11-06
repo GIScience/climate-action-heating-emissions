@@ -3,7 +3,7 @@ from enum import StrEnum
 
 import geopandas as gpd
 from climatoology.base.aoi import AoiConstraintSets, AoiProperties, CoveredByGeomConstraint
-from climatoology.base.exception import ClimatoologyUserError, InputValidationError
+from climatoology.base.exception import InputValidationError
 from climatoology.base.i18n import N_
 from shapely import MultiPolygon
 
@@ -125,11 +125,8 @@ def check_aoi(aoi: MultiPolygon, aoi_properties: AoiProperties, aoi_constraints:
 
         if not valid:
             log.error(f'{aoi=} failed constraint check: {con}')
-            # We intentionally raise a ClimatoologyUserError for the CoveredByGeomConstraint because this error type
-            # will not be cached. We don't want to cache this error because the HEAL data may spontaneously be expanded
-            # to cover new regions, in which case we should immediately be able to run for those regions.
             if isinstance(con, CoveredByGeomConstraint):
-                raise ClimatoologyUserError(
+                raise InputValidationError(
                     'The selected area is outside of the valid regions. '
                     'Please contact us to add new areas to this assessment tool.'
                 )

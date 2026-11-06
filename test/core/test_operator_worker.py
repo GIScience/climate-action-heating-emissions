@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 from climatoology.base.artifact import Artifact
-from climatoology.base.exception import ClimatoologyUserError
+from climatoology.base.exception import InputValidationError
 from climatoology.base.plugin_info import DEFAULT_LANGUAGE, PluginInfo
 
 from heating_emissions.core.operator_worker import calculate_time_downscale_emissions
@@ -82,7 +82,7 @@ def test_check_aoi_outside_germany(
     default_non_german_aoi_properties,
     compute_resources,
 ):
-    with pytest.raises(ClimatoologyUserError):
+    with pytest.raises(InputValidationError):
         operator.compute(
             resources=compute_resources,
             aoi=default_non_german_aoi,
